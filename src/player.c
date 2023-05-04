@@ -6,14 +6,6 @@ PlayerStruct * playerSetup(int y, int x)
 	player->position.y = y;
 	player->position.x = x;
 	player->skin = '@';
-	player->health = 20;
-	player->backpack = malloc(sizeof(Item*)*3);
-	
-	for(int i=0; i<3; i++)
-		player->backpack[i] = malloc(sizeof(Item*));
-	//start set
-	player->backpack[0] = genSword(1,20,"startersword");
-	
 	
 	return player;
 }

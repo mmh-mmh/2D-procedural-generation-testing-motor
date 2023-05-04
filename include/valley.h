@@ -5,14 +5,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-#include "inventory.h"
-#include "mainMenu.h"
 
 #define MAP_HEIGHT 41
 #define MAP_WIDTH 81
 
 #define GAME_WINDOW_HEIGHT 21
-#define GAME_WINDOW_WIDTH 51
+#define GAME_WINDOW_WIDTH 101
 #define GAME_WINDOW_POSITION_Y 1
 #define GAME_WINDOW_POSITION_X 3
 
@@ -38,8 +36,6 @@ typedef struct PlayerStruct
 {
 	Position position;
 	char skin;
-	int health;
-	Item ** backpack;
 } PlayerStruct;
 
 typedef struct Level
@@ -62,11 +58,6 @@ Level * createLevel();
 //main fonctions
 int mainSetup();
 void loading();
-
-//menu fonctions;
-void closeMenu(int numberItems, MENU * menu, ITEM ** items);
-int mainMenu(int numberItems, char * choices[]);
-void menuLoop();
 
 //player fonctions
 PlayerStruct * playerSetup(int y, int x);
