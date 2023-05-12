@@ -24,11 +24,33 @@ char ** mapSetup(int height, int width, Level * level)
 			}
 		}
 	}
+	return map;
 }
 
 int mapGeneration(Level * level)
 {
-	
+		
+	int proba1 = 8;
+	int proba2 = 0;
+	int chance = 100;
+
+	for (int y = 1 ; y < MAP_HEIGHT - 1; y++)
+	{
+		for (int x = 1; x < MAP_WIDTH - 1; x++)
+		{
+			int randomNumber = rand() % chance;
+
+			if (randomNumber < proba1)
+			{
+				level->map[y][x] = ',' ;
+			}
+
+			else if (randomNumber < proba2)
+			{
+				level->map[y][x] = '"';
+			}
+		}
+	}
 	return 0;
 }
 
