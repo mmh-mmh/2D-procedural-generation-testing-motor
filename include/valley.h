@@ -5,9 +5,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <math.h>
 
-#define MAP_HEIGHT 41
-#define MAP_WIDTH 81
+#define MAP_HEIGHT 81
+#define MAP_WIDTH 161
 
 #define GAME_WINDOW_HEIGHT 21
 #define GAME_WINDOW_WIDTH 101
@@ -26,11 +27,11 @@ typedef struct Position
 	int x;
 } Position;
 
-typedef struct Dimension
+typedef struct Dimensions
 {
 	int height;
 	int width;
-} Dimension;
+} Dimensions;
 
 typedef struct PlayerStruct
 {
@@ -42,13 +43,11 @@ typedef struct Level
 {
 	char ** map;
 	char ** mapSave;
+	Position ** mapDoors;
 
-	Position * HousePosition;
+	Position ** houseDoors;
 
 	PlayerStruct * player;
-
-	//MonsterStruct ** monsters;
-	//int numberOfMonsters;
 } Level;
 
 
@@ -63,19 +62,15 @@ void loading();
 PlayerStruct * playerSetup(int y, int x);
 int handlePlayerInput(PlayerStruct * player, char input, char ** map, char ** mapInmovableSave);
 int playerMove(PlayerStruct * player, Position posDiff, char ** map, char ** mapInmovableSave);
-int handleMovable(PlayerStruct * player, Position posDiff, char ** map, char ** mapInmovableSave);
 
 //map fonctions
-char ** mapSetup(int height, int width);
-int mapNotMovableGeneration(Level * level);
-int mapMovableGeneration(char ** map);
+char ** mapSetup(int height, int width, Level * level);
+int mapGeneration(Level * level);
+
+int houseGeneration(Level * level);
+
+
 int drawMapInGameWindow(WINDOW * window, char ** map, PlayerStruct * player);
-int mapRandGrassGeneration(char ** map);
-int mapRandHouseGeneration(Level * level);
-int mapRandRockGeneration(char ** map);
-int mapRandMovableGeneration(char ** map);
-int unblockDoor(char ** map, Position * doorPos);
-char ** saveMap(char ** map);
 
 //window fonctions
 WINDOW * gameWindowSetup(int height, int width, int y, int x);
