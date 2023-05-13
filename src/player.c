@@ -51,18 +51,24 @@ Position handleInput(int input)
 
 void checkPosition(Position position_offset, Game * game)
 {
-    switch (game->map->tiles[game->player->position.y + position_offset.y][game->player->position.x + position_offset.x])
-    {
-        default:
-			playerMove(position_offset, game);
-            break;
-        case 'X':
-        case 'G':
-        case 'T':
-            //combat(user, getMonsterAt(newPosition, level->monsters), 1);
-			break;
-    }
+	Position new;
+	new.y = game->player->position.y + position_offset.y;
+    new.x = game->player->position.x + position_offset.x;
 
+	if (new.y >= 0 && new.y < game->map->dimensions.height && new.x >= 0 && new.x < game->map->dimensions.width)
+    	{
+    	switch (game->map->tiles[game->player->position.y + position_offset.y][game->player->position.x + position_offset.x])
+    	{
+    	    default:
+				playerMove(position_offset, game);
+    	        break;
+     		case 'X':
+    	    case 'G':
+    	    case 'T':
+     	       //combat(user, getMonsterAt(newPosition, level->monsters), 1);
+				break;
+		}
+	}
 }
 
 
@@ -74,19 +80,18 @@ void playerMove(Position position_offset, Game * game)
 	new_position.x = game->player->position.x + position_offset.x;
 
 
-	if (new_position.y >= 0 && new_position.y < game->map->dimensions.height && new_position.x >= 0 && new_position.x < game->map->dimensions.width)
+
+	switch (game->map->tiles[new_position.y][new_position.x])
 	{
-		switch (game->map->tiles[new_position.y][new_position.x])
-		{
-			default:
+		default:
 			game->player->position = new_position;
-				break;
-			case '#':
-			case '&':
-				break;
-			case 'O':
-				//handleMovable();
 			break;
-		}
+		//case '#':
+		case '&':
+			break;
+		case 'O':
+			//handleMovable();
+		break;
 	}
+
 }

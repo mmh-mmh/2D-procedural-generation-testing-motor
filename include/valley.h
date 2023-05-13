@@ -7,10 +7,10 @@
 #include <unistd.h>
 #include <math.h>
 
-#define MAP_HEIGHT 81
-#define MAP_WIDTH 161
+#define MAP_HEIGHT 161
+#define MAP_WIDTH 321
 
-#define MAIN_WINDOW_HEIGHT 21
+#define MAIN_WINDOW_HEIGHT 31
 #define MAIN_WINDOW_WIDTH 101
 #define MAIN_WINDOW_POSITION_Y 1
 #define MAIN_WINDOW_POSITION_X 3
@@ -46,30 +46,35 @@ typedef struct Game
 } Game;
 
 
-//game fonctions 
+//game functions 
 Game * gameSetup();
 void gameLoop(WINDOW * main_window);
 
-//main fonctions
+//main functions
 void screenSetup();
 void mainLoops();
 
-//player fonctions
+//player functions
 PlayerStruct * playerSetup();
 Position handleInput(int input);
 void checkPosition(Position position_offset, Game * game);
 void playerMove(Position position_offset, Game * game);
 
-
-//map fonctions
+//map functions
 Map * createMap();
 char ** mapSetup(Map * map);
-void mapProceduralGeneration(Map * map);
+char ** copyMap(Map * map);
 
-//window fonctions
+//procedural functions
+void mapProceduralGeneration(Map * map);
+void mapNoiseGeneration(Map * map, int density);
+void mapApplyCellularAutomaton();
+void mapFillWalls(Map * map);
+
+//window functions
 WINDOW * CreateMainWindow();
 
-//render fonctions
+//render functions
 void render(Game * game, WINDOW * main_window);
 void drawMapInGameWindow(Game * game, WINDOW * gameWindow);
 

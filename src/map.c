@@ -14,6 +14,7 @@ Map * createMap()
 }
 
 
+
 char ** mapSetup(Map * map)
 {	
 	char ** tiles;
@@ -41,29 +42,18 @@ char ** mapSetup(Map * map)
 }
 
 
-
-void mapProceduralGeneration(Map * map)
+char ** copyMap(Map * map)
 {
-		
-	int proba1 = 8;
-	int proba2 = 0;
-	int chance = 100;
+	char ** temp_tiles = malloc(map->dimensions.height * sizeof(char *));
 
-	for (int y = 1 ; y < map->dimensions.height - 1; y++)
+	for (int y = 0; y < map->dimensions.height; y++)
 	{
-		for (int x = 1; x < map->dimensions.width - 1; x++)
+		temp_tiles[y] = malloc(map->dimensions.width * sizeof(char));
+
+		for (int x = 0; x < map->dimensions.width; x++)
 		{
-			int randomNumber = rand() % chance;
-
-			if (randomNumber < proba1)
-			{
-				map->tiles[y][x] = ',' ;
-			}
-
-			else if (randomNumber < proba2)
-			{
-				map->tiles[y][x] = '"';
-			}
+				temp_tiles[y][x] = map->tiles[y][x];
 		}
 	}
+	return temp_tiles;
 }
