@@ -15,6 +15,7 @@
 #define MAIN_WINDOW_POSITION_Y 1
 #define MAIN_WINDOW_POSITION_X 3
 
+
 typedef struct Position
 {
 	int y;
@@ -31,6 +32,7 @@ typedef struct Map
 {
     Dimensions dimensions;
     char ** tiles;
+	int ** colors;
 } Map;
 
 typedef struct PlayerStruct
@@ -62,7 +64,7 @@ void playerMove(Position position_offset, Game * game);
 
 //map functions
 Map * createMap();
-char ** mapSetup(Map * map);
+void mapSetup(Map * map);
 char ** copyMap(Map * map);
 
 //procedural functions
@@ -70,6 +72,7 @@ void mapProceduralGeneration(Map * map);
 void mapNoiseGeneration(Map * map, int density);
 void mapApplyCellularAutomaton();
 void mapFillWalls(Map * map);
+void mapGrassGeneration(Map * map);
 
 //window functions
 WINDOW * CreateMainWindow();

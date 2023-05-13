@@ -7,7 +7,7 @@ Map * createMap()
 	map->dimensions.height = MAP_HEIGHT;
 	map->dimensions.width = MAP_WIDTH;
 
-	map->tiles = mapSetup(map);
+	mapSetup(map);
 	mapProceduralGeneration(map);
 
 	return map;
@@ -15,13 +15,16 @@ Map * createMap()
 
 
 
-char ** mapSetup(Map * map)
+void mapSetup(Map * map)
 {	
 	char ** tiles;
-	tiles = malloc(sizeof(char*) * map->dimensions.height);
+	map->tiles = malloc(sizeof(char*) * map->dimensions.height);
+	map->colors = malloc(sizeof(int*) * map->dimensions.height);
+
 	for(int y = 0; y < map->dimensions.height; y++)
 	{
-		tiles[y] = malloc(sizeof(char) * map->dimensions.width);
+		map->tiles[y] = malloc(sizeof(char) * map->dimensions.width);
+		map->colors[y] = malloc(sizeof(int) * map->dimensions.width);
 	}
 	
 	for (int y = 0; y < map->dimensions.height; y++)
@@ -30,15 +33,16 @@ char ** mapSetup(Map * map)
 		{
 			if (y == 0 || y == map->dimensions.height - 1 || x == 0 || x == map->dimensions.width - 1)
 			{
-				tiles[y][x] = '#';
+				map->tiles[y][x] = '#';
 			}
 			else
 			{
-				tiles[y][x] = ' ';
+				map->tiles[y][x] = ' ';
 			}
+
+			map->colors[y][x] = 2;
 		}
 	}
-	return tiles;
 }
 
 
