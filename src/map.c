@@ -16,14 +16,14 @@ Map * createMap()
 
 
 char ** mapSetup(Map * map)
-{	
+{
 	char ** tiles;
 	tiles = malloc(sizeof(char*) * map->dimensions.height);
 	for(int y = 0; y < map->dimensions.height; y++)
 	{
 		tiles[y] = malloc(sizeof(char) * map->dimensions.width);
 	}
-	
+
 	for (int y = 0; y < map->dimensions.height; y++)
 	{
 		for (int x = 0; x < map->dimensions.width; x++)

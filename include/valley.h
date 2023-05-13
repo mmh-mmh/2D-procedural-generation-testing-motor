@@ -38,6 +38,13 @@ typedef struct PlayerStruct
 	Position position;
 	char skin;
 } PlayerStruct;
+typedef MobStruct
+{
+    Position coordinate;
+    int health;
+    int damage;
+    char skin;
+}MobStruct;
 
 typedef struct Game
 {
@@ -46,7 +53,7 @@ typedef struct Game
 } Game;
 
 
-//game functions 
+//game functions
 Game * gameSetup();
 void gameLoop(WINDOW * main_window);
 
@@ -60,6 +67,9 @@ Position handleInput(int input);
 void checkPosition(Position position_offset, Game * game);
 void playerMove(Position position_offset, Game * game);
 
+//mob functions
+MobStruct * genMonster( int health, int attack, char skin);
+MobStruct * Mobselect(int mobtype);
 //map functions
 Map * createMap();
 char ** mapSetup(Map * map);
