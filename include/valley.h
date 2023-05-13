@@ -10,16 +10,10 @@
 #define MAP_HEIGHT 81
 #define MAP_WIDTH 161
 
-#define GAME_WINDOW_HEIGHT 21
-#define GAME_WINDOW_WIDTH 101
-#define GAME_WINDOW_POSITION_Y 1
-#define GAME_WINDOW_POSITION_X 3
-
-#define PLAYER_START_POSITION_Y MAP_HEIGHT/2
-#define PLAYER_START_POSITION_X MAP_WIDTH/2
-
-#define HOUSE_SIZE 11
-
+#define MAIN_WINDOW_HEIGHT 21
+#define MAIN_WINDOW_WIDTH 101
+#define MAIN_WINDOW_POSITION_Y 1
+#define MAIN_WINDOW_POSITION_X 3
 
 typedef struct Position
 {
@@ -33,46 +27,50 @@ typedef struct Dimensions
 	int width;
 } Dimensions;
 
+typedef struct Map
+{
+    Dimensions dimensions;
+    char ** tiles;
+} Map;
+
 typedef struct PlayerStruct
 {
 	Position position;
 	char skin;
 } PlayerStruct;
 
-typedef struct Level
+typedef struct Game
 {
-	char ** map;
-	char ** mapSave;
-	Position ** mapDoors;
-
-	Position ** houseDoors;
-
+	Map * map;
 	PlayerStruct * player;
-} Level;
+} Game;
 
 
-//level fonctions 
-Level * createLevel();
+//game fonctions 
+Game * gameSetup();
+void gameLoop(WINDOW * main_window);
 
 //main fonctions
-int mainSetup();
-void loading();
+void screenSetup();
+void mainLoops();
 
 //player fonctions
-PlayerStruct * playerSetup(int y, int x);
-int handlePlayerInput(PlayerStruct * player, char input, char ** map, char ** mapInmovableSave);
-int playerMove(PlayerStruct * player, Position posDiff, char ** map, char ** mapInmovableSave);
+PlayerStruct * playerSetup();
+Position handleInput(int input);
+void checkPosition(Position position_offset, Game * game);
+void playerMove(Position position_offset, Game * game);
+
 
 //map fonctions
-char ** mapSetup(int height, int width, Level * level);
-int mapGeneration(Level * level);
-
-int houseGeneration(Level * level);
-
-
-int drawMapInGameWindow(WINDOW * window, char ** map, PlayerStruct * player);
+Map * createMap();
+char ** mapSetup(Map * map);
+void mapProceduralGeneration(Map * map);
 
 //window fonctions
-WINDOW * gameWindowSetup(int height, int width, int y, int x);
+WINDOW * CreateMainWindow();
+
+//render fonctions
+void render(Game * game, WINDOW * main_window);
+void drawMapInGameWindow(Game * game, WINDOW * gameWindow);
 
 #endif

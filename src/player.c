@@ -1,68 +1,92 @@
 #include "valley.h"
 
-PlayerStruct * playerSetup(int y, int x)
+PlayerStruct * playerSetup()
 {
 	PlayerStruct * player = malloc(sizeof(PlayerStruct));
-	player->position.y = y;
-	player->position.x = x;
+	player->position.y = MAP_HEIGHT/2;
+	player->position.x = MAP_WIDTH/2;
 	player->skin = '@';
 	
 	return player;
 }
 
 
-int handlePlayerInput(PlayerStruct * player, char input, char ** map, char ** mapSave)
+Position handleInput(int input)
 {
-	Position posDiff;
+	Position position_offset;
+
+	position_offset.y = 0;
+	position_offset.x = 0;
 	
 	switch(input)
 	{
 		
 		case 'z' :
 		case 'Z' :
-			posDiff.y = - 1;
-			posDiff.x = 0;
-			playerMove(player, posDiff, map, mapSave);
+			position_offset.y = - 1;
+			position_offset.x = 0;
 			break;
 		case 's' :
 		case 'S' :
-			posDiff.y = + 1;
-			posDiff.x = 0;
-			playerMove(player, posDiff, map, mapSave);
+			position_offset.y = + 1;
+			position_offset.x = 0;
 			break;
 		case 'q' :
 		case 'Q' :
-			posDiff.y = 0;
-			posDiff.x = - 1;
-			playerMove(player, posDiff, map, mapSave);
+			position_offset.y = 0;
+			position_offset.x = - 1;
 			break;
 		case 'd' :
 		case 'D' :
-			posDiff.y = 0;
-			posDiff.x = + 1;
-			playerMove(player, posDiff, map, mapSave);
+			position_offset.y = 0;
+			position_offset.x = + 1;
 			break;
 		default :
 			break;
 			
 	}
-	return 0;
+	return position_offset;
 }
 
 
-int playerMove(PlayerStruct * player, Position posDiff, char ** map, char ** mapSave)
+void checkPosition(Position position_offset, Game * game)
 {
-
-	switch (map[player->position.y + posDiff.y][player->position.x + posDiff.x])
-	{
-		default :
-			player->position.y += posDiff.y;
-			player->position.x += posDiff.x;
-			break;	
-		case '#':
-		case '&':
+    switch (game->map->tiles[game->player->position.y + position_offset.y][game->player->position.x + position_offset.x])
+    {
+        default:
+			playerMove(position_offset, game);
+            break;
+        case 'X':
+        case 'G':
+        case 'T':
+            //combat(user, getMonsterAt(newPosition, level->monsters), 1);
 			break;
-	}
+    }
 
-	return 0;
+}
+
+
+void playerMove(Position position_offset, Game * game)
+{
+	Position new_position;
+
+	new_position.y = game->player->position.y + position_offset.y;
+	new_position.x = game->player->position.x + position_offset.x;
+
+
+	if (new_position.y >= 0 && new_position.y < game->map->dimensions.height && new_position.x >= 0 && new_position.x < game->map->dimensions.width)
+	{
+		switch (game->map->tiles[new_position.y][new_position.x])
+		{
+			default:
+			game->player->position = new_position;
+				break;
+			case '#':
+			case '&':
+				break;
+			case 'O':
+				//handleMovable();
+			break;
+		}
+	}
 }
