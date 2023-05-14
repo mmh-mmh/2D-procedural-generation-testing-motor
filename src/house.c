@@ -1,36 +1,39 @@
 #include "valley.h"
 
-void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, int * maxTrials)
+void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, int * max_trials)
 {   
-    Position house;
-    
     do // Generate a random valid position for the house while till she is reachable and not too close the player
     {
-    generateRandHousePosition(game->map, &house);
+    generateRandHousePosition(game);
     (*trials)++;
-        if (*trials >= *maxTrials) // If trials reaches maxTrials, return to create another map
+        if (*trials >= *max_trials) // If trials reaches maxTrials, return to create another map
         {
             return;
         }
-    } while (isHouseReachable(game, house) == FALSE || isHouseTooNear(game, house, distance_limit) == TRUE); 
+    } while (isHouseReachable(game) == FALSE || isHouseTooNear(game, distance_limit) == TRUE); 
 
-    game->map->tiles[house.y][house.x] = 'H';
-    game->map->colors[house.y][house.x] = 3;
+    game->map->tiles[game->house->position.y][game->house->position.x] = 'H';
+    game->map->colors[game->house->position.y][game->house->position.x] = 3;
 }
 
-void generateRandHousePosition (Map * map, Position * house)
+ void generateHouse()
+{
+    return;
+}
+
+void generateRandHousePosition (Game * game)
 {
     do
     {
-        house->y = (rand() % (map->dimensions.height - 2)) + 1;
-        house->x = (rand() % (map->dimensions.width - 2)) + 1;
-    } while (map->tiles[house->y][house->x] == '#' || map->tiles[house->y][house->x] == '.');
+        game->house->position.y = (rand() % (game->map->dimensions.height - 2)) + 1;
+        game->house->position.x = (rand() % (game->map->dimensions.width - 2)) + 1;
+    } while (game->map->tiles[game->house->position.y][game->house->position.x] == '#' || game->map->tiles[game->house->position.y][game->house->position.x] == '.');
 }
 
-int isHouseTooNear(Game * game, Position house, int distance_limit)
+int isHouseTooNear(Game * game, int distance_limit)
 {   
-    double dx = house.x - game->player->position.x;
-    double dy = house.y - game->player->position.y;
+    double dx = game->house->position.x - game->player->position.x;
+    double dy = game->house->position.y - game->player->position.y;
     double housePlayerDistance = sqrt(dx * dx + dy * dy);
 
     if (housePlayerDistance < distance_limit)

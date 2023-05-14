@@ -5,7 +5,6 @@ void mapProceduralGeneration(Map * map)
 	mapNoiseGeneration(map, 60);
     mapApplyCellularAutomaton(map, 10);
     mapFillWalls(map);
-
     mapGrassGeneration(map);
 
 }

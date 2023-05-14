@@ -32,6 +32,11 @@ typedef struct Dimensions
 	int width;
 } Dimensions;
 
+typedef struct House
+{	
+	Position position;
+	Dimensions dimensions;
+} House;
 
 typedef struct Map
 {
@@ -50,6 +55,7 @@ typedef struct Game
 {
 	Map * map;
 	PlayerStruct * player;
+	House * house;
 } Game;
 
 
@@ -75,19 +81,19 @@ char ** copyMap(Map * map);
 void placePlayerAndStructures(Game * game);
 
 //house functnions
-void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, int * maxTrials);
-void generateRandHousePosition (Map * map, Position * house);
-int isHouseTooNear(Game * game, Position house, int distance_limit);
+void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, int * max_trials);
+void generateRandHousePosition (Game * game);
+int isHouseTooNear(Game * game, int distance_limit);
 
 //procedural functions
 void mapProceduralGeneration(Map * map);
 void mapNoiseGeneration(Map * map, int density);
-void mapApplyCellularAutomaton();
+void mapApplyCellularAutomaton(Map * map, int count);
 void mapFillWalls(Map * map);
 void mapGrassGeneration(Map * map);
 
 //pathfinding functions
-int isHouseReachable(Game * game, Position house);
+int isHouseReachable(Game * game);
 
 //window functions
 WINDOW * CreateMainWindow();

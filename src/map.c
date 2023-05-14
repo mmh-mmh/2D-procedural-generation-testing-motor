@@ -63,13 +63,15 @@ char ** copyMap(Map * map)
 
 void placePlayerAndStructures(Game * game)
 {
-    int trials, maxTrials = 1000;
-	int houseMinDistance = HOUSE_MINIMAL_DISTANCE;
+	game->house = malloc(sizeof(House));
+
+    int trials, max_trials = 1000;
+	int house_minimal_distance = HOUSE_MINIMAL_DISTANCE;
 
 	do
 	{
 	trials = 0;
     setRandomSpawn(game);
-    placeHouseAtPlayerDistance(game, houseMinDistance, &trials, &maxTrials);
-	} while (trials >= maxTrials);
+    placeHouseAtPlayerDistance(game, house_minimal_distance, &trials, &max_trials);
+	} while (trials >= max_trials);
 }

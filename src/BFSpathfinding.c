@@ -1,6 +1,6 @@
 #include "valley.h"
 
-int isHouseReachable(Game * game, Position house)
+int isHouseReachable(Game * game)
 {
     // Create an Array containing 'visited' tiles
     unsigned int ** visited_tiles = malloc(sizeof(unsigned int*) * game->map->dimensions.height);
@@ -39,7 +39,7 @@ int isHouseReachable(Game * game, Position house)
         queue_start++; // Increment the starting queue index
 
 
-        if (current.y == house.y && current.x == house.x)
+        if (current.y == game->house->position.y && current.x == game->house->position.x)
         {
             // House is accessible from the player
             return 1;
