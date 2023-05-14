@@ -8,13 +8,16 @@
 #include <math.h>
 #include <stdbool.h>
 
-#define MAP_HEIGHT 31
-#define MAP_WIDTH 61
+#define MAP_HEIGHT 101
+#define MAP_WIDTH 201
 
 #define MAIN_WINDOW_HEIGHT 21
 #define MAIN_WINDOW_WIDTH 101
 #define MAIN_WINDOW_POSITION_Y 1
 #define MAIN_WINDOW_POSITION_X 3
+
+#define HOUSE_MINIMAL_DISTANCE 100
+#define HOUSE_SIZE 11
 
 
 typedef struct Position

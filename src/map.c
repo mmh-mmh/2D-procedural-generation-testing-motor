@@ -64,7 +64,7 @@ char ** copyMap(Map * map)
 void placePlayerAndStructures(Game * game)
 {
     int trials, maxTrials = 1000;
-	int houseMinDistance = 20;
+	int houseMinDistance = HOUSE_MINIMAL_DISTANCE;
 
 	do
 	{
