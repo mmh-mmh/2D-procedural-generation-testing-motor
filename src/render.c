@@ -39,9 +39,9 @@ void drawMapInGameWindow(Game * game, WINDOW * gameWindow)
 			}
 			else
 			{	
-				wattron(gameWindow, COLOR_PAIR(0));
+				wattron(gameWindow, COLOR_PAIR(2));
 				mvwprintw(gameWindow, i, j, ".");
-				wattroff(gameWindow, COLOR_PAIR(0));
+				wattroff(gameWindow, COLOR_PAIR(2));
 			}
 		}
 	}
