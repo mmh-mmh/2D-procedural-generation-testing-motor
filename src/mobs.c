@@ -1,4 +1,4 @@
-#include "valley.h"
+	#include "valley.h"
 
 MobStruct * genMonster( int health, int attack, char skin)
 {
@@ -13,12 +13,12 @@ MobStruct * genMonster( int health, int attack, char skin)
 	monster->health=health;
 	monster->attack=attack;
 	monster->skin=skin;
-    monster->coordinate.x=1;
-    monster->coordinate.y=1;
+    monster->coordinate.x=50;
+    monster->coordinate.y=50;
 	return monster;
 }
 
-MobStruct * Mobselect(int mobtype)
+MobStruct * MobSetUp(int mobtype)
 {
 	if(mobtype<0 &&mobtype>2);
         exit(0);
@@ -30,4 +30,15 @@ MobStruct * Mobselect(int mobtype)
 		return genMonster(5,2,'V');
 	}
 	return NULL;
+}
+
+void AddMob(Map *map)
+{
+    if(map==NULL)
+        exit(0);
+
+    MobStruct *mob=MobSetUp(0);
+    if(mob!= NULL)
+		map->tiles[mob->coordinate.y][mob->coordinate.x]=mob->skin;
+
 }

@@ -15,6 +15,7 @@
 #define MAIN_WINDOW_POSITION_Y 1
 #define MAIN_WINDOW_POSITION_X 3
 
+
 typedef struct Position
 {
 	int y;
@@ -31,6 +32,7 @@ typedef struct Map
 {
     Dimensions dimensions;
     char ** tiles;
+	int ** colors;
 } Map;
 
 typedef struct PlayerStruct
@@ -38,13 +40,14 @@ typedef struct PlayerStruct
 	Position position;
 	char skin;
 } PlayerStruct;
-typedef MobStruct
+
+typedef struct MobStruct
 {
     Position coordinate;
     int health;
-    int damage;
+    int attack;
     char skin;
-}MobStruct;
+} MobStruct;
 
 typedef struct Game
 {
@@ -53,7 +56,7 @@ typedef struct Game
 } Game;
 
 
-//game functions
+//game functions 
 Game * gameSetup();
 void gameLoop(WINDOW * main_window);
 
@@ -63,16 +66,21 @@ void mainLoops();
 
 //player functions
 PlayerStruct * playerSetup();
+void SetRandomSpawn(Game * game);
 Position handleInput(int input);
 void checkPosition(Position position_offset, Game * game);
 void playerMove(Position position_offset, Game * game);
 
+//mob function
 //mob functions
 MobStruct * genMonster( int health, int attack, char skin);
-MobStruct * Mobselect(int mobtype);
+MobStruct * MobSetUp(int mobtype);
+void AddMob(Map *map);
+
+
 //map functions
 Map * createMap();
-char ** mapSetup(Map * map);
+void mapSetup(Map * map);
 char ** copyMap(Map * map);
 
 //procedural functions
@@ -80,6 +88,7 @@ void mapProceduralGeneration(Map * map);
 void mapNoiseGeneration(Map * map, int density);
 void mapApplyCellularAutomaton();
 void mapFillWalls(Map * map);
+void mapGrassGeneration(Map * map);
 
 //window functions
 WINDOW * CreateMainWindow();

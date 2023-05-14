@@ -10,10 +10,10 @@ void drawMapInGameWindow(Game * game, WINDOW * gameWindow)
 {
     Dimensions game_window;
 
-    game_window.height = MAIN_WINDOW_HEIGHT;
-    game_window.width = MAIN_WINDOW_WIDTH;
+    //game_window.height = MAIN_WINDOW_HEIGHT;
+    //game_window.width = MAIN_WINDOW_WIDTH;
 
-    //getmaxyx(gameWindow, game_window.height, game_window.width);
+    getmaxyx(gameWindow, game_window.height, game_window.width);
 
 
 	Position mapStartPos;
@@ -21,6 +21,8 @@ void drawMapInGameWindow(Game * game, WINDOW * gameWindow)
 	mapStartPos.x = game->player->position.x - (game_window.width / 2);
 	
 	Position mapPos;
+
+	int random_color;
 
 	for (int i = 1; i <= game_window.height - 2; i++)
 	{
@@ -30,12 +32,16 @@ void drawMapInGameWindow(Game * game, WINDOW * gameWindow)
 			mapPos.x = mapStartPos.x + j;
 			
 			if (mapPos.y >= 0 && mapPos.y < game->map->dimensions.height && mapPos.x >= 0 && mapPos.x < game->map->dimensions.width)
-			{	
-				mvwprintw(gameWindow, i, j, "%c", game->map->tiles[mapPos.y][mapPos.x]);
+			{
+				wattron(gameWindow, COLOR_PAIR(game->map->colors[mapPos.y][mapPos.x]));
+                mvwprintw(gameWindow, i, j, "%c", game->map->tiles[mapPos.y][mapPos.x]);
+                wattroff(gameWindow, COLOR_PAIR(game->map->colors[mapPos.y][mapPos.x]));
 			}
 			else
-			{
-				mvwprintw(gameWindow, i, j, " ");
+			{	
+				wattron(gameWindow, COLOR_PAIR(2));
+				mvwprintw(gameWindow, i, j, ".");
+				wattroff(gameWindow, COLOR_PAIR(2));
 			}
 		}
 	}
