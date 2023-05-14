@@ -13,9 +13,6 @@ Map * createMap()
 	return map;
 }
 
-
-
-
 void mapSetup(Map * map)
 {	
 	char ** tiles;
@@ -61,4 +58,18 @@ char ** copyMap(Map * map)
 		}
 	}
 	return temp_tiles;
+}
+
+
+void placePlayerAndStructures(Game * game)
+{
+    int trials, maxTrials = 1000;
+	int houseMinDistance = 20;
+
+	do
+	{
+	trials = 0;
+    setRandomSpawn(game);
+    placeHouseAtPlayerDistance(game, houseMinDistance, &trials, &maxTrials);
+	} while (trials >= maxTrials);
 }

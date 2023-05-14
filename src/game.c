@@ -4,13 +4,9 @@ Game * gameSetup()
 {
     Game * new_game = malloc(sizeof(Game));
     new_game->player = playerSetup();
-
     new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH);
+    placePlayerAndStructures(new_game);
     
-    setRandomSpawn(new_game);
-
-    placeInterestPoints(new_game);
-
     return new_game;
 }
 
@@ -33,9 +29,4 @@ void gameLoop(WINDOW * main_window)
 
         input = getch();
     }
-}
-
-void placeInterestPoints(Game * game)
-{
-	placeHouseAtPlayerDistance(game, 20);
 }
