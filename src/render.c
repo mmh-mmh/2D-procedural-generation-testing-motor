@@ -10,10 +10,10 @@ void drawMapInGameWindow(Game * game, WINDOW * gameWindow)
 {
     Dimensions game_window;
 
-    game_window.height = MAIN_WINDOW_HEIGHT;
-    game_window.width = MAIN_WINDOW_WIDTH;
+    //game_window.height = MAIN_WINDOW_HEIGHT;
+    //game_window.width = MAIN_WINDOW_WIDTH;
 
-    //getmaxyx(gameWindow, game_window.height, game_window.width);
+    getmaxyx(gameWindow, game_window.height, game_window.width);
 
 
 	Position mapStartPos;
