@@ -65,7 +65,6 @@ void gameLoop(WINDOW * main_window);
 
 //main functions
 void screenSetup();
-void mainLoops();
 
 //player functions
 PlayerStruct * playerSetup();

@@ -4,7 +4,11 @@
 int main()
 {
 	screenSetup();
-	mainLoops();
+
+	WINDOW * main_window = CreateMainWindow();
+
+	//menuLoop();
+	gameLoop(main_window);
 
 	endwin();
 
@@ -33,12 +37,4 @@ void screenSetup()
 
 
 	srand(time(NULL));
-}
-
-void mainLoops()
-{
-	WINDOW * main_window = CreateMainWindow();
-
-	//menuLoop();
-	gameLoop(main_window);
 }
