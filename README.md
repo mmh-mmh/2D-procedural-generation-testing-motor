@@ -1,5 +1,8 @@
 # Valley
-Projet d'info préing 1
+UNFINISHED
+
+Informatic Project Préing 1 Cy-Tech
+Groupe : Felipe, Malik, Alrick
 
 'make' to make
 'make run' to run
