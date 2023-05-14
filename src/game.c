@@ -6,6 +6,8 @@ Game * gameSetup()
     new_game->player = playerSetup();
     new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH);
 
+    SetRandomSpawn(new_game);
+
     return new_game;
 }
 

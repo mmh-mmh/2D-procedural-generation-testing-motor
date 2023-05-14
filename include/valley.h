@@ -58,6 +58,7 @@ void mainLoops();
 
 //player functions
 PlayerStruct * playerSetup();
+void SetRandomSpawn(Game * game);
 Position handleInput(int input);
 void checkPosition(Position position_offset, Game * game);
 void playerMove(Position position_offset, Game * game);

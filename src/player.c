@@ -10,6 +10,22 @@ PlayerStruct * playerSetup()
 	return player;
 }
 
+void SetRandomSpawn(Game * game)
+{
+	int height = game->map->dimensions.height;
+	int width = game->map->dimensions.width;
+	char **tiles = game->map->tiles;
+
+	int y, x;
+	do {
+		y = rand() % (height - 2) + 1;
+		x = rand() % (width - 2) + 1;
+	} while (tiles[y][x] == '#' || tiles[y][x] == '.');
+
+	game->player->position.y = y;
+	game->player->position.x = x;
+}
+
 
 Position handleInput(int input)
 {
@@ -65,7 +81,7 @@ void checkPosition(Position position_offset, Game * game)
      		case 'X':
     	    case 'G':
     	    case 'T':
-     	       //combat(user, getMonsterAt(newPosition, level->monsters), 1);
+     	       //combat(...);
 				break;
 		}
 	}
@@ -83,15 +99,15 @@ void playerMove(Position position_offset, Game * game)
 
 	switch (game->map->tiles[new_position.y][new_position.x])
 	{
-		default:
-			game->player->position = new_position;
-			break;
-		//case '#':
+		case '#':
+		case '.':
 		case '&':
 			break;
 		case 'O':
 			//handleMovable();
 		break;
+		default:
+			game->player->position = new_position;
+			break;
 	}
-
 }
