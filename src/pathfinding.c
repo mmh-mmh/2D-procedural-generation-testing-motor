@@ -1,27 +1,7 @@
 #include "valley.h"
 
 
-void placeHouseAtPlayerDistance (Game * game, int distance_limit)
-{   
-    //Init house position
-    Position house;
 
-    // Generate random valid position for the house while till she is reachable not too close the player
-    do 
-    {
-        generateRandHousePosition(game->map, &house);
-
-    } while (isHouseReachable(game, house) == 0 || isHouseTooNear(game, house, distance_limit) == 1); 
-}
-
-void generateRandHousePosition (Map * map, Position * house)
-{
-    do
-    {
-        house->y = rand() % (map->dimensions.height - 2) + 1;
-        house->x = rand() % (map->dimensions.height - 2) + 1;
-    } while (map->tiles[house->y][house->x] == '#' || map->tiles[house->y][house->x] == '.');
-}
 
 int isHouseTooNear(Game * game, Position house, int distance_limit)
 {   
@@ -92,8 +72,10 @@ int isHouseReachable(Game * game, Position house)
             neighbor.x = current.x + directions[i].x;
 
             // Check if the neighbor cell is valid and has not been visited yet
-            if (visited_tiles[neighbor.y][neighbor.x] == '0' &&
-            game->map->tiles[neighbor.y][neighbor.x] != '#')
+            if (neighbor.y >= 0 && neighbor.y < game->map->dimensions.height &&
+                neighbor.x >= 0 && neighbor.x < game->map->dimensions.width &&
+                visited_tiles[neighbor.y][neighbor.x] == '0' &&
+                game->map->tiles[neighbor.y][neighbor.x] != '#')
             {
                 // Add the neighbor position to the queue of positions and mark it as visited
                 queue[queue_end] = neighbor;
@@ -104,6 +86,13 @@ int isHouseReachable(Game * game, Position house)
             }
         }
     }
+
+    for(int i = 0; i < game->map->dimensions.height; i++)
+    {
+        free(visited_tiles[i]);
+    }
+    free(visited_tiles);
+    free(queue);
 
     return 0;
 }

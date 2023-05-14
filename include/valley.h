@@ -6,9 +6,10 @@
 #include <time.h>
 #include <unistd.h>
 #include <math.h>
+#include <stdbool.h>
 
-#define MAP_HEIGHT 161
-#define MAP_WIDTH 321
+#define MAP_HEIGHT 21
+#define MAP_WIDTH 41
 
 #define MAIN_WINDOW_HEIGHT 31
 #define MAIN_WINDOW_WIDTH 101

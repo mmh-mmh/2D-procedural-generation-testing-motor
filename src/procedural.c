@@ -129,7 +129,6 @@ void mapApplyCellularAutomaton(Map * map, int count)
 void mapNoiseGeneration(Map * map, int density)
 {
 		
-	int proba = density;
 	int chance = 100;
 
 	for (int y = 1 ; y < map->dimensions.height - 1; y++)
@@ -138,7 +137,7 @@ void mapNoiseGeneration(Map * map, int density)
 		{
 			int randomNumber = (rand() % chance) + 1;
 
-			if (randomNumber < proba)
+			if (randomNumber < density)
 			{
 				map->tiles[y][x] = '#' ;
 			}
