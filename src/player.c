@@ -10,20 +10,16 @@ PlayerStruct * playerSetup()
 	return player;
 }
 
-void SetRandomSpawn(Game * game)
+void setRandomSpawn(Game * game)
 {
-	int height = game->map->dimensions.height;
-	int width = game->map->dimensions.width;
-	char **tiles = game->map->tiles;
-
-	int y, x;
+	Position random;
 	do {
-		y = rand() % (height - 2) + 1;
-		x = rand() % (width - 2) + 1;
-	} while (tiles[y][x] == '#' || tiles[y][x] == '.');
+		random.y = rand() % (game->map->dimensions.height - 2) + 1;
+		random.x = rand() % (game->map->dimensions.width - 2) + 1;
+	} while (game->map->tiles[random.y][random.x] == '#' || game->map->tiles[random.y][random.x] == '.');
 
-	game->player->position.y = y;
-	game->player->position.x = x;
+	game->player->position.y = random.y;
+	game->player->position.x = random.x;
 }
 
 

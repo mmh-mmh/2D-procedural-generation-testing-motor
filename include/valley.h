@@ -28,6 +28,7 @@ typedef struct Dimensions
 	int width;
 } Dimensions;
 
+
 typedef struct Map
 {
     Dimensions dimensions;
@@ -58,7 +59,7 @@ void mainLoops();
 
 //player functions
 PlayerStruct * playerSetup();
-void SetRandomSpawn(Game * game);
+void setRandomSpawn(Game * game);
 Position handleInput(int input);
 void checkPosition(Position position_offset, Game * game);
 void playerMove(Position position_offset, Game * game);
@@ -67,6 +68,7 @@ void playerMove(Position position_offset, Game * game);
 Map * createMap();
 void mapSetup(Map * map);
 char ** copyMap(Map * map);
+void placeInterestPoints(Game * game);
 
 //procedural functions
 void mapProceduralGeneration(Map * map);
@@ -74,6 +76,12 @@ void mapNoiseGeneration(Map * map, int density);
 void mapApplyCellularAutomaton();
 void mapFillWalls(Map * map);
 void mapGrassGeneration(Map * map);
+
+//pathfinding functions
+void placeHouseAtPlayerDistance(Game * game, int distance_limit);
+void generateRandHousePosition (Map * map, Position * house);
+int isHouseReachable(Game * game, Position house);
+int isHouseTooNear(Game * game, Position house, int distance_limit);
 
 //window functions
 WINDOW * CreateMainWindow();

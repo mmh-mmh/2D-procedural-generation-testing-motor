@@ -4,9 +4,11 @@ Game * gameSetup()
 {
     Game * new_game = malloc(sizeof(Game));
     new_game->player = playerSetup();
-    new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH);
 
-    SetRandomSpawn(new_game);
+    new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH);
+    placeInterestPoints(new_game);
+    
+    setRandomSpawn(new_game);
 
     return new_game;
 }

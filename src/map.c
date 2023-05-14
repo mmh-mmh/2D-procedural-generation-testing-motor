@@ -13,6 +13,12 @@ Map * createMap()
 	return map;
 }
 
+void placeInterestPoints(Game * game)
+{
+	placeHouseAtPlayerDistance(game, 20);
+}
+
+
 
 
 void mapSetup(Map * map)
