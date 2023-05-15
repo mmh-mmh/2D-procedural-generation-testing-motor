@@ -7,9 +7,10 @@ void render(Game * game, Windows * windows)
 	Dimensions main_window_posistion;
 
 	// Gesture of ncurses's windows display refresh
-	getmaxyx(windows->main_window, main_window_posistion.height, main_window_posistion.width); // Get Dimensions of a window
-	wresize(windows->main_window, main_window_posistion.height, main_window_posistion.width); // Resolves certain display bugs
+	//getmaxyx(windows->main_window, main_window_posistion.height, main_window_posistion.width); // Get Dimensions of a window
+	wresize(windows->main_window, MAIN_WINDOW_HEIGHT, MAIN_WINDOW_WIDTH); // Resolves certain display bugs
 	box(windows->main_window, 0, 0); // 'Box' the window : had white outlines
+	refresh();
 	wrefresh(windows->main_window); // refresh the main window
 
 }
