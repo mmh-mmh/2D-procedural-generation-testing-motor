@@ -16,7 +16,12 @@
 #define MAIN_WINDOW_POSITION_Y 1
 #define MAIN_WINDOW_POSITION_X 3
 
-#define HOUSE_MINIMAL_DISTANCE 80
+#define NOISE_DENSITY 60
+#define CELLULAR_AUTOMATON_ITERATIONS 12
+
+#define HOUSE_SIZE 6
+
+#define HOUSE_MINIMAL_DISTANCE 20
 
 
 typedef struct Position
@@ -114,5 +119,8 @@ Windows * windowsSetup();
 //render functions
 void render(Game * game, Windows * windows);
 void drawMapInGameWindow(Game * game, Windows * windows);
+
+//error functions
+void CheckConstants();
 
 #endif

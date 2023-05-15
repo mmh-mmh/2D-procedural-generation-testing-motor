@@ -2,8 +2,8 @@
 
 void mapProceduralGeneration(Map * map)
 {
-	mapNoiseGeneration(map, 60); // Generate simple noise on the map with '#' and  ' '
-    mapApplyCellularAutomaton(map, 12); // Apply Cellular Automaton a certain number of times
+	mapNoiseGeneration(map, NOISE_DENSITY); // Generate simple noise on the map with '#' and  ' '
+    mapApplyCellularAutomaton(map, CELLULAR_AUTOMATON_ITERATIONS); // Apply Cellular Automaton a certain number of times
     mapFillWalls(map); // If surrounded by 4 '#', turns into a '.' 
     mapGrassGeneration(map); // Generate randomly grass : ',', '"', '*'
 

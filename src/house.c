@@ -2,8 +2,8 @@
 
 void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, int * max_trials)
 {   
-    generateRandomHouseDimensionsBetweenTwoNumbers (game->house, 5, 7); // As it says
-
+    game->house->dimensions.height = HOUSE_SIZE;
+    game->house->dimensions.width = 2*HOUSE_SIZE;
 
     do // Generate a random valid position for the house while till she is reachable and not too close the player
     {

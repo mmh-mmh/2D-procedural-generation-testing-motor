@@ -3,6 +3,7 @@
 
 int main()
 {	
+	CheckConstants();
 	screenSetup(); // Setup of ncurses
 
 	Windows * windows = windowsSetup(); // Setup of all the windows used for display
