@@ -11,7 +11,7 @@ Game * gameSetup()
     return new_game;
 }
 
-void gameLoop(WINDOW * main_window)
+void gameLoop(Windows * windows)
 {
     Game * game = gameSetup();
 
@@ -26,7 +26,7 @@ void gameLoop(WINDOW * main_window)
         checkPosition(position_offset, game);
         //moveMonsters(game);
 
-        render(game, main_window);
+        render(game, windows);
 
         input = getch();
     }

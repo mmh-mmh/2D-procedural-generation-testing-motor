@@ -65,12 +65,17 @@ void placePlayerAndStructures(Game * game)
 {
 	game->house = malloc(sizeof(House));
 
-    int trials, max_trials = 1000;
 	int house_minimal_distance = HOUSE_MINIMAL_DISTANCE;
+
+	int trials, max_trials = 30000;
 
 	do
 	{
+	printw("1MapTried ");
 	trials = 0;
+
+	srand(time(NULL));
+
     setRandomSpawn(game);
     placeHouseAtPlayerDistance(game, house_minimal_distance, &trials, &max_trials);
 	} while (trials >= max_trials);

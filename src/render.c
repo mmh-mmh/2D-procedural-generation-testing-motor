@@ -1,19 +1,28 @@
 #include "valley.h"
 
-void render(Game * game, WINDOW * main_window)
+void render(Game * game, Windows * windows)
 {
-    drawMapInGameWindow(game, main_window);
+    drawMapInGameWindow(game, windows);
+
+	Dimensions main_window_posistion;
+
+	getmaxyx(windows->main_window, main_window_posistion.height, main_window_posistion.width);
+	wresize(windows->main_window, main_window_posistion.height, main_window_posistion.width);
+	box(windows->main_window, 0, 0);
+	wrefresh(windows->main_window);
+	refresh();
+
 }
 
 
-void drawMapInGameWindow(Game * game, WINDOW * gameWindow)
+void drawMapInGameWindow(Game * game, Windows * windows)
 {
     Dimensions game_window;
 
     //game_window.height = MAIN_WINDOW_HEIGHT;
     //game_window.width = MAIN_WINDOW_WIDTH;
 
-    getmaxyx(gameWindow, game_window.height, game_window.width);
+    getmaxyx(windows->game_window, game_window.height, game_window.width);
 
 
 	Position mapStartPos;
@@ -33,23 +42,23 @@ void drawMapInGameWindow(Game * game, WINDOW * gameWindow)
 			
 			if (mapPos.y >= 0 && mapPos.y < game->map->dimensions.height && mapPos.x >= 0 && mapPos.x < game->map->dimensions.width)
 			{
-				wattron(gameWindow, COLOR_PAIR(game->map->colors[mapPos.y][mapPos.x]));
-                mvwprintw(gameWindow, i, j, "%c", game->map->tiles[mapPos.y][mapPos.x]);
-                wattroff(gameWindow, COLOR_PAIR(game->map->colors[mapPos.y][mapPos.x]));
+				wattron(windows->game_window, COLOR_PAIR(game->map->colors[mapPos.y][mapPos.x]));
+                mvwprintw(windows->game_window, i, j, "%c", game->map->tiles[mapPos.y][mapPos.x]);
+                wattroff(windows->game_window, COLOR_PAIR(game->map->colors[mapPos.y][mapPos.x]));
 			}
 			else
 			{	
-				wattron(gameWindow, COLOR_PAIR(2));
-				mvwprintw(gameWindow, i, j, ".");
-				wattroff(gameWindow, COLOR_PAIR(2));
+				wattron(windows->game_window, COLOR_PAIR(2));
+				mvwprintw(windows->game_window, i, j, ".");
+				wattroff(windows->game_window, COLOR_PAIR(2));
 			}
 		}
 	}
 
-	mvwprintw(gameWindow, game_window.height/2, game_window.width/2, "%c", game->player->skin);
+	mvwprintw(windows->game_window, game_window.height/2, game_window.width/2, "%c", game->player->skin);
 
-	wresize(gameWindow, game_window.height, game_window.width);
-	box(gameWindow, 0, 0);
-	wrefresh(gameWindow);
+	wresize(windows->game_window, game_window.height, game_window.width);
+	box(windows->game_window, 0, 0);
+	wrefresh(windows->game_window);
 }
 

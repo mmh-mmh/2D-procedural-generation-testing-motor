@@ -5,10 +5,11 @@ int main()
 {
 	screenSetup();
 
-	WINDOW * main_window = CreateMainWindow();
+	Windows * windows = windowsSetup();
+	
 
 	//menuLoop();
-	gameLoop(main_window);
+	gameLoop(windows);
 
 	endwin();
 

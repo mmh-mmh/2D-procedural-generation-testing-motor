@@ -8,15 +8,15 @@
 #include <math.h>
 #include <stdbool.h>
 
-#define MAP_HEIGHT 51
-#define MAP_WIDTH 101
+#define MAP_HEIGHT 101
+#define MAP_WIDTH 201
 
 #define MAIN_WINDOW_HEIGHT 21
 #define MAIN_WINDOW_WIDTH 101
 #define MAIN_WINDOW_POSITION_Y 1
 #define MAIN_WINDOW_POSITION_X 3
 
-#define HOUSE_MINIMAL_DISTANCE 50
+#define HOUSE_MINIMAL_DISTANCE 80
 
 
 typedef struct Position
@@ -59,10 +59,18 @@ typedef struct Game
 	House * house;
 } Game;
 
+typedef struct Windows
+{
+	WINDOW * main_window;
+	WINDOW * game_window;
+	//WINDOW * text_window;
+	//WINDOW * inventory_window;
+} Windows;
+
 
 //game functions 
 Game * gameSetup();
-void gameLoop(WINDOW * main_window);
+void gameLoop(Windows * windows);
 
 //main functions
 void screenSetup();
@@ -87,7 +95,6 @@ void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, 
 bool isHouseTooNear(Game * game, int distance_limit);
 void generateHouse(Game * game);
 bool isHouseStuck(Game * game);
-bool isHouseUpLeftCornerReachable(Game * game);
 bool isHouseReachable(Game * game);
 
 
@@ -102,10 +109,10 @@ void mapGrassGeneration(Map * map);
 bool isHouseUpLeftCornerReachable(Game * game);
 
 //window functions
-WINDOW * CreateMainWindow();
+Windows * windowsSetup();
 
 //render functions
-void render(Game * game, WINDOW * main_window);
-void drawMapInGameWindow(Game * game, WINDOW * gameWindow);
+void render(Game * game, Windows * windows);
+void drawMapInGameWindow(Game * game, Windows * windows);
 
 #endif

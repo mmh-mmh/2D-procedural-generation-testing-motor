@@ -3,7 +3,7 @@
 void mapProceduralGeneration(Map * map)
 {
 	mapNoiseGeneration(map, 60);
-    mapApplyCellularAutomaton(map, 10);
+    mapApplyCellularAutomaton(map, 12);
     mapFillWalls(map);
     mapGrassGeneration(map);
 
