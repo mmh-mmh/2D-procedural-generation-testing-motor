@@ -62,7 +62,7 @@ bool isHouseStuck(Game * game)
             if(y == pos.y || y == pos.y + dim.height - 1 || x == pos.x || x == pos.x + dim.width - 1)
             {
                 game->map->tiles[y][x] = '#';
-                game->map->colors[y][x] = 2;
+                game->map->colors[y][x] = 8;
             }
             else
             {

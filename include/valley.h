@@ -8,8 +8,8 @@
 #include <math.h>
 #include <stdbool.h>
 
-#define MAP_HEIGHT 101
-#define MAP_WIDTH 201
+#define MAP_HEIGHT 80
+#define MAP_WIDTH 160
 
 #define MAIN_WINDOW_HEIGHT 21
 #define MAIN_WINDOW_WIDTH 101

@@ -67,7 +67,7 @@ void placePlayerAndStructures(Game * game)
 
 	int house_minimal_distance = HOUSE_MINIMAL_DISTANCE;
 
-	int trials, max_trials = 30000;
+	int trials, max_trials = 20000;
 
 	do
 	{
