@@ -77,5 +77,6 @@ bool isHouseUpLeftCornerReachable(Game * game)
     free(visited_tiles);
     free(queue);
 
+    // Queue is empty, meaning house is not reachable
     return FALSE;
 }
