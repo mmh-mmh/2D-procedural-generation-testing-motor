@@ -67,7 +67,7 @@ void checkPosition(Position position_offset, Game * game)
      		case 'X': // If moves towards an enemy
     	    case 'G':
     	    case 'T':
-     	       //combat(...);
+     	    	//combat(...);
 				break;
 
     	    default: // If else
@@ -91,7 +91,6 @@ void playerMove(Position position_offset, Game * game)
 	{
 		case '#': // If not crossable
 		case '.':
-		case '&':
 			break;
 		case 'O': // If movable
 			//handleMovable();

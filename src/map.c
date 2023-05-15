@@ -78,9 +78,8 @@ void placePlayerAndStructures(Game * game)
 	printw("1MapTried "); // Temporary indicator of how many maps are being generated before finding one valid
 	trials = 0;
 
-	srand(time(NULL));
-
-    setRandomSpawn(game); // Set a random valid spawn point for the player
+	//srand(time(NULL));
+	setRandomSpawn(game); // Set a random valid spawn point for the player
     placeHouseAtPlayerDistance(game, house_minimal_distance, &trials, &max_trials); // Try to place house until conditions are valid or the max trials have been reached
 	} while (trials >= max_trials); // Loop if the map is invalid, creating another map
 }

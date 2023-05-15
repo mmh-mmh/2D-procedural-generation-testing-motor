@@ -3,7 +3,7 @@
 
 int main()
 {	
-	CheckConstants();
+	CheckConstants(); // Check if constant values are right
 	screenSetup(); // Setup of ncurses
 
 	Windows * windows = windowsSetup(); // Setup of all the windows used for display
@@ -36,8 +36,6 @@ void screenSetup()
 	init_pair(6, COLOR_MAGENTA, -1);
 	init_pair(7, COLOR_CYAN, -1);
 	init_pair(8, -1, COLOR_WHITE);
-
-	
 
 
 	srand(time(NULL));

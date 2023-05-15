@@ -40,7 +40,6 @@ typedef struct House
 {	
 	Position position;
 	Dimensions dimensions;
-
 	Position door_position;
 } House;
 
