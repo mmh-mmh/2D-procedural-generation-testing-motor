@@ -5,6 +5,7 @@ Game * gameSetup()
     Game * new_game = malloc(sizeof(Game));
     new_game->player = playerSetup();
     new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH);
+    
     placePlayerAndStructures(new_game);
     
     return new_game;

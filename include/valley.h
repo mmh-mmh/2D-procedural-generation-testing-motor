@@ -8,16 +8,15 @@
 #include <math.h>
 #include <stdbool.h>
 
-#define MAP_HEIGHT 101
-#define MAP_WIDTH 201
+#define MAP_HEIGHT 51
+#define MAP_WIDTH 101
 
 #define MAIN_WINDOW_HEIGHT 21
 #define MAIN_WINDOW_WIDTH 101
 #define MAIN_WINDOW_POSITION_Y 1
 #define MAIN_WINDOW_POSITION_X 3
 
-#define HOUSE_MINIMAL_DISTANCE 100
-#define HOUSE_SIZE 11
+#define HOUSE_MINIMAL_DISTANCE 50
 
 
 typedef struct Position
@@ -36,6 +35,8 @@ typedef struct House
 {	
 	Position position;
 	Dimensions dimensions;
+
+	Position door_position;
 } House;
 
 typedef struct Map
@@ -80,9 +81,15 @@ char ** copyMap(Map * map);
 void placePlayerAndStructures(Game * game);
 
 //house functnions
+void generateRandomHouseDimensionsBetweenTwoNumbers (House * house, int num1, int num2);
+void generateRandomHousePosition (Game * game);
 void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, int * max_trials);
-void generateRandHousePosition (Game * game);
-int isHouseTooNear(Game * game, int distance_limit);
+bool isHouseTooNear(Game * game, int distance_limit);
+void generateHouse(Game * game);
+bool isHouseStuck(Game * game);
+bool isHouseUpLeftCornerReachable(Game * game);
+bool isHouseReachable(Game * game);
+
 
 //procedural functions
 void mapProceduralGeneration(Map * map);
@@ -92,7 +99,7 @@ void mapFillWalls(Map * map);
 void mapGrassGeneration(Map * map);
 
 //pathfinding functions
-int isHouseReachable(Game * game);
+bool isHouseUpLeftCornerReachable(Game * game);
 
 //window functions
 WINDOW * CreateMainWindow();

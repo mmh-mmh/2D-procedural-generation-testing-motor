@@ -1,6 +1,6 @@
 #include "valley.h"
 
-int isHouseReachable(Game * game)
+bool isHouseUpLeftCornerReachable(Game * game)
 {
     // Create an Array containing 'visited' tiles
     unsigned int ** visited_tiles = malloc(sizeof(unsigned int*) * game->map->dimensions.height);
@@ -42,7 +42,7 @@ int isHouseReachable(Game * game)
         if (current.y == game->house->position.y && current.x == game->house->position.x)
         {
             // House is accessible from the player
-            return 1;
+            return TRUE;
         }
 
         for(int i = 0; i < 4; i++)
@@ -75,5 +75,5 @@ int isHouseReachable(Game * game)
     free(visited_tiles);
     free(queue);
 
-    return 0;
+    return FALSE;
 }
