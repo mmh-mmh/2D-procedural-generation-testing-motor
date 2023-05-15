@@ -21,7 +21,7 @@
 
 #define HOUSE_SIZE 6
 
-#define HOUSE_MINIMAL_DISTANCE 20
+#define HOUSE_MINIMAL_DISTANCE 30
 
 
 typedef struct Position

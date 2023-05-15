@@ -9,7 +9,7 @@ Windows * windowsSetup()
 	int main_x = MAIN_WINDOW_POSITION_X;
 
 	windows->main_window = newwin(main_height, main_width, main_y, main_x);
-	windows->game_window = derwin(windows->main_window, (0.8)*main_height, (0.8)*main_width, 1, 1);
+	windows->game_window = derwin(windows->main_window, (0.95)*main_height, (0.99)*main_width, 1, 1);
 
 	if (windows->game_window == NULL) {
     fprintf(stderr, "Failed to create game window\n");
