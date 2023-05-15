@@ -6,6 +6,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <math.h>
+#include <string.h>
 
 #define MAP_HEIGHT 161
 #define MAP_WIDTH 321
@@ -56,7 +57,7 @@ typedef struct Game
 } Game;
 
 
-//game functions 
+//game functions
 Game * gameSetup();
 void gameLoop(WINDOW * main_window);
 
@@ -73,7 +74,7 @@ void playerMove(Position position_offset, Game * game);
 
 //mob function
 //mob functions
-MobStruct * genMonster( int health, int attack, char skin);
+MobStruct * genMonster( int health, int attack, char skin,int height,int width);
 MobStruct * MobSetUp(int mobtype);
 void AddMob(Map *map);
 

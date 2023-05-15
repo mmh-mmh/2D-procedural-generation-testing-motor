@@ -14,11 +14,8 @@ Game * gameSetup()
 void gameLoop(WINDOW * main_window)
 {
     Game * game = gameSetup();
-
     Position position_offset;
     int input = 0;
-    AddMob(game->map);
-
     while (input != 'a')
     {
         position_offset = handleInput(input);
