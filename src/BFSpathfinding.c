@@ -1,6 +1,6 @@
 #include "valley.h"
 
-// Classic BFS Pathfinding algorithm use to check if the player is able to reache the House
+// Classic BFS Pathfinding algorithm use to check if the player is able to reach the house
 
 bool isHouseUpLeftCornerReachable(Game * game)
 {

@@ -12,10 +12,9 @@ Windows * windowsSetup()
 	windows->game_window = derwin(windows->main_window, (0.8)*main_height, (0.8)*main_width, 1, 1);
 
 	if (windows->game_window == NULL) {
-    // Handle error, for example print an error message and exit
     fprintf(stderr, "Failed to create game window\n");
     exit(1);
-}
+	}
 
 	return windows;
 }

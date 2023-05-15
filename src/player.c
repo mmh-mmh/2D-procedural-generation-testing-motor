@@ -3,9 +3,7 @@
 PlayerStruct * playerSetup()
 {
 	PlayerStruct * player = malloc(sizeof(PlayerStruct));
-	player->position.y = MAP_HEIGHT/2;
-	player->position.x = MAP_WIDTH/2;
-	player->skin = '@';
+	player->skin = '@'; // Set player char
 	
 	return player;
 }
@@ -23,16 +21,11 @@ void setRandomSpawn(Game * game)
 }
 
 
-Position handleInput(int input)
+Position handleInput(int input) 
 {
 	Position position_offset;
-
-	position_offset.y = 0;
-	position_offset.x = 0;
-	
-	switch(input)
+	switch(input) 
 	{
-		
 		case 'z' :
 		case 'Z' :
 			position_offset.y = - 1;
@@ -68,17 +61,18 @@ void checkPosition(Position position_offset, Game * game)
     new.x = game->player->position.x + position_offset.x;
 
 	if (new.y >= 0 && new.y < game->map->dimensions.height && new.x >= 0 && new.x < game->map->dimensions.width)
-    	{
+    {
     	switch (game->map->tiles[game->player->position.y + position_offset.y][game->player->position.x + position_offset.x])
     	{
-    	    default:
-				playerMove(position_offset, game);
-    	        break;
-     		case 'X':
+     		case 'X': // If moves towards an enemy
     	    case 'G':
     	    case 'T':
      	       //combat(...);
 				break;
+
+    	    default: // If else
+				playerMove(position_offset, game); // Manage how to move the player
+    	        break;
 		}
 	}
 }
@@ -95,14 +89,14 @@ void playerMove(Position position_offset, Game * game)
 
 	switch (game->map->tiles[new_position.y][new_position.x])
 	{
-		case '#':
+		case '#': // If not crossable
 		case '.':
 		case '&':
 			break;
-		case 'O':
+		case 'O': // If movable
 			//handleMovable();
 		break;
-		default:
+		default: // If crossable
 			game->player->position = new_position;
 			break;
 	}

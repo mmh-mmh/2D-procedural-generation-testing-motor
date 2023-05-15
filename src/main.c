@@ -2,10 +2,10 @@
 
 
 int main()
-{
-	screenSetup();
+{	
+	screenSetup(); // Setup of ncurses
 
-	Windows * windows = windowsSetup();
+	Windows * windows = windowsSetup(); // Setup of all the windows used for display
 	
 
 	//menuLoop();
@@ -19,11 +19,11 @@ int main()
 
 void screenSetup()
 {
-	initscr();
-	noecho();
-	keypad(stdscr, TRUE);
-	curs_set(0);
-	refresh();
+	initscr(); // Initialize the ncurses library
+	noecho(); // Disable input writing on terminal
+	keypad(stdscr, TRUE); // Enable special key interpretation
+	curs_set(0); // Remove cursor
+	refresh(); // Refresh the screen to update the changes
 
 	start_color();
 	use_default_colors();
