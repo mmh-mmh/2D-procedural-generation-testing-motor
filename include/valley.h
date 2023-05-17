@@ -72,12 +72,11 @@ Position handleInput(int input);
 void checkPosition(Position position_offset, Game * game);
 void playerMove(Position position_offset, Game * game);
 
-//mob function
 //mob functions
-MobStruct * genMonster( int health, int attack, char skin,int height,int width);
-MobStruct * MobSetUp(int mobtype);
-void AddMob(Map *map);
-
+MobStruct * genMonster( char *map[MAP_WIDTH],int health, int attack, char skin);
+MobStruct * MobSetUp(int mobtype, char ** map);
+void AddMob(char *map[MAP_WIDTH]);
+Position genPos(char *map[MAP_WIDTH], char skin, int height,int width);
 
 //map functions
 Map * createMap();

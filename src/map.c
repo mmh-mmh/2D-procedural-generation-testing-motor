@@ -8,7 +8,6 @@ Map * createMap()
 	map->dimensions.width = MAP_WIDTH;
 	mapSetup(map);
 	mapProceduralGeneration(map);
-	AddMob(map);
 
 	return map;
 }
@@ -61,14 +60,4 @@ char ** copyMap(Map * map)
 	}
 	return temp_tiles;
 }
-void AddMob(Map *map)
-{
-    MobStruct *mob=malloc(sizeof(MobStruct));
-    if(mob== NULL)
-		exit(0);
-    mob=MobSetUp(0);
-    if(mob== NULL)
-		exit(0);
-	map->tiles[mob->coordinate.y][mob->coordinate.x]=mob->skin;
 
-}
