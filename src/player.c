@@ -8,7 +8,22 @@ PlayerStruct * playerSetup()
 	return player;
 }
 
-void setRandomSpawn(Game * game)
+void SetRandomSpawn(Game * game)
+{
+	int height = game->map->dimensions.height;
+	int width = game->map->dimensions.width;
+	char **tiles = game->map->tiles;
+
+	int y, x;
+	do {
+		y = rand() % (height - 2) + 1;
+		x = rand() % (width - 2) + 1;
+	} while (tiles[y][x] == '#' || tiles[y][x] == '.');
+
+	game->player->position.y = y;
+	game->player->position.x = x;
+
+  void setRandomSpawn(Game * game)
 {
 	Position random;
 	do {
@@ -89,12 +104,22 @@ void playerMove(Position position_offset, Game * game)
 
 	switch (game->map->tiles[new_position.y][new_position.x])
 	{
+		case '#':
+		case '.':
+		case '&':
 		case '#': // If not crossable
 		case '.':
+
 			break;
 		case 'O': // If movable
 			//handleMovable();
 		break;
+		default:
+			game->player->position = new_position;
+			break;
+	}
+}
+
 		default: // If crossable
 			game->player->position = new_position;
 			break;

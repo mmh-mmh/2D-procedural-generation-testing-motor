@@ -2,6 +2,42 @@
 
 void mapProceduralGeneration(Map * map)
 {
+  	mapNoiseGeneration(map, 60);
+    mapApplyCellularAutomaton(map, 10);
+    mapFillWalls(map);
+
+    mapGrassGeneration(map);
+
+}
+
+void mapGrassGeneration(Map * map)
+{
+    for(int y = 1; y < map->dimensions.height; y++) 
+    {
+        for (int x = 1; x < map->dimensions.width; x++)
+        {
+            int randomNumber = (rand() % 200) + 1;
+
+            if (map->tiles[y][x] == ' ')
+            {   
+                if (randomNumber >= 1 && randomNumber <= 10)
+                {
+                    map->tiles[y][x] = ',';
+                    map->colors[y][x] = 1;
+                }
+                else if (randomNumber > 10 && randomNumber <= 20)
+                {
+                    map->tiles[y][x] = '"';
+                    map->colors[y][x] = 1;
+                }
+                else if (randomNumber > 20 && randomNumber <= 21)
+                {
+                    map->tiles[y][x] = '*';
+                    map->colors[y][x] = (rand() % 5) + 3;
+                }
+            }
+        }   
+    }
 	mapNoiseGeneration(map, NOISE_DENSITY); // Generate simple noise on the map with '#' and  ' '
     mapApplyCellularAutomaton(map, CELLULAR_AUTOMATON_ITERATIONS); // Apply Cellular Automaton a certain number of times
     mapFillWalls(map); // If surrounded by 4 '#', turns into a '.' 
@@ -19,6 +55,9 @@ void mapFlowersGeneration(Map * map)
 
 void mapGroundGeneration(Map * map)
 {
+    for(int k = 0; k < map->dimensions.height; k++) 
+    {
+        for (int j = 0; j < map->dimensions.width; j++)
     for(int y = 1; y < map->dimensions.height; y++) 
     {
         for (int x = 1; x < map->dimensions.width; x++)
@@ -29,6 +68,14 @@ void mapGroundGeneration(Map * map)
             {   
                 if (random_number >= 1 && random_number <= 10) 
                 {
+                    if (y < 0 || y >= map->dimensions.height || y == k)
+                    {
+                        neighbor_wall_count ++;
+                    }
+                    else if (map->tiles[y][j] == '#' || map->tiles[y][j] == '.')
+                    {
+                        neighbor_wall_count ++;
+                    }
                     map->tiles[y][x] = ',';
                     map->colors[y][x] = 1;
                 }
@@ -67,12 +114,22 @@ void mapFillWalls(Map * map)
     
                 if(new_y < 0 || new_y >= map->dimensions.height || new_x < 0 || new_x >= map->dimensions.width)
                 {
+                    if (x < 0 || x >= map->dimensions.width || x == j)
+                    {
+                        neighbor_wall_count ++;
+                    }
+                    else if (map->tiles[k][x] == '#' || map->tiles[k][x] == '.')
+                    {
+                        neighbor_wall_count ++;
+                    }  
+                }
                     neighbor_wall_count++;
                 }
             else if(map->tiles[new_y][new_x] == '#' || map->tiles[new_y][new_x] == '.') // Count if there is a wall
                 {
                     neighbor_wall_count++;
                 }  
+
             }
 
             

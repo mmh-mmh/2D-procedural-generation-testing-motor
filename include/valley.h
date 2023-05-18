@@ -3,9 +3,11 @@
 
 #include <ncurses.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <time.h>
 #include <unistd.h>
 #include <math.h>
+#include <string.h>
 #include <stdbool.h>
 
 #define MAP_HEIGHT 80
@@ -15,7 +17,6 @@
 #define MAIN_WINDOW_WIDTH 101
 #define MAIN_WINDOW_POSITION_Y 1
 #define MAIN_WINDOW_POSITION_X 3
-
 #define NOISE_DENSITY 60
 #define CELLULAR_AUTOMATON_ITERATIONS 12
 
@@ -56,6 +57,14 @@ typedef struct PlayerStruct
 	char skin;
 } PlayerStruct;
 
+typedef struct MobStruct
+{
+    Position coordinate;
+    int health;
+    int attack;
+    char skin;
+} MobStruct;
+
 typedef struct Game
 {
 	Map * map;
@@ -72,7 +81,7 @@ typedef struct Windows
 } Windows;
 
 
-//game functions 
+//game functions
 Game * gameSetup();
 void gameLoop(Windows * windows);
 
@@ -81,10 +90,25 @@ void screenSetup();
 
 //player functions
 PlayerStruct * playerSetup();
+void SetRandomSpawn(Game * game);
 void setRandomSpawn(Game * game);
 Position handleInput(int input);
 void checkPosition(Position position_offset, Game * game);
 void playerMove(Position position_offset, Game * game);
+
+//mob functions
+
+MobStruct * genMonster( char *map[MAP_WIDTH],int health, int attack, char skin);
+MobStruct * MobSetUp(int mobtype, char ** map);
+void AddMob(char *map[MAP_WIDTH]);
+Position genPos(char *map[MAP_WIDTH], char skin, int height,int width);
+Position findEmptyZoneStart(char *map[MAP_WIDTH], int height, int width);
+bool IsPositionValid(Position pos, int gap, char skin, int height, int width, char *map[MAP_WIDTH]);
+
+
+
+
+
 
 //map functions
 Map * createMap();
@@ -107,6 +131,7 @@ void mapProceduralGeneration(Map * map);
 void mapNoiseGeneration(Map * map, int density);
 void mapApplyCellularAutomaton(Map * map, int count);
 void mapFillWalls(Map * map);
+void mapGrassGeneration(Map * map);
 void mapGroundGeneration(Map * map);
 void mapFlowersGeneration(Map * map);
 
