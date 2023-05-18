@@ -5,9 +5,10 @@ Game * gameSetup()
     Game * new_game = malloc(sizeof(Game));
     new_game->player = playerSetup();
     new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH);	
-    SetRandomSpawn(new_game);
-	AddMob(new_game->map->tiles);
-					
+	SetRandomSpawn(new_game);
+	genMonster(new_game->map->tiles, 20,5,'T');
+	genMonster(new_game->map->tiles, 8,2,'G');				
+	genMonster(new_game->map->tiles, 12,3,'X');				
     return new_game;
 }
 

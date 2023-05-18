@@ -1,6 +1,7 @@
 #include "valley.h"
 
-Position findEmptyZoneStart(char *map[MAP_WIDTH], int height, int width) {
+Position findEmptyZoneStart(char *map[MAP_WIDTH], int height, int width) 
+{
     Position start;
     start.x = -1;
     start.y = -1;
@@ -15,7 +16,7 @@ Position findEmptyZoneStart(char *map[MAP_WIDTH], int height, int width) {
         }
     }
 
-
+}
 
 MobStruct * genMonster( char * map[MAP_WIDTH], int health, int attack, char skin)
 {
@@ -23,7 +24,7 @@ MobStruct * genMonster( char * map[MAP_WIDTH], int health, int attack, char skin
         exit(0);
 	if(attack<0||attack>30)
         exit(0);
-	if(skin != 'G'&& skin != 'X')
+	if(skin != 'G'&& skin != 'X' && skin != 'T' )
 		exit(0);
 	MobStruct * monster=malloc(sizeof(MobStruct));
 	Position start;
@@ -35,6 +36,5 @@ MobStruct * genMonster( char * map[MAP_WIDTH], int health, int attack, char skin
 	monster->coordinate.x= start.x+rand()%(MAP_WIDTH-start.x);
 	monster->coordinate.y= -start.y+rand()%(MAP_HEIGHT-start.y);
 	map[monster->coordinate.y][monster->coordinate.x]=monster->skin;
-	mvprintw(0,0,"x: %d  y: %d", monster->coordinate.x,monster->coordinate.y);
 	return monster;
 }
