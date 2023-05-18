@@ -1,4 +1,4 @@
-CC = gcc
+	CC = gcc
 CFLAGS = -lmenu -lncurses -I$(IDIR)
 
 IDIR = ./include/

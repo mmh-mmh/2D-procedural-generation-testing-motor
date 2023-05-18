@@ -3,6 +3,7 @@
 
 #include <ncurses.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <time.h>
 #include <unistd.h>
 #include <math.h>
@@ -73,10 +74,18 @@ void checkPosition(Position position_offset, Game * game);
 void playerMove(Position position_offset, Game * game);
 
 //mob functions
+
 MobStruct * genMonster( char *map[MAP_WIDTH],int health, int attack, char skin);
 MobStruct * MobSetUp(int mobtype, char ** map);
 void AddMob(char *map[MAP_WIDTH]);
 Position genPos(char *map[MAP_WIDTH], char skin, int height,int width);
+Position findEmptyZoneStart(char *map[MAP_WIDTH], int height, int width);
+bool IsPositionValid(Position pos, int gap, char skin, int height, int width, char *map[MAP_WIDTH]);
+
+
+
+
+
 
 //map functions
 Map * createMap();

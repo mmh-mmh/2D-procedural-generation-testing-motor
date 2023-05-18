@@ -79,8 +79,7 @@ void checkPosition(Position position_offset, Game * game)
 				playerMove(position_offset, game);
     	        break;
      		case 'X':
-    	    case 'W':
-    	    case 'T':
+    	    case 'G':
      	       //combat(...);
 				break;
 		}
