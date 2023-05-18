@@ -12,11 +12,11 @@ void CheckConstants()
     exit(1);
 	}
     if (NOISE_DENSITY != 60) {
-    fprintf(stderr, "ERROR : NOISE_DENSITY constant isn't 60\n");
+    fprintf(stderr, "ERROR : NOISE_DENSITY constant should be 60\n");
     exit(1);
     }
     if (CELLULAR_AUTOMATON_ITERATIONS != 12) {
-    fprintf(stderr, "ERROR : CELLULAR_AUTOMATON_ITERATIONS constant isn't 12\n");
+    fprintf(stderr, "ERROR : CELLULAR_AUTOMATON_ITERATIONS constant should be 12\n");
     exit(1);
     }
     if (HOUSE_SIZE < 6) {

@@ -4,9 +4,13 @@ Game * gameSetup()
 {
     Game * new_game = malloc(sizeof(Game));
     new_game->player = playerSetup(); // malloc  and set player skin
+
+
     new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH); // Creating procdduraly walls and ground of the map
-    
     placePlayerAndStructures(new_game); //Placing the player and the house
+
+    
+    //placeMonsters();
     
     return new_game;
 }

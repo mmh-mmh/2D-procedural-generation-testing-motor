@@ -7,6 +7,7 @@ void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, 
 
     do // Generate a random valid position for the house while till she is reachable and not too close the player
     {
+    setRandomSpawn(game); // Set a random valid spawn point for the player
     generateRandomHousePosition(game);
     (*trials)++;
         if (*trials >= *max_trials) // If trials reaches maxTrials, return to create another map
@@ -15,7 +16,7 @@ void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, 
         }
 
     // Checking if the house is reachable by the player and if the house is too near using Euclidian distance
-    } while (isHouseReachable(game) == FALSE || isHouseTooNear(game, distance_limit) == TRUE); 
+    } while (isHouseTooNear(game, distance_limit) == TRUE || isHouseReachable(game) == FALSE); 
 
 
     generateHouse(game); // Creates house in the map array at the house position
