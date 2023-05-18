@@ -3,9 +3,7 @@
 PlayerStruct * playerSetup()
 {
 	PlayerStruct * player = malloc(sizeof(PlayerStruct));
-	player->position.y = MAP_HEIGHT/2;
-	player->position.x = MAP_WIDTH/2;
-	player->skin = '@';
+	player->skin = '@'; // Set player char
 	
 	return player;
 }
@@ -24,19 +22,25 @@ void SetRandomSpawn(Game * game)
 
 	game->player->position.y = y;
 	game->player->position.x = x;
+
+  void setRandomSpawn(Game * game)
+{
+	Position random;
+	do {
+		random.y = rand() % (game->map->dimensions.height - 2) + 1;
+		random.x = rand() % (game->map->dimensions.width - 2) + 1;
+	} while (game->map->tiles[random.y][random.x] == '#' || game->map->tiles[random.y][random.x] == '.');
+
+	game->player->position.y = random.y;
+	game->player->position.x = random.x;
 }
 
 
-Position handleInput(int input)
+Position handleInput(int input) 
 {
 	Position position_offset;
-
-	position_offset.y = 0;
-	position_offset.x = 0;
-	
-	switch(input)
+	switch(input) 
 	{
-		
 		case 'z' :
 		case 'Z' :
 			position_offset.y = - 1;
@@ -72,16 +76,18 @@ void checkPosition(Position position_offset, Game * game)
     new.x = game->player->position.x + position_offset.x;
 
 	if (new.y >= 0 && new.y < game->map->dimensions.height && new.x >= 0 && new.x < game->map->dimensions.width)
-    	{
+    {
     	switch (game->map->tiles[game->player->position.y + position_offset.y][game->player->position.x + position_offset.x])
     	{
-    	    default:
-				playerMove(position_offset, game);
-    	        break;
-     		case 'X':
+     		case 'X': // If moves towards an enemy
     	    case 'G':
-     	       //combat(...);
+    	    case 'T':
+     	    	//combat(...);
 				break;
+
+    	    default: // If else
+				playerMove(position_offset, game); // Manage how to move the player
+    	        break;
 		}
 	}
 }
@@ -101,11 +107,20 @@ void playerMove(Position position_offset, Game * game)
 		case '#':
 		case '.':
 		case '&':
+		case '#': // If not crossable
+		case '.':
+
 			break;
-		case 'O':
+		case 'O': // If movable
 			//handleMovable();
 		break;
 		default:
+			game->player->position = new_position;
+			break;
+	}
+}
+
+		default: // If crossable
 			game->player->position = new_position;
 			break;
 	}
