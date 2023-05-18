@@ -5,31 +5,39 @@ void mapProceduralGeneration(Map * map)
 	mapNoiseGeneration(map, NOISE_DENSITY); // Generate simple noise on the map with '#' and  ' '
     mapApplyCellularAutomaton(map, CELLULAR_AUTOMATON_ITERATIONS); // Apply Cellular Automaton a certain number of times
     mapFillWalls(map); // If surrounded by 4 '#', turns into a '.' 
-    mapGrassGeneration(map); // Generate randomly grass : ',', '"', '*'
+    mapGroundGeneration(map); // Generate randomly grass : ',', '"', '*'
+    mapFlowersGeneration(map); // Generate packs of flowers '*' UwU
+
 
 }
 
-void mapGrassGeneration(Map * map)
+void mapFlowersGeneration(Map * map)
+{
+    
+    return;
+}
+
+void mapGroundGeneration(Map * map)
 {
     for(int y = 1; y < map->dimensions.height; y++) 
     {
         for (int x = 1; x < map->dimensions.width; x++)
         {
-            int randomNumber = (rand() % 200) + 1; // Create random int between 1 and 200
+            int random_number = (rand() % 200) + 1; // Create random int between 1 and 200
 
             if (map->tiles[y][x] == ' ') // If not walls, generate a random grass char
             {   
-                if (randomNumber >= 1 && randomNumber <= 10) 
+                if (random_number >= 1 && random_number <= 10) 
                 {
                     map->tiles[y][x] = ',';
                     map->colors[y][x] = 1;
                 }
-                else if (randomNumber > 10 && randomNumber <= 20) 
+                else if (random_number > 10 && random_number <= 20) 
                 {
                     map->tiles[y][x] = '"';
                     map->colors[y][x] = 1;
                 }
-                else if (randomNumber > 20 && randomNumber <= 21) 
+                else if (random_number > 20 && random_number <= 21) 
                 {
                     map->tiles[y][x] = '*';
                     map->colors[y][x] = (rand() % 5) + 3; // generate random color

@@ -107,7 +107,8 @@ void mapProceduralGeneration(Map * map);
 void mapNoiseGeneration(Map * map, int density);
 void mapApplyCellularAutomaton(Map * map, int count);
 void mapFillWalls(Map * map);
-void mapGrassGeneration(Map * map);
+void mapGroundGeneration(Map * map);
+void mapFlowersGeneration(Map * map);
 
 //pathfinding functions
 bool isHouseUpLeftCornerReachable(Game * game);
