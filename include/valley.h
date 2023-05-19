@@ -75,10 +75,13 @@ typedef struct Game
 
 typedef struct Windows
 {
+	Position main_position;
+	Dimensions main_dimensions;
 	WINDOW * main_window;
 	WINDOW * game_window;
 	WINDOW * text_window;
-	//WINDOW * inventory_window;
+	WINDOW * stats_window;
+	WINDOW * inventory_window;
 } Windows;
 
 

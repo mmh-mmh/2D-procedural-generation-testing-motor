@@ -2,23 +2,37 @@
 
 void render(Game * game, Windows * windows)
 {
+
+
     drawMapInGameWindow(game, windows); // As it says
 
 	Dimensions main_window_position;
 
 	// Gesture of ncurses's windows display refresh
 	//getmaxyx(windows->main_window, main_window_position.height, main_window_position.width); // Get Dimensions of a window
-	wresize(windows->main_window, MAIN_WINDOW_HEIGHT, MAIN_WINDOW_WIDTH); // Resolves certain display bugs
+	wresize(windows->main_window, windows->main_dimensions.height, windows->main_dimensions.width); // Resolves certain display bugs
 
+	
+	wresize(windows->game_window, (0.75)*windows->main_dimensions.height, (0.70)*windows->main_dimensions.width);
 	box(windows->game_window, 0, 0); // 'Box' the window : had white outlines
 	wrefresh(windows->game_window); // refresh game_window
-
+	
+	wresize(windows->text_window, (0.25)*windows->main_dimensions.height, (0.70)*windows->main_dimensions.width);
 	box(windows->text_window, 0, 0);
 	wrefresh(windows->text_window);
 
+	wresize(windows->stats_window, (0.5)*windows->main_dimensions.height, (0.30)*windows->main_dimensions.width);
+	box(windows->stats_window, 0, 0);
+	wrefresh(windows->stats_window);
+
+	wresize(windows->inventory_window, ((0.5)*windows->main_dimensions.height) - 1, (0.30)*windows->main_dimensions.width);
+	box(windows->inventory_window, 0, 0);
+	wrefresh(windows->inventory_window);
+
+	
+
 	refresh();
 }
-
 
 void drawMapInGameWindow(Game * game, Windows * windows)
 {
