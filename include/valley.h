@@ -25,7 +25,6 @@
 
 #define HOUSE_MINIMAL_DISTANCE 9
 
-
 typedef struct Position
 {
 	int y;
@@ -52,12 +51,6 @@ typedef struct Map
 	int ** colors;
 } Map;
 
-typedef struct PlayerStruct
-{
-	Position position;
-	char skin;
-} PlayerStruct;
-
 typedef struct MobStruct
 {
     Position coordinate;
@@ -72,6 +65,49 @@ typedef struct npcStruct
 	char skin;
 	Position position;
 } npcStruct;
+
+typedef enum{WEAPON_TYPE, OBJECTS_TYPE,POTIONS_TYPE}itemType;
+
+typedef struct Weaponstats
+{
+	int damage;
+	int durability;
+} Weaponstats; 
+
+typedef struct Object
+{
+	Position * coordinate;
+	char skin;
+	int quantity;
+} Object;
+
+typedef struct Potion
+{
+	int heal;
+	int quantity;
+} Potion;
+
+typedef struct Item
+{
+	itemType type;
+	union
+	{
+		Weaponstats * weapon;
+		Object * object;
+		Potion * potions;
+	}mainItems;
+	char name[256];
+} Item;
+
+typedef struct PlayerStruct
+{
+	Position position;
+	char skin;
+	int health;
+    int max_health;
+	Item ** backpack;
+    int score;
+} PlayerStruct;
 
 typedef struct Game
 {
@@ -91,6 +127,7 @@ typedef struct Windows
 	WINDOW * stats_window;
 	WINDOW * inventory_window;
 } Windows;
+
 
 
 
@@ -116,7 +153,7 @@ void playerMove(Position position_offset, Game * game);
 //npc functions
 npcStruct * wizardSetup();
 void placeWizardInHouse(Game * game);
-void giveQuest(npcStruct * npc, Windows * windows);
+void giveQuest(Game * game, Windows * windows);
 
 // mob functions
 MobStruct * genMonster(Map * map, int health, int attack, char skin);
@@ -130,11 +167,9 @@ bool TryToPlaceHouseAndPlayerForMaxTrials(Game * game, int max_trials);
 //house functnions
 HouseStruct * houseSetup();
 void generateRandomHousePosition (Game * game);
-bool isHouseTooNear(Game * game, int distance_limit);
 void generateHouse(Game * game);
 bool isHouseStuck(Game * game);
 bool isHouseReachable(Game * game);
-
 
 //procedural functions
 void mapProceduralGeneration(Map * map);
@@ -159,5 +194,11 @@ void CheckConstants();
 
 //utilities functions
 bool isNear(Position a, Position b);
+bool isTooNear (Position a, Position b, int distance_limit);
+
+//items functions
+Item * genSword(int damage, int durability, char *name_sword);
+Item * genPotion(int heal_points, int quantity, char * name_potion);
+Item * genObject(int quantity, char skin,char * name_object, Position coordinate);
 
 #endif

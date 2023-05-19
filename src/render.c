@@ -15,23 +15,21 @@ void render(Game * game, Windows * windows)
 	
 	wresize(windows->game_window, (0.75)*windows->main_dimensions.height, (0.70)*windows->main_dimensions.width);
 	box(windows->game_window, 0, 0); // 'Box' the window : had white outlines
-	wrefresh(windows->game_window); // refresh game_window
+	wnoutrefresh(windows->game_window); // refresh game_window
 	
 	wresize(windows->text_window, (0.25)*windows->main_dimensions.height, (0.70)*windows->main_dimensions.width);
 	box(windows->text_window, 0, 0);
-	wrefresh(windows->text_window);
+	wnoutrefresh(windows->text_window);
 
 	wresize(windows->stats_window, (0.5)*windows->main_dimensions.height, (0.30)*windows->main_dimensions.width);
 	box(windows->stats_window, 0, 0);
-	wrefresh(windows->stats_window);
+	wnoutrefresh(windows->stats_window);
 
 	wresize(windows->inventory_window, ((0.5)*windows->main_dimensions.height) - 1, (0.30)*windows->main_dimensions.width);
 	box(windows->inventory_window, 0, 0);
-	wrefresh(windows->inventory_window);
+	wnoutrefresh(windows->inventory_window);
 
-	
-
-	refresh();
+	doupdate();
 }
 
 void drawMapInGameWindow(Game * game, Windows * windows)
@@ -83,9 +81,5 @@ void drawMapInGameWindow(Game * game, Windows * windows)
 
 	// Finally puts the player skin at its position, the middle of the window
 	mvwprintw(windows->game_window, game_window.height/2, game_window.width/2, "%c", game->player->skin);
-
-	wresize(windows->game_window, game_window.height, game_window.width); // Avoids bugs
-	box(windows->game_window, 0, 0); // add white outlines
-	wrefresh(windows->game_window); //actualise the window
 }
 

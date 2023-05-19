@@ -25,7 +25,7 @@ bool TryToPlaceHouseAndPlayerForMaxTrials(Game * game, int max_trials)
         }
 
     // Checking if the house is reachable by the player and if the house is too near using Euclidian distance
-    } while (isHouseTooNear(game, HOUSE_MINIMAL_DISTANCE) == TRUE || isHouseReachable(game) == FALSE); 
+    } while (isTooNear(game->house->position, game->player->position, HOUSE_MINIMAL_DISTANCE) == TRUE || isHouseReachable(game) == FALSE); 
 
     //generateHouse(game); // Creates house in the map array at the house position
 	return TRUE; // map is valid
@@ -121,11 +121,11 @@ void generateRandomHousePosition (Game * game)
     } while (game->map->tiles[game->house->position.y][game->house->position.x] == '#' || game->map->tiles[game->house->position.y][game->house->position.x] == '.');
 }
 
-bool isHouseTooNear (Game * game, int distance_limit)
+bool isTooNear (Position a, Position b, int distance_limit)
 {   
     // The square root of the sum of the squared distances
-    double dx = game->house->position.x - game->player->position.x;
-    double dy = game->house->position.y - game->player->position.y;
+    double dx = a.x - b.x;
+    double dy = a.y - b.y;
     double housePlayerDistance = sqrt(dx * dx + dy * dy);
 
     if (housePlayerDistance < distance_limit)

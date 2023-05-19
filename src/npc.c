@@ -25,7 +25,7 @@ game->map->colors[game->npc->position.y][game->npc->position.x] = 4;
 }
 
 
-void giveQuest(npcStruct * npc, Windows * windows)
+void giveQuest(Game * game, Windows * windows)
 {
-    mvwprintw(windows->text_window, 1, 1, "%s : Felipe est une merde !", npc->name);
+    mvwprintw(windows->text_window, 1, 1, "%s : It's dangerous to go aolne, take that.", game->npc->name);
 }
