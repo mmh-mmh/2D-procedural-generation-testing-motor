@@ -7,12 +7,12 @@ Game * gameSetup()
     new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH); // malloc and create an empty map
     new_game->house = houseSetup(); // malloc house, set size and position
 
+    // Generate proceduraly ground and walls of the map, then try for max_trials to put the house and the player in the map
+    // If max_trials reached, regenerate a map
     int max_trials = 1000;
     do
     {
-        printw("MapTried");
         mapProceduralGeneration(new_game->map); // Proceduraly generate map inside the walls;
-
     } while ( TryToPlaceHouseAndPlayerForMaxTrials(new_game, max_trials) == FALSE );
 
 

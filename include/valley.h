@@ -77,7 +77,7 @@ typedef struct Windows
 {
 	WINDOW * main_window;
 	WINDOW * game_window;
-	//WINDOW * text_window;
+	WINDOW * text_window;
 	//WINDOW * inventory_window;
 } Windows;
 
