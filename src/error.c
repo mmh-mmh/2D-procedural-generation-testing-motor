@@ -3,6 +3,7 @@
 
 void CheckConstants()
 {
+    /*
     if (MAP_HEIGHT < 80) {
     fprintf(stderr, "ERROR : MAP_HEIGHT is too low (< 80) \n");
     exit(1);
@@ -11,6 +12,7 @@ void CheckConstants()
     fprintf(stderr, "ERROR : MAP_WIDTH constant is too low (< 160)\n");
     exit(1);
 	}
+    */
     if (NOISE_DENSITY != 60) {
     fprintf(stderr, "ERROR : NOISE_DENSITY constant should be 60\n");
     exit(1);

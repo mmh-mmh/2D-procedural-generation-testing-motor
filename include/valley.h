@@ -8,9 +8,10 @@
 #include <math.h>
 #include <stdbool.h>
 #include <menu.h>
+#include <string.h>
 
-#define MAP_HEIGHT 80
-#define MAP_WIDTH 160
+#define MAP_HEIGHT 30
+#define MAP_WIDTH 60
 
 #define MAIN_WINDOW_HEIGHT 26
 #define MAIN_WINDOW_WIDTH 101
@@ -22,7 +23,7 @@
 
 #define HOUSE_SIZE 6
 
-#define HOUSE_MINIMAL_DISTANCE 60
+#define HOUSE_MINIMAL_DISTANCE 9
 
 
 typedef struct Position
@@ -49,8 +50,6 @@ typedef struct Map
     Dimensions dimensions;
     char ** tiles;
 	int ** colors;
-
-	
 } Map;
 
 typedef struct PlayerStruct
@@ -67,11 +66,19 @@ typedef struct MobStruct
     char skin;
 } MobStruct;
 
+typedef struct npcStruct
+{
+	char * name;
+	char skin;
+	Position position;
+} npcStruct;
+
 typedef struct Game
 {
 	Map * map;
 	PlayerStruct * player;
 	HouseStruct * house;
+	npcStruct * npc;
 } Game;
 
 typedef struct Windows
@@ -84,6 +91,7 @@ typedef struct Windows
 	WINDOW * stats_window;
 	WINDOW * inventory_window;
 } Windows;
+
 
 
 //game functions 
@@ -102,8 +110,13 @@ void screenSetup();
 PlayerStruct * playerSetup();
 void setRandomSpawn(Game * game);
 Position handleInput(int input);
-void checkPosition(Position position_offset, Game * game);
+void checkPosition(Position position_offset, Game * game, Windows * window);
 void playerMove(Position position_offset, Game * game);
+
+//npc functions
+npcStruct * wizardSetup();
+void placeWizardInHouse(Game * game);
+void giveQuest(npcStruct * npc, Windows * windows);
 
 // mob functions
 MobStruct * genMonster(Map * map, int health, int attack, char skin);
@@ -143,5 +156,8 @@ void drawMapInGameWindow(Game * game, Windows * windows);
 
 //error functions
 void CheckConstants();
+
+//utilities functions
+bool isNear(Position a, Position b);
 
 #endif

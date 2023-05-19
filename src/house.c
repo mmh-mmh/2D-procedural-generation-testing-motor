@@ -27,7 +27,7 @@ bool TryToPlaceHouseAndPlayerForMaxTrials(Game * game, int max_trials)
     // Checking if the house is reachable by the player and if the house is too near using Euclidian distance
     } while (isHouseTooNear(game, HOUSE_MINIMAL_DISTANCE) == TRUE || isHouseReachable(game) == FALSE); 
 
-    generateHouse(game); // Creates house in the map array at the house position
+    //generateHouse(game); // Creates house in the map array at the house position
 	return TRUE; // map is valid
 }
 

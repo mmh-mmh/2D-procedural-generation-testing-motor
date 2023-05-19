@@ -50,6 +50,7 @@ Position handleInput(int input)
 			position_offset.y = 0;
 			position_offset.x = + 1;
 			break;
+
 		default :
 			break;	
 	}
@@ -57,7 +58,7 @@ Position handleInput(int input)
 }
 
 
-void checkPosition(Position position_offset, Game * game)
+void checkPosition(Position position_offset, Game * game, Windows * windows)
 {
 	Position new;
 	new.y = game->player->position.y + position_offset.y;
@@ -72,7 +73,9 @@ void checkPosition(Position position_offset, Game * game)
     	    case 'T':
      	    	//combat(...);
 				break;
-
+			case 'W':
+				giveQuest(game->npc, windows);
+				break;
     	    default: // If else
 				playerMove(position_offset, game); // Manage how to move the player
     	        break;
@@ -94,6 +97,7 @@ void playerMove(Position position_offset, Game * game)
 	{
 		case '#': // If not crossable
 		case '.':
+		case 'W':
 			break;
 		case 'O': // If movable
 			//handleMovable();
