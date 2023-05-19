@@ -9,16 +9,16 @@ Game * gameSetup()
 
     // Generate proceduraly ground and walls of the map, then try for max_trials to put the house and the player in the map
     // If max_trials reached, regenerate a map
-    int max_trials = 1000;
+    int max_trials = 10000;
     do
     {
         mapProceduralGeneration(new_game->map); // Proceduraly generate map inside the walls;
     } while ( TryToPlaceHouseAndPlayerForMaxTrials(new_game, max_trials) == FALSE );
 
-
-	genMonster(new_game->map->tiles, 20,5,'T');
-	genMonster(new_game->map->tiles, 12,6,'X');
-	genMonster(new_game->map->tiles, 10,3,'G');
+    
+	genMonster(new_game->map, 20,5,'T');
+	genMonster(new_game->map, 12,6,'X');
+	genMonster(new_game->map, 10,3,'G');
     
     
     return new_game;
@@ -40,7 +40,7 @@ void gameLoop(Windows * windows)
         checkPosition(position_offset, game); // Deal with what's where the player wants to move
         //moveMonsters(game);
 
-        render(game, windows); // Update the game display
+        render(game, windows); // Update the game's display
 
         input = getch(); // Get user input
     }

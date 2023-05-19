@@ -7,9 +7,8 @@ int main()
 	screenSetup(); // Setup of ncurses
 
 	Windows * windows = windowsSetup(); // Setup of all the windows used for display
-	
 
-	//menuLoop();
+	menuLoop(windows);
 	gameLoop(windows);
 
 	endwin();

@@ -24,6 +24,10 @@ void setRandomSpawn(Game * game)
 Position handleInput(int input) 
 {
 	Position position_offset;
+
+	position_offset.y = 0;
+	position_offset.x = 0;
+
 	switch(input) 
 	{
 		case 'z' :
@@ -47,8 +51,7 @@ Position handleInput(int input)
 			position_offset.x = + 1;
 			break;
 		default :
-			break;
-			
+			break;	
 	}
 	return position_offset;
 }

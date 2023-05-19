@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <stdbool.h>
+#include <menu.h>
 
 #define MAP_HEIGHT 80
 #define MAP_WIDTH 160
@@ -89,6 +90,11 @@ typedef struct Windows
 Game * gameSetup();
 void gameLoop(Windows * windows);
 
+//menu functions
+void menuLoop(Windows * windows);
+int mainMenu(Windows * windows, int numberItems, char * choices[]);
+void closeMenu(int numberItems, MENU * menu, ITEM ** items);
+
 //main functions
 void screenSetup();
 
@@ -99,11 +105,8 @@ Position handleInput(int input);
 void checkPosition(Position position_offset, Game * game);
 void playerMove(Position position_offset, Game * game);
 
-
 // mob functions
-MobStruct * genMonster( char * map[MAP_WIDTH], int health, int attack, char skin);
-Position findEmptyZoneStart(char *map[MAP_WIDTH], int height, int width);
-
+MobStruct * genMonster(Map * map, int health, int attack, char skin);
 
 //map functions
 Map * createMap();
