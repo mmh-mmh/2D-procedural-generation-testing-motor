@@ -23,7 +23,6 @@ void drawMapInGameWindow(Game * game, Windows * windows)
     //game_window.height = MAIN_WINDOW_HEIGHT;
     //game_window.width = MAIN_WINDOW_WIDTH;
 
-    getmaxyx(gameWindow, game_window.height, game_window.width);
     getmaxyx(windows->game_window, game_window.height, game_window.width); // Get the game display window dimensions
 
 
@@ -37,9 +36,6 @@ void drawMapInGameWindow(Game * game, Windows * windows)
 	
 	Position printing_position;
 
-	int random_color;
-
-	for (int i = 1; i <= game_window.height - 2; i++)
 	for (int i = 1; i <= game_window.height - 2; i++) // Print the game in the limits of the window
 	{
 		for (int j = 1; j <= game_window.width - 2; j++)
@@ -47,17 +43,6 @@ void drawMapInGameWindow(Game * game, Windows * windows)
 			printing_position.y = start_printing_position.y + i; // Iterate throught the map
 			printing_position.x = start_printing_position.x + j;
 			
-			if (mapPos.y >= 0 && mapPos.y < game->map->dimensions.height && mapPos.x >= 0 && mapPos.x < game->map->dimensions.width)
-			{
-				wattron(gameWindow, COLOR_PAIR(game->map->colors[mapPos.y][mapPos.x]));
-                mvwprintw(gameWindow, i, j, "%c", game->map->tiles[mapPos.y][mapPos.x]);
-                wattroff(gameWindow, COLOR_PAIR(game->map->colors[mapPos.y][mapPos.x]));
-			}
-			else
-			{	
-				wattron(gameWindow, COLOR_PAIR(2));
-				mvwprintw(gameWindow, i, j, ".");
-				wattroff(gameWindow, COLOR_PAIR(2));
 			if (printing_position.y >= 0 && printing_position.y < game->map->dimensions.height && printing_position.x >= 0 && printing_position.x < game->map->dimensions.width)
 			{
 

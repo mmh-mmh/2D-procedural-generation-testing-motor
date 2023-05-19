@@ -3,20 +3,19 @@
 
 Map * createMap()
 {
-	Map * map = malloc(sizeof(Map*));
+	Map * map = malloc(sizeof(Map));
 	map->dimensions.height = MAP_HEIGHT;
 	map->dimensions.width = MAP_WIDTH;
 
-	mapSetup(map);
-	mapProceduralGeneration(map);
 	mapSetup(map); // Malloc map and colors and place walls at map extremities
 	mapProceduralGeneration(map); // Proceduraly generate map inside the walls
+
 	return map;
 }
 
 void mapSetup(Map * map)
 {	
-  char ** tiles;
+	char ** tiles;
 	map->tiles = malloc(sizeof(char*) * map->dimensions.height);
 	map->colors = malloc(sizeof(int*) * map->dimensions.height);
 
@@ -25,7 +24,7 @@ void mapSetup(Map * map)
 		map->tiles[y] = malloc(sizeof(char) * map->dimensions.width);
 		map->colors[y] = malloc(sizeof(int) * map->dimensions.width);
 	}
-
+	
 	for (int y = 0; y < map->dimensions.height; y++)
 	{
 		for (int x = 0; x < map->dimensions.width; x++)
@@ -33,11 +32,13 @@ void mapSetup(Map * map)
 			if (y == 0 || y == map->dimensions.height - 1 || x == 0 || x == map->dimensions.width - 1)
 			{
 				map->tiles[y][x] = '#';
+
 			}
 			else
 			{
 				map->tiles[y][x] = ' ';
 			}
+			
 			map->colors[y][x] = 2;
 		}
 	}
@@ -61,7 +62,6 @@ char ** copyMap(Map * map)
 }
 
 
-
 void placePlayerAndStructures(Game * game)
 {
 	game->house = malloc(sizeof(House));
@@ -77,6 +77,8 @@ void placePlayerAndStructures(Game * game)
 	{
 	printw("1MapTried "); // Temporary indicator of how many maps are being generated before finding one valid
 	trials = 0;
+
+	//srand(time(NULL));
     placeHouseAtPlayerDistance(game, house_minimal_distance, &trials, &max_trials); // Try to place house until conditions are valid or the max trials have been reached
 	} while (trials >= max_trials); // Loop if the map is invalid, creating another map
 }
