@@ -1,25 +1,34 @@
 #include "valley.h"
 
-void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, int * max_trials)
-{   
-    game->house->dimensions.height = HOUSE_SIZE;
-    game->house->dimensions.width = 2*HOUSE_SIZE;
+HouseStruct * houseSetup()
+{
+	HouseStruct * house = malloc(sizeof(HouseStruct));
+	house->dimensions.height = HOUSE_SIZE;
+    house->dimensions.width = 2*HOUSE_SIZE;
+    return house;
+}
 
-    do // Generate a random valid position for the house while till she is reachable and not too close the player
+bool TryToPlaceHouseAndPlayerForMaxTrials(Game * game, int max_trials)
+{
+    int trials = 0;
+
+    do // Generate a random valid position for the house and the player while until she is reachable and not too close to the player
     {
     setRandomSpawn(game); // Set a random valid spawn point for the player
     generateRandomHousePosition(game);
-    (*trials)++;
-        if (*trials >= *max_trials) // If trials reaches maxTrials, return to create another map
+
+    trials++;
+
+        if (trials >= max_trials) // If trials reaches maxTrials, return to create another map
         {
-            return;
+            return FALSE; //map is unvalid
         }
 
     // Checking if the house is reachable by the player and if the house is too near using Euclidian distance
-    } while (isHouseTooNear(game, distance_limit) == TRUE || isHouseReachable(game) == FALSE); 
-
+    } while (isHouseTooNear(game, HOUSE_MINIMAL_DISTANCE) == TRUE || isHouseReachable(game) == FALSE); 
 
     generateHouse(game); // Creates house in the map array at the house position
+	return TRUE; // map is valid
 }
 
 bool isHouseReachable(Game * game)
@@ -102,20 +111,6 @@ bool isHouseStuck(Game * game)
     game->map->colors[game->house->door_position.y][game->house->door_position.x] = 2;
 
 }
-
-void generateRandomHouseDimensionsBetweenTwoNumbers (House * house, int num1, int num2)
-{
-    if (num2 < num1)
-    {
-        int temp = num1;
-        num1 = num2;
-        num2 = temp;
-    }
-    house->dimensions.height = (rand() % (num2 - num1)) + 1 + num1;
-    house->dimensions.width = 2*house->dimensions.height;
-}
-
-
 
 void generateRandomHousePosition (Game * game)
 {

@@ -27,5 +27,4 @@ void CheckConstants()
     fprintf(stderr, "ERROR : HOUSE_MINIMAL_DISTANCE is too long\n");
     exit(1);
 	}
-
 }

@@ -3,18 +3,27 @@
 Game * gameSetup()
 {
     Game * new_game = malloc(sizeof(Game));
-    new_game->player = playerSetup(); // malloc  and set player skin
-    new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH); // Creating procdduraly walls and ground of the map
-    placePlayerAndStructures(new_game); //Placing the player and the house
+    new_game->player = playerSetup(); // malloc and set player stats
+    new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH); // malloc and create an empty map
+    new_game->house = houseSetup(); // malloc house, set size and position
+
+    int max_trials = 1000;
+    do
+    {
+        printw("MapTried");
+        mapProceduralGeneration(new_game->map); // Proceduraly generate map inside the walls;
+
+    } while ( TryToPlaceHouseAndPlayerForMaxTrials(new_game, max_trials) == FALSE );
+
+
 	genMonster(new_game->map->tiles, 20,5,'T');
 	genMonster(new_game->map->tiles, 12,6,'X');
 	genMonster(new_game->map->tiles, 10,3,'G');
     
     
-    //placeMonsters();
-    
     return new_game;
 }
+
 
 void gameLoop(Windows * windows)
 {

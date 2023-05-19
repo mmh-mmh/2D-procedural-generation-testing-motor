@@ -21,7 +21,7 @@
 
 #define HOUSE_SIZE 6
 
-#define HOUSE_MINIMAL_DISTANCE 30
+#define HOUSE_MINIMAL_DISTANCE 60
 
 
 typedef struct Position
@@ -36,18 +36,20 @@ typedef struct Dimensions
 	int width;
 } Dimensions;
 
-typedef struct House
+typedef struct HouseStruct
 {	
 	Position position;
 	Dimensions dimensions;
 	Position door_position;
-} House;
+} HouseStruct;
 
 typedef struct Map
 {
     Dimensions dimensions;
     char ** tiles;
 	int ** colors;
+
+	
 } Map;
 
 typedef struct PlayerStruct
@@ -64,12 +66,11 @@ typedef struct MobStruct
     char skin;
 } MobStruct;
 
-
 typedef struct Game
 {
 	Map * map;
 	PlayerStruct * player;
-	House * house;
+	HouseStruct * house;
 } Game;
 
 typedef struct Windows
@@ -105,12 +106,11 @@ Position findEmptyZoneStart(char *map[MAP_WIDTH], int height, int width);
 Map * createMap();
 void mapSetup(Map * map);
 char ** copyMap(Map * map);
-void placePlayerAndStructures(Game * game);
+bool TryToPlaceHouseAndPlayerForMaxTrials(Game * game, int max_trials);
 
 //house functnions
-void generateRandomHouseDimensionsBetweenTwoNumbers (House * house, int num1, int num2);
+HouseStruct * houseSetup();
 void generateRandomHousePosition (Game * game);
-void placeHouseAtPlayerDistance (Game * game, int distance_limit, int * trials, int * max_trials);
 bool isHouseTooNear(Game * game, int distance_limit);
 void generateHouse(Game * game);
 bool isHouseStuck(Game * game);
