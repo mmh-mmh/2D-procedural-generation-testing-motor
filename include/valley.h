@@ -164,6 +164,9 @@ typedef struct Windows
 Game * gameSetup();
 void gameLoop(Windows * windows);
 
+//loading functions
+void loading(Windows * windows);
+
 //menu functions
 void menuLoop(Windows * windows);
 int mainMenu(Windows * windows, int numberItems, char * choices[]);
