@@ -27,14 +27,30 @@ bool TryToPlacePlayerAndStructuresForMaxTrials(Game * game, int max_trials)
             return FALSE; //map is unvalid
         }
 
-    // Checking if the structures are reachable by the player, and not too near from the player
-    } while (!isStructureReachableAndNotTooNear(game->map, game->player, game->house, HOUSE_MINIMAL_DISTANCE), !isStructureReachableAndNotTooNear(game->map, game->player, game->dungeon, HOUSE_MINIMAL_DISTANCE)); 
+    // Checking if the structures are reachable by the player, not too near from each other and not too near from the player
+    } while (!ArePlayerHouseAndDungeonWellPlaced(game)); 
 
     // Generates house and dungeon in the map array
     generateStructure(game->map, game->house);
     generateStructure(game->map, game->dungeon);
 	return TRUE; // map is valid
 }
+
+bool ArePlayerHouseAndDungeonWellPlaced(Game * game)
+{
+    if (isStructureReachableAndNotTooNear(game->map, game->player, game->house, HOUSE_MINIMAL_DISTANCE_FROM_PLAYER) && 
+        isStructureReachableAndNotTooNear(game->map, game->player, game->dungeon, DUNGEON_MINIMAL_DISTANCE_FROM_PLAYER) &&
+        !isTooNear(game->house->position, game->dungeon->position, HOUSE_MINIMAL_DISTANCE_FROM_DUNGEON))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
 
 bool isStructureReachableAndNotTooNear(Map * map, PlayerStruct * player, StructureStruct * structure, int minimal_distance)
 {
@@ -82,12 +98,12 @@ void generateStructure(Map * map, StructureStruct * structure)
             if(y == pos.y || y == pos.y + dim.height - 1 || x == pos.x || x == pos.x + dim.width - 1) // If extremities, place wall
             {
                 map->tiles[y][x] = '#';
-                map->colors[y][x] = 8; // Special color for the walls
+                map->colors[y][x] = BLACK_ON_WHITE; // Special color for the walls
             }
             else // If not, place ground
             {
                 map->tiles[y][x] = ' ';
-                map->colors[y][x] = 2;
+                map->colors[y][x] = DEFAULT_ON_DEFAULT;
             }
         }
     }

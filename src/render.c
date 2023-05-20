@@ -5,7 +5,7 @@ void render(Game * game, Windows * windows)
 	//Changes are stored in the buffer, then applied at ther same time with refreshWindows()
 
     printMapInWindow(game, windows); // As it says
-	printInventoryInWindow(game->player->inventory, windows->inventory_window); // Seeks player's inventory informations to print them in the inventory window
+	printInventoryInWindow(game->player, windows->inventory_window); // Seeks player's inventory informations to print them in the inventory window
 	printStatsInWindow(game->player, windows->stats_window); // Seeks player's stats informations to print them in the inventory window
 
 
@@ -17,8 +17,12 @@ void printStatsInWindow (PlayerStruct * player, WINDOW * stats_window)
 	mvwprintw(stats_window, 2, 3,"[%d,%d]", player->position.y, player->position.x);
 	return;
 }
-void printInventoryInWindow (Item ** inventory, WINDOW * inventory_window)
+void printInventoryInWindow (PlayerStruct * player, WINDOW * inventory_window)
 {
+	for(int i = 0; i < player->inventory_size; i++)
+	{
+		mvwprintw(inventory_window, i + 1, 1,"%s", player->inventory[i]->name);
+	}
 
 	return;
 }

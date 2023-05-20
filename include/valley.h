@@ -19,9 +19,10 @@
 #define MAGENTA_ON_DEFAULT 6
 #define CYAN_ON_DEFAULT 7
 #define BLACK_ON_WHITE 8
+#define DEFAULT_ON_DEFAULT 9
 
-#define MAP_HEIGHT 30
-#define MAP_WIDTH 60
+#define MAP_HEIGHT 60
+#define MAP_WIDTH 80
 
 #define MAIN_WINDOW_HEIGHT 31
 #define MAIN_WINDOW_WIDTH 131
@@ -33,9 +34,9 @@
 
 #define HOUSE_SIZE 6
 
-#define HOUSE_MINIMAL_DISTANCE 9
-
-#define DUNGEON_MINIMAL_DISTANCE 9
+#define HOUSE_MINIMAL_DISTANCE_FROM_PLAYER 20
+#define DUNGEON_MINIMAL_DISTANCE_FROM_PLAYER 40
+#define HOUSE_MINIMAL_DISTANCE_FROM_DUNGEON 30
 
 typedef struct Position
 {
@@ -126,6 +127,7 @@ typedef struct PlayerStruct
 	int health;
     int max_health;
 	Item ** inventory;
+	int inventory_size;
     int score;
 } PlayerStruct;
 
@@ -168,11 +170,13 @@ void setRandomSpawn(Game * game);
 Position handleInput(int input);
 void checkPosition(Position position_offset, Game * game, Windows * window);
 void playerMove(Position position_offset, Game * game);
+void initPlayerInventory(PlayerStruct * player);
 
 // npc functions
 npcStruct * wizardSetup();
-void placeWizardInHouse(Game * game);
+void placeNpcInStructure(Map * map, StructureStruct * structure, npcStruct * npc);
 void ManageWizardInteractions(Game * game, Windows * windows);
+
 
 // mob functions
 MobStruct * genMonster(Map * map, int health, int attack, char skin);
@@ -190,6 +194,7 @@ bool isStructureReachableAndNotTooNear(Map * map, PlayerStruct * Player, Structu
 bool isStructureStuck(Map * map, StructureStruct * structure);
 void generateStructure(Map * map, StructureStruct * structure);
 void generateRandomStructurePosition (Map * map, StructureStruct * structure);
+bool ArePlayerHouseAndDungeonWellPlaced(Game * game);
 
 // door functions
 void PlaceDoorAtRandomSide(Map * map, StructureStruct * structure);
@@ -212,7 +217,7 @@ Windows * windowsSetup();
 //render functions
 void render(Game * game, Windows * windows);
 void printMapInWindow(Game * game, Windows * windows);
-void printInventoryInWindow(Item ** inventory, WINDOW * inventory_window);
+void printInventoryInWindow (PlayerStruct * player, WINDOW * inventory_window);
 void printStatsInWindow(PlayerStruct * player, WINDOW * stats_window);
 void refreshWindows(Windows * windows);
 

@@ -4,8 +4,22 @@ PlayerStruct * playerSetup()
 {
 	PlayerStruct * player = malloc(sizeof(PlayerStruct));
 	player->skin = '@'; // Set player char
-	
+	player->inventory_size = 3;
+	initPlayerInventory(player);
+
 	return player;
+}
+
+void initPlayerInventory(PlayerStruct * player)
+{
+	int size = player->inventory_size;
+	player->inventory = malloc(sizeof(Item*) * size);
+
+
+    for(int i = 0; i < size; i++)
+    {
+        player->inventory[i] = malloc(sizeof(Item));
+    }
 }
 
 void setRandomSpawn(Game * game)
@@ -95,6 +109,7 @@ void playerMove(Position position_offset, Game * game)
 
 	switch (game->map->tiles[new_position.y][new_position.x])
 	{
+		case '%':
 		case '#': // If not crossable
 		case '.':
 		case 'W':

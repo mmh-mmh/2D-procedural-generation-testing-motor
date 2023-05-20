@@ -25,8 +25,12 @@ void CheckConstants()
     fprintf(stderr, "ERROR : HOUSE_SIZE constant is too low (< 6)\n");
     exit(1);
 	}
-    if (HOUSE_MINIMAL_DISTANCE > MAP_HEIGHT - (HOUSE_SIZE + 10) || HOUSE_MINIMAL_DISTANCE > MAP_WIDTH - (HOUSE_SIZE + 10)) {
-    fprintf(stderr, "ERROR : HOUSE_MINIMAL_DISTANCE is too long\n");
+    if (HOUSE_MINIMAL_DISTANCE_FROM_PLAYER > MAP_HEIGHT - (HOUSE_SIZE + 10) || HOUSE_MINIMAL_DISTANCE_FROM_PLAYER > MAP_WIDTH - (HOUSE_SIZE + 10)) {
+    fprintf(stderr, "ERROR : HOUSE_MINIMAL_DISTANCE_FROM_PLAYER is too long\n");
+    exit(1);
+	}
+    if (DUNGEON_MINIMAL_DISTANCE_FROM_PLAYER > MAP_HEIGHT - (HOUSE_SIZE + 10) || DUNGEON_MINIMAL_DISTANCE_FROM_PLAYER > MAP_WIDTH - (HOUSE_SIZE + 10)) {
+    fprintf(stderr, "ERROR : DUNGEON_MINIMAL_DISTANCE_FROM_PLAYER is too long\n");
     exit(1);
 	}
 }

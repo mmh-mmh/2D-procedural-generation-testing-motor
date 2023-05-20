@@ -30,17 +30,17 @@ void mapGroundGeneration(Map * map)
                 if (random_number >= 1 && random_number <= 10) 
                 {
                     map->tiles[y][x] = ',';
-                    map->colors[y][x] = 1;
+                    map->colors[y][x] = GREEN_ON_DEFAULT;
                 }
                 else if (random_number > 10 && random_number <= 20) 
                 {
                     map->tiles[y][x] = '"';
-                    map->colors[y][x] = 1;
+                    map->colors[y][x] = GREEN_ON_DEFAULT;
                 }
                 else if (random_number > 20 && random_number <= 21) 
                 {
                     map->tiles[y][x] = '*';
-                    map->colors[y][x] = (rand() % 5) + 3; // generate random color
+                    map->colors[y][x] = (rand() % 5) + 3; // generate a random color
                 }
             }
         }   
@@ -79,7 +79,6 @@ void mapFillWalls(Map * map)
             if (neighbor_wall_count == 4) // If surrounded by walls, palce '.'
             {
                 map->tiles[k][j] = '.';
-                map->colors[k][j] = 2;
             }
         }   
     }

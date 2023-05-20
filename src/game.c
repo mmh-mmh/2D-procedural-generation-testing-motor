@@ -41,7 +41,11 @@ Game * gameSetup()
     {
         mapProceduralGeneration(new_game->map); // Proceduraly generate map inside the walls;
     } while ( !TryToPlacePlayerAndStructuresForMaxTrials(new_game, max_trials));
-    //placeWizardInHouse(new_game);
+    
+    // place the npc giving the quest in the house 
+    placeNpcInStructure(new_game->map, new_game->house, new_game->npc);
+
+
 
 	genMonster(new_game->map, 20,5,'T');
 	genMonster(new_game->map, 12,6,'X');
