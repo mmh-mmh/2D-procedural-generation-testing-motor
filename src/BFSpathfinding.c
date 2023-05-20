@@ -1,35 +1,35 @@
 #include "valley.h"
 
-// Classic BFS Pathfinding algorithm use to check if the player is able to reach the house
+// Classic BFS Pathfinding algorithm used to check if object b is reachable from object a
 
-bool isHouseUpLeftCornerReachable(Game * game)
+bool isReachable(Map * map, Position object_a, Position object_b)
 {
     // Create an Array containing 'visited' tiles
-    unsigned int ** visited_tiles = malloc(sizeof(unsigned int*) * game->map->dimensions.height);
+    unsigned int ** visited_tiles = malloc(sizeof(unsigned int*) * map->dimensions.height);
 
-    for (int y = 0; y < game->map->dimensions.height; y++)
+    for (int y = 0; y < map->dimensions.height; y++)
     {
-        visited_tiles[y] = malloc(sizeof(unsigned int) * game->map->dimensions.width);
+        visited_tiles[y] = malloc(sizeof(unsigned int) * map->dimensions.width);
 
 
-        for (int x = 0; x < game->map->dimensions.width; x++)
+        for (int x = 0; x < map->dimensions.width; x++)
         {
         visited_tiles[y][x] = FALSE;
         }
     }
 
     // Create an array of positions representing tiles which are going to be verified next (queue)
-    int queue_max_size = game->map->dimensions.width * game->map->dimensions.height;
+    int queue_max_size = map->dimensions.width * map->dimensions.height;
     Position * queue = malloc(sizeof(Position) * queue_max_size);
 
     int queue_start = 0, queue_end = 0;
     
     // Add the starting point to the queue
-    queue[queue_end] = game->player->position;
+    queue[queue_end] = object_a;
     queue_end++;
 
     // Mark the starting point as visited
-    visited_tiles[game->player->position.y][game->player->position.x] = TRUE;
+    visited_tiles[object_a.y][object_a.x] = TRUE;
 
     // Define the four directions: up, down, left, right
     Position directions[4] = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
@@ -41,7 +41,7 @@ bool isHouseUpLeftCornerReachable(Game * game)
         queue_start++; // Increment the starting queue index
 
 
-        if (current.y == game->house->position.y && current.x == game->house->position.x)
+        if (current.y == object_b.y && current.x == object_b.x)
         {
             // House is accessible from the player
             return TRUE;
@@ -55,10 +55,10 @@ bool isHouseUpLeftCornerReachable(Game * game)
             neighbor.x = current.x + directions[i].x;
 
             // Check if the neighbor cell is valid and has not been visited yet
-            if (neighbor.y >= 0 && neighbor.y < game->map->dimensions.height &&
-                neighbor.x >= 0 && neighbor.x < game->map->dimensions.width &&
+            if (neighbor.y >= 0 && neighbor.y < map->dimensions.height &&
+                neighbor.x >= 0 && neighbor.x < map->dimensions.width &&
                 visited_tiles[neighbor.y][neighbor.x] == FALSE &&
-                game->map->tiles[neighbor.y][neighbor.x] != '#')
+                map->tiles[neighbor.y][neighbor.x] != '#')
             {
                 // Add the neighbor position to the queue of positions and mark it as visited
                 queue[queue_end] = neighbor;
@@ -70,7 +70,7 @@ bool isHouseUpLeftCornerReachable(Game * game)
         }
     }
 
-    for(int i = 0; i < game->map->dimensions.height; i++)
+    for(int i = 0; i < map->dimensions.height; i++)
     {
         free(visited_tiles[i]);
     }

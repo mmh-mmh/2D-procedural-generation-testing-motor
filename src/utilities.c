@@ -14,3 +14,20 @@ bool isNear(Position a, Position b)
     }
     return false;
 }
+
+bool isTooNear (Position a, Position b, int distance_limit)
+{   
+    // The square root of the sum of the squared distances
+    double dx = a.x - b.x;
+    double dy = a.y - b.y;
+    double abDistance = sqrt(dx * dx + dy * dy);
+
+    if (abDistance < distance_limit)
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}

@@ -10,11 +10,21 @@
 #include <menu.h>
 #include <string.h>
 
+//define color pair id
+#define GREEN_ON_DEFAULT 1
+#define WHITE_ON_DEFAULT 2
+#define RED_ON_DEFAULT 3
+#define BLUE_ON_DEFAULT 4
+#define YELLOW_ON_DEFAULT 5
+#define MAGENTA_ON_DEFAULT 6
+#define CYAN_ON_DEFAULT 7
+#define BLACK_ON_WHITE 8
+
 #define MAP_HEIGHT 30
 #define MAP_WIDTH 60
 
-#define MAIN_WINDOW_HEIGHT 26
-#define MAIN_WINDOW_WIDTH 101
+#define MAIN_WINDOW_HEIGHT 31
+#define MAIN_WINDOW_WIDTH 131
 #define MAIN_WINDOW_POSITION_Y 1
 #define MAIN_WINDOW_POSITION_X 3
 
@@ -24,6 +34,8 @@
 #define HOUSE_SIZE 6
 
 #define HOUSE_MINIMAL_DISTANCE 9
+
+#define DUNGEON_MINIMAL_DISTANCE 9
 
 typedef struct Position
 {
@@ -37,12 +49,19 @@ typedef struct Dimensions
 	int width;
 } Dimensions;
 
-typedef struct HouseStruct
+typedef struct DoorStruct
+{
+	char type;
+	Position position;
+} DoorStruct;
+
+typedef struct StructureStruct
 {	
 	Position position;
 	Dimensions dimensions;
-	Position door_position;
-} HouseStruct;
+	DoorStruct door;
+	bool chest;
+} StructureStruct;
 
 typedef struct Map
 {
@@ -64,9 +83,10 @@ typedef struct npcStruct
 	char * name;
 	char skin;
 	Position position;
+	int interactions_count;
 } npcStruct;
 
-typedef enum{WEAPON_TYPE, OBJECTS_TYPE,POTIONS_TYPE}itemType;
+typedef enum {WEAPON_TYPE, OBJECTS_TYPE,POTIONS_TYPE} itemType;
 
 typedef struct Weaponstats
 {
@@ -95,7 +115,7 @@ typedef struct Item
 		Weaponstats * weapon;
 		Object * object;
 		Potion * potions;
-	}mainItems;
+	} mainItems ;
 	char name[256];
 } Item;
 
@@ -105,7 +125,7 @@ typedef struct PlayerStruct
 	char skin;
 	int health;
     int max_health;
-	Item ** backpack;
+	Item ** inventory;
     int score;
 } PlayerStruct;
 
@@ -113,7 +133,8 @@ typedef struct Game
 {
 	Map * map;
 	PlayerStruct * player;
-	HouseStruct * house;
+	StructureStruct * house;
+	StructureStruct * dungeon;
 	npcStruct * npc;
 } Game;
 
@@ -127,8 +148,6 @@ typedef struct Windows
 	WINDOW * stats_window;
 	WINDOW * inventory_window;
 } Windows;
-
-
 
 
 //game functions 
@@ -150,10 +169,10 @@ Position handleInput(int input);
 void checkPosition(Position position_offset, Game * game, Windows * window);
 void playerMove(Position position_offset, Game * game);
 
-//npc functions
+// npc functions
 npcStruct * wizardSetup();
 void placeWizardInHouse(Game * game);
-void giveQuest(Game * game, Windows * windows);
+void ManageWizardInteractions(Game * game, Windows * windows);
 
 // mob functions
 MobStruct * genMonster(Map * map, int health, int attack, char skin);
@@ -164,12 +183,17 @@ void mapSetup(Map * map);
 char ** copyMap(Map * map);
 bool TryToPlaceHouseAndPlayerForMaxTrials(Game * game, int max_trials);
 
-//house functnions
-HouseStruct * houseSetup();
-void generateRandomHousePosition (Game * game);
-void generateHouse(Game * game);
-bool isHouseStuck(Game * game);
-bool isHouseReachable(Game * game);
+// Structure functions
+StructureStruct * StructureSetup(int SIZE, char door, bool chest);
+bool TryToPlacePlayerAndStructuresForMaxTrials(Game * game, int max_trials);
+bool isStructureReachableAndNotTooNear(Map * map, PlayerStruct * Player, StructureStruct * structure, int minimal_distance);
+bool isStructureStuck(Map * map, StructureStruct * structure);
+void generateStructure(Map * map, StructureStruct * structure);
+void generateRandomStructurePosition (Map * map, StructureStruct * structure);
+
+// door functions
+void PlaceDoorAtRandomSide(Map * map, StructureStruct * structure);
+
 
 //procedural functions
 void mapProceduralGeneration(Map * map);
@@ -180,14 +204,17 @@ void mapGroundGeneration(Map * map);
 void mapFlowersGeneration(Map * map);
 
 //pathfinding functions
-bool isHouseUpLeftCornerReachable(Game * game);
+bool isReachable(Map * map, Position object_a, Position object_b);
 
 //window functions
 Windows * windowsSetup();
 
 //render functions
 void render(Game * game, Windows * windows);
-void drawMapInGameWindow(Game * game, Windows * windows);
+void printMapInWindow(Game * game, Windows * windows);
+void printInventoryInWindow(Item ** inventory, WINDOW * inventory_window);
+void printStatsInWindow(PlayerStruct * player, WINDOW * stats_window);
+void refreshWindows(Windows * windows);
 
 //error functions
 void CheckConstants();
@@ -196,7 +223,7 @@ void CheckConstants();
 bool isNear(Position a, Position b);
 bool isTooNear (Position a, Position b, int distance_limit);
 
-//items functions
+//item functions
 Item * genSword(int damage, int durability, char *name_sword);
 Item * genPotion(int heal_points, int quantity, char * name_potion);
 Item * genObject(int quantity, char skin,char * name_object, Position coordinate);

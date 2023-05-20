@@ -74,7 +74,7 @@ void checkPosition(Position position_offset, Game * game, Windows * windows)
      	    	//combat(...);
 				break;
 			case 'W':
-				giveQuest(game, windows);
+				ManageWizardInteractions(game, windows);
 				break;
     	    default: // If else
 				playerMove(position_offset, game); // Manage how to move the player

@@ -8,10 +8,11 @@ int main()
 
 	Windows * windows = windowsSetup(); // Setup of all the windows used for display
 
-	menuLoop(windows);
-	gameLoop(windows);
+	menuLoop(windows); // Starting menu
 
-	endwin();
+	gameLoop(windows); // Game loop
+
+	endwin(); // Stops ncurses in the terminal
 
 	return 0;
 }

@@ -2,20 +2,37 @@
 
 void render(Game * game, Windows * windows)
 {
+	//Changes are stored in the buffer, then applied at ther same time with refreshWindows()
+
+    printMapInWindow(game, windows); // As it says
+	printInventoryInWindow(game->player->inventory, windows->inventory_window); // Seeks player's inventory informations to print them in the inventory window
+	printStatsInWindow(game->player, windows->stats_window); // Seeks player's stats informations to print them in the inventory window
 
 
-    drawMapInGameWindow(game, windows); // As it says
+	refreshWindows(windows); // Gesture of ncurses's windows display refresh / refresh all windows 
+}
 
-	Dimensions main_window_position;
+void printStatsInWindow (PlayerStruct * player, WINDOW * stats_window)
+{	
+	mvwprintw(stats_window, 2, 3,"[%d,%d]", player->position.y, player->position.x);
+	return;
+}
+void printInventoryInWindow (Item ** inventory, WINDOW * inventory_window)
+{
 
-	// Gesture of ncurses's windows display refresh
-	//getmaxyx(windows->main_window, main_window_position.height, main_window_position.width); // Get Dimensions of a window
-	wresize(windows->main_window, windows->main_dimensions.height, windows->main_dimensions.width); // Resolves certain display bugs
+	return;
+}
 
+
+void refreshWindows(Windows * windows)
+{
+	// getmaxyx(windows->main_window, main_window_position.height, main_window_position.width); // Get Dimensions of a window
+
+	wresize(windows->main_window, windows->main_dimensions.height, windows->main_dimensions.width); // Resizes the window, fixes some display bugs
 	
 	wresize(windows->game_window, (0.75)*windows->main_dimensions.height, (0.70)*windows->main_dimensions.width);
 	box(windows->game_window, 0, 0); // 'Box' the window : had white outlines
-	wnoutrefresh(windows->game_window); // refresh game_window
+	wnoutrefresh(windows->game_window); // This function is used to refresh a window in the buffer but not on the screen.
 	
 	wresize(windows->text_window, (0.25)*windows->main_dimensions.height, (0.70)*windows->main_dimensions.width);
 	box(windows->text_window, 0, 0);
@@ -25,19 +42,19 @@ void render(Game * game, Windows * windows)
 	box(windows->stats_window, 0, 0);
 	wnoutrefresh(windows->stats_window);
 
-	wresize(windows->inventory_window, ((0.5)*windows->main_dimensions.height) - 1, (0.30)*windows->main_dimensions.width);
+	wresize(windows->inventory_window, ((0.5)*windows->main_dimensions.height), (0.30)*windows->main_dimensions.width);
 	box(windows->inventory_window, 0, 0);
 	wnoutrefresh(windows->inventory_window);
 
-	doupdate();
+	doupdate(); // This function is used to refresh the screen with any buffer changes that have been made
 }
 
-void drawMapInGameWindow(Game * game, Windows * windows)
+void printMapInWindow(Game * game, Windows * windows)
 {
     Dimensions game_window;
 
-    //game_window.height = MAIN_WINDOW_HEIGHT;
-    //game_window.width = MAIN_WINDOW_WIDTH;
+    //game_window.height = (0.75)*windows->main_dimensions.height;
+    //game_window.width = (0.70)*windows->main_dimensions.width;
 
     getmaxyx(windows->game_window, game_window.height, game_window.width); // Get the game display window dimensions
 

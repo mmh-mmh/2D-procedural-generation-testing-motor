@@ -37,7 +37,7 @@ Windows* windowsSetup()
     windows->stats_window = derwin(windows->main_window, stats_height, stats_width, stats_y, stats_x);
 
     
-    int inventory_height = ((0.5)*windows->main_dimensions.height) - 1;
+    int inventory_height = ((0.5)*windows->main_dimensions.height);
     int inventory_width = (0.30)*windows->main_dimensions.width;
     int inventory_y = stats_height;
     int inventory_x = game_width;

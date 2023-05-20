@@ -37,7 +37,7 @@ void mapSetup(Map * map)
 				map->tiles[y][x] = ' ';
 			}
 			
-			map->colors[y][x] = 2;
+			map->colors[y][x] = WHITE_ON_DEFAULT;
 		}
 	}
 }
