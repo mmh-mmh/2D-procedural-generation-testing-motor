@@ -70,18 +70,18 @@ int mainMenu(Windows * windows, int numberItems, char * choices[])
 
     int menu_width = 40;
     int menu_height = 10;
-    int menu_y = ((0.5)*windows->main_dimensions.height) - menu_height;
-    int menu_x = ((0.5)*windows->main_dimensions.width) - menu_width;
+    int menu_y = ((0.5)*windows->main_dimensions.height) - (menu_height/2);
+    int menu_x = ((0.5)*windows->main_dimensions.width) - (menu_width/2);
 
     WINDOW * menuwin = derwin(windows->main_window, menu_height, menu_width, menu_y, menu_x);
     keypad(menuwin, TRUE);
 
-    //associer la fenêtre au menu
-    set_menu_win(menu, menuwin);
-    //créer une sous-fenêtre pour les options
-    set_menu_sub(menu, derwin(menuwin, numberItems+2, 28, 1, 1));
-    //afficher les options sur une seule colonne
-    set_menu_format(menu, numberItems, 1);
+    
+    set_menu_win(menu, menuwin); //associer la fenêtre au menu
+    
+    set_menu_sub(menu, derwin(menuwin, numberItems+2, 28, 1, 1)); //créer une sous-fenêtre pour les options
+ 
+    set_menu_format(menu, numberItems, 1); //afficher les options sur une seule colonne
     post_menu(menu);
     wrefresh(menuwin);
 
@@ -101,6 +101,7 @@ int mainMenu(Windows * windows, int numberItems, char * choices[])
             case KEY_UP:
                 menu_driver(menu, REQ_UP_ITEM);
                 break;
+                
             //entrer = 10 en ASCII
             case 10:
                 current = current_item(menu);

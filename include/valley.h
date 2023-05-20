@@ -26,8 +26,8 @@
 
 #define MAIN_WINDOW_HEIGHT 31
 #define MAIN_WINDOW_WIDTH 131
-#define MAIN_WINDOW_POSITION_Y 1
-#define MAIN_WINDOW_POSITION_X 3
+#define MAIN_WINDOW_POSITION_Y 0
+#define MAIN_WINDOW_POSITION_X 0
 
 #define NOISE_DENSITY 60
 #define CELLULAR_AUTOMATON_ITERATIONS 12
@@ -47,7 +47,7 @@ typedef struct Position
 	int y;
 	int x;
 } Position;
-q
+
 typedef struct Dimensions
 {
 	int height;
@@ -72,6 +72,7 @@ typedef struct Map
 {
     Dimensions dimensions;
     char ** tiles;
+	char ** tiles_save;
 	int ** colors;
 } Map;
 
@@ -175,6 +176,7 @@ void screenSetup();
 PlayerStruct * playerSetup();
 void setRandomSpawn(Game * game);
 Position handleInput(Game * game, Windows * windows, int input);
+void handleMovable(PlayerStruct * player, Map * map, Position position_offset);
 void handleInteraction(Game * game, Windows * windows);
 void checkPosition(Position position_offset, Game * game, Windows * window);
 void playerMove(Position position_offset, Game * game, Windows * windows);

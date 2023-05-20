@@ -45,16 +45,16 @@ void mapSetup(Map * map)
 
 char ** copyMap(Map * map)
 {
-	char ** temp_tiles = malloc(map->dimensions.height * sizeof(char *));
+	char ** tiles_save = malloc(map->dimensions.height * sizeof(char *));
 
 	for (int y = 0; y < map->dimensions.height; y++)
 	{
-		temp_tiles[y] = malloc(map->dimensions.width * sizeof(char));
+		tiles_save[y] = malloc(map->dimensions.width * sizeof(char));
 
 		for (int x = 0; x < map->dimensions.width; x++)
 		{
-				temp_tiles[y][x] = map->tiles[y][x];
+				tiles_save[y][x] = map->tiles[y][x];
 		}
 	}
-	return temp_tiles;
+	return tiles_save;
 }

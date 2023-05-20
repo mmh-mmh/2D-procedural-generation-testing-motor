@@ -106,6 +106,7 @@ void handleInteraction(Game * game, Windows * windows)
 				case 'G':
 					//combat()
 					break;
+
 				default:
 					break;
 			}
@@ -121,18 +122,7 @@ void checkPosition(Position position_offset, Game * game, Windows * windows)
 
 	if (new.y >= 0 && new.y < game->map->dimensions.height && new.x >= 0 && new.x < game->map->dimensions.width)
     {
-    	switch (game->map->tiles[game->player->position.y + position_offset.y][game->player->position.x + position_offset.x])
-    	{
-     		case 'X': // If moves towards an enemy
-    	    case 'G':
-    	    case 'T':
-     	    	//combat(...);
-				break;
-
-    	    default: // If else
-					playerMove(position_offset, game, windows); // Manage how to move the player
-    	        break;
-		}
+		playerMove(position_offset, game, windows); // Manage how to move the player
 	}
 }
 
@@ -158,7 +148,7 @@ void playerMove(Position position_offset, Game * game, Windows * windows)
 
 		// If movable
 		case 'O': 
-			//handleMovable();
+			handleMovable(game->player, game->map, position_offset);
 		break;
 
 		default: // If crossable
@@ -167,3 +157,31 @@ void playerMove(Position position_offset, Game * game, Windows * windows)
 	}
 }
 
+void handleMovable(PlayerStruct * player, Map * map, Position position_offset)
+{
+	Position newMovablePosition;
+	Position newPlayerPosition;
+
+	newPlayerPosition.y = player->position.y + position_offset.y;
+	newPlayerPosition.x = player->position.x + position_offset.x;
+
+	newMovablePosition.y = newPlayerPosition.y + position_offset.y;
+	newMovablePosition.x = newPlayerPosition.x + position_offset.x;
+
+	switch(map->tiles[newMovablePosition.y][newMovablePosition.x])
+	{
+		case ',':
+		case '"':
+		case '*':
+			map->tiles[newMovablePosition.y][newMovablePosition.x] = 'O';
+			map->tiles[newPlayerPosition.y][newPlayerPosition.x] = map->tiles_save[newPlayerPosition.y][newPlayerPosition.x];
+
+			player->position.y = newPlayerPosition.y;
+			player->position.x = newPlayerPosition.x;
+
+			break;
+
+		default:
+			break;
+	}
+}
