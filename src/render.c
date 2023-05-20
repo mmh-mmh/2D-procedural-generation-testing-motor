@@ -14,14 +14,30 @@ void render(Game * game, Windows * windows)
 
 void printStatsInWindow (PlayerStruct * player, WINDOW * stats_window)
 {	
-	mvwprintw(stats_window, 2, 3,"[%d,%d]", player->position.y, player->position.x);
+	mvwprintw(stats_window, 2, 3, "[%d,%d]", player->position.y, player->position.x);
+
+	mvwprintw(stats_window, 4, 3, "HP   %d/%d", player->health, player->max_health);
+
+	if(player->inventory[0] != NULL)
+	{
+		mvwprintw(stats_window, 5, 3, "ATK  %d + %d", player->base_attack , (*player->inventory)->mainItems.weapon->damage);
+	}
+	else
+	{
+		mvwprintw(stats_window, 5, 3, "ATK  %d", player->base_attack);
+	}
+
+
 	return;
 }
 void printInventoryInWindow (PlayerStruct * player, WINDOW * inventory_window)
 {
 	for(int i = 0; i < player->inventory_size; i++)
 	{
-		mvwprintw(inventory_window, i + 1, 1,"%s", player->inventory[i]->name);
+		if(player->inventory[i] != NULL)
+		{
+			mvwprintw(inventory_window, (i+1), 1,"%d - %s", (i+1), player->inventory[i]->name);
+		}
 	}
 
 	return;

@@ -38,6 +38,9 @@
 #define DUNGEON_MINIMAL_DISTANCE_FROM_PLAYER 40
 #define HOUSE_MINIMAL_DISTANCE_FROM_DUNGEON 30
 
+#define PLAYER_MAX_HEALTH 20
+#define PLAYER_BASE_ATTACK 2
+
 typedef struct Position
 {
 	int y;
@@ -126,8 +129,11 @@ typedef struct PlayerStruct
 	char skin;
 	int health;
     int max_health;
+	int base_attack;
+	int attack;
 	Item ** inventory;
 	int inventory_size;
+
     int score;
 } PlayerStruct;
 

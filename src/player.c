@@ -6,6 +6,10 @@ PlayerStruct * playerSetup()
 	player->skin = '@'; // Set player char
 	player->inventory_size = 3;
 	initPlayerInventory(player);
+	player->max_health = PLAYER_MAX_HEALTH;
+	player->health = player->max_health;
+	player->base_attack = PLAYER_BASE_ATTACK;
+	player->attack = player->base_attack;
 
 	return player;
 }
@@ -19,6 +23,7 @@ void initPlayerInventory(PlayerStruct * player)
     for(int i = 0; i < size; i++)
     {
         player->inventory[i] = malloc(sizeof(Item));
+		player->inventory[i] = NULL;
     }
 }
 
