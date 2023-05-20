@@ -40,7 +40,7 @@ void setRandomSpawn(Game * game)
 }
 
 
-Position handleInput(int input) 
+Position handleInput(Game * game, Windows * windows, int input) 
 {
 	Position position_offset;
 
@@ -70,12 +70,48 @@ Position handleInput(int input)
 			position_offset.x = + 1;
 			break;
 
+		case 'e':
+			handleInteraction(game, windows);
 		default :
 			break;	
 	}
 	return position_offset;
 }
 
+void handleInteraction(Game * game, Windows * windows)
+{
+	for (int y = game->player->position.y - 1; y <= game->player->position.y + 1; y++)
+	{
+		for (int x = game->player->position.x - 1; x <= game->player->position.x + 1; x++)
+		{
+			switch (game->map->tiles[y][x])
+			{
+				case 'W':
+					ManageWizardInteractions(game, windows);
+					break;
+
+
+				case '%':
+					if (game->player->attack >= 3) // 3 is the minimal required attack to break
+					{
+						game->map->tiles[y][x] = ' ';
+					}
+					else
+					{
+						mvwprintw(windows->text_window, 1, 1, "Dammit ! The door is obstructed and im too weak to break it.");
+					}
+					break;
+
+
+				case 'G':
+					//combat()
+					break;
+				default:
+					break;
+			}
+		}
+	}
+}
 
 void checkPosition(Position position_offset, Game * game, Windows * windows)
 {
@@ -92,18 +128,16 @@ void checkPosition(Position position_offset, Game * game, Windows * windows)
     	    case 'T':
      	    	//combat(...);
 				break;
-			case 'W':
-				ManageWizardInteractions(game, windows);
-				break;
+
     	    default: // If else
-				playerMove(position_offset, game); // Manage how to move the player
+					playerMove(position_offset, game, windows); // Manage how to move the player
     	        break;
 		}
 	}
 }
 
 
-void playerMove(Position position_offset, Game * game)
+void playerMove(Position position_offset, Game * game, Windows * windows)
 {
 	Position new_position;
 
@@ -114,16 +148,22 @@ void playerMove(Position position_offset, Game * game)
 
 	switch (game->map->tiles[new_position.y][new_position.x])
 	{
-		case '%':
-		case '#': // If not crossable
+		// If not crossable
+		case '#': 
 		case '.':
 		case 'W':
+		case '%':
+		case '$':
 			break;
-		case 'O': // If movable
+
+		// If movable
+		case 'O': 
 			//handleMovable();
 		break;
+
 		default: // If crossable
 			game->player->position = new_position;
 			break;
 	}
 }
+

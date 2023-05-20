@@ -21,8 +21,8 @@
 #define BLACK_ON_WHITE 8
 #define DEFAULT_ON_DEFAULT 9
 
-#define MAP_HEIGHT 60
-#define MAP_WIDTH 80
+#define MAP_HEIGHT 80
+#define MAP_WIDTH 160
 
 #define MAIN_WINDOW_HEIGHT 31
 #define MAIN_WINDOW_WIDTH 131
@@ -33,6 +33,7 @@
 #define CELLULAR_AUTOMATON_ITERATIONS 12
 
 #define HOUSE_SIZE 6
+#define DUNGEON_SIZE 13
 
 #define HOUSE_MINIMAL_DISTANCE_FROM_PLAYER 20
 #define DUNGEON_MINIMAL_DISTANCE_FROM_PLAYER 40
@@ -46,7 +47,7 @@ typedef struct Position
 	int y;
 	int x;
 } Position;
-
+q
 typedef struct Dimensions
 {
 	int height;
@@ -173,9 +174,10 @@ void screenSetup();
 //player functions
 PlayerStruct * playerSetup();
 void setRandomSpawn(Game * game);
-Position handleInput(int input);
+Position handleInput(Game * game, Windows * windows, int input);
+void handleInteraction(Game * game, Windows * windows);
 void checkPosition(Position position_offset, Game * game, Windows * window);
-void playerMove(Position position_offset, Game * game);
+void playerMove(Position position_offset, Game * game, Windows * windows);
 void initPlayerInventory(PlayerStruct * player);
 
 // npc functions
@@ -238,5 +240,8 @@ bool isTooNear (Position a, Position b, int distance_limit);
 Item * genSword(int damage, int durability, char *name_sword);
 Item * genPotion(int heal_points, int quantity, char * name_potion);
 Item * genObject(int quantity, char skin,char * name_object, Position coordinate);
+
+//chest functions
+void genChestInMiddleOfStructure(Map * map, StructureStruct * structure);
 
 #endif

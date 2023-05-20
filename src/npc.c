@@ -37,6 +37,7 @@ void ManageWizardInteractions (Game * game, Windows * windows)
     if (game->npc->interactions_count == 0)
     {
         game->player->inventory[0] = genSword(5, 200, "rusty sword");
+        game->player->attack = game->player->base_attack + 5;
     }
 
     game->npc->interactions_count++;

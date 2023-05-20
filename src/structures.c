@@ -7,6 +7,9 @@ StructureStruct * StructureSetup(int SIZE, char door, bool chest)
     structure->dimensions.width = 2*SIZE;
     structure->door.type = door;
     structure->chest = chest;
+
+
+
     return structure;
 }
 
@@ -109,6 +112,11 @@ void generateStructure(Map * map, StructureStruct * structure)
     }
 
     PlaceDoorAtRandomSide(map, structure);
+
+    if (structure->chest = true)
+    {
+        genChestInMiddleOfStructure(map, structure);
+    }
 
 }
 

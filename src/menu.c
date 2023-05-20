@@ -2,14 +2,6 @@
 
 void menuLoop(Windows * windows)
 {
-
-    int menu_width = 30;
-    int menu_height = 6;
-    int menu_y = (0.5)*windows->main_position.y;
-    int menu_x = (0.5)*windows->main_position.x;
-
-    WINDOW * menu_window = derwin(windows->main_window, menu_height, menu_width, menu_y, menu_x );
-
     char * choices[] = {"Start a new adventure !", "Need some help ?", "Continue at your last checkpoint", "Quit game"};
     int choice = -1;
     while(choice !=0)
@@ -75,7 +67,13 @@ int mainMenu(Windows * windows, int numberItems, char * choices[])
     items[i] = NULL;
 
     menu = new_menu((ITEM**)items);
-    WINDOW * menuwin = derwin(windows->main_window, 10, 30, ((0.5)*windows->main_dimensions.height) - 10, ((0.5)*windows->main_dimensions.width) - 30);
+
+    int menu_width = 40;
+    int menu_height = 10;
+    int menu_y = ((0.5)*windows->main_dimensions.height) - menu_height;
+    int menu_x = ((0.5)*windows->main_dimensions.width) - menu_width;
+
+    WINDOW * menuwin = derwin(windows->main_window, menu_height, menu_width, menu_y, menu_x);
     keypad(menuwin, TRUE);
 
     //associer la fenêtre au menu

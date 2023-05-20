@@ -10,10 +10,10 @@ void gameLoop(Windows * windows)
 
     while (input != 'a') // Main loop
     {
-        position_offset = handleInput(input); // Return position offset suggested by current user input
-        
         wclear(windows->text_window);
 
+        position_offset = handleInput(game, windows, input); // Return position offset suggested by current user input
+        
         checkPosition(position_offset, game, windows); // Deal with what's where the player wants to move
 
         //moveMonsters(game);
@@ -29,8 +29,8 @@ Game * gameSetup()
     Game * new_game = malloc(sizeof(Game));
     new_game->player = playerSetup(); // malloc and set player stats
     new_game->map = createMap(MAP_HEIGHT, MAP_WIDTH); // malloc and create an empty map
-    new_game->house = StructureSetup(HOUSE_SIZE, ' ', false); // malloc structure, set size, door, and if chest
-    new_game->dungeon = StructureSetup(HOUSE_SIZE, '%', false);
+    new_game->house = StructureSetup(HOUSE_SIZE, '|', false); // malloc structure, set size, door, and if chest
+    new_game->dungeon = StructureSetup(DUNGEON_SIZE, '%', false);
     new_game->npc = wizardSetup(); // malloc and set position
 
     // Generate proceduraly ground and walls of the map, then try for max_trials to place the player and the structures in the map
