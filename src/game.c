@@ -46,10 +46,7 @@ Game * gameSetup()
     placeNpcInStructure(new_game->map, new_game->house, new_game->npc);
 
 
-
-	genMonster(new_game->map, 20,5,'T');
-	genMonster(new_game->map, 12,6,'X');
-	genMonster(new_game->map, 10,3,'G');
+    MobStruct * mob = genMonster(new_game->map, 10,3,'G');
     
     
     return new_game;
