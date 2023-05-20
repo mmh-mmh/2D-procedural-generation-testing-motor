@@ -148,7 +148,7 @@ void playerMove(Position position_offset, Game * game, Windows * windows)
 
 		// If movable
 		case 'O': 
-			handleMovable(game->player, game->map, position_offset);
+			handleMovable(&game->player->position, game->map, position_offset);
 		break;
 
 		default: // If crossable
@@ -157,33 +157,44 @@ void playerMove(Position position_offset, Game * game, Windows * windows)
 	}
 }
 
-void handleMovable(PlayerStruct * player, Map * map, Position position_offset)
+void handleMovable(Position * movingPosition, Map * map, Position position_offset)
 {
-	Position newMovablePosition;
-	Position newPlayerPosition;
+    Position newMovingPosition;
+    Position newMovedPosition;
 
-	newPlayerPosition.y = player->position.y + position_offset.y;
-	newPlayerPosition.x = player->position.x + position_offset.x;
+    newMovingPosition.y = movingPosition->y + position_offset.y;
+    newMovingPosition.x = movingPosition->x + position_offset.x;
 
-	newMovablePosition.y = newPlayerPosition.y + position_offset.y;
-	newMovablePosition.x = newPlayerPosition.x + position_offset.x;
+    newMovedPosition.y = newMovingPosition.y + position_offset.y;
+    newMovedPosition.x = newMovingPosition.x + position_offset.x;
 
-	switch(map->tiles[newMovablePosition.y][newMovablePosition.x])
-	{
-		case ',':
-		case '"':
-		case '*':
-			map->tiles[newMovablePosition.y][newMovablePosition.x] = 'O';
-			map->tiles[newPlayerPosition.y][newPlayerPosition.x] = map->tiles_save[newPlayerPosition.y][newPlayerPosition.x];
+    switch(map->tiles[newMovedPosition.y][newMovedPosition.x])
+    {
+        case ',':
+        case '"':
+        case '*':
+        case ' ':
+            // If the new moved position is empty, move the 'O' there
+            map->tiles[newMovedPosition.y][newMovedPosition.x] = 'O';
 
-			player->position.y = newPlayerPosition.y;
-			player->position.x = newPlayerPosition.x;
-			break;
+            // Update the player's position
+            movingPosition->y = newMovingPosition.y;
+            movingPosition->x = newMovingPosition.x;
+            break;
 
-		case 'O':
-			break;
+        case 'O':
+            // If the new moved position has an 'O', move it recursively first
+            handleMovable(&newMovedPosition, map, position_offset);
 
-		default:
-			break;
-	}
+            // Only after moving the next 'O' do we clear the current 'O'
+            map->tiles[newMovingPosition.y][newMovingPosition.x] = map->tiles_save[newMovingPosition.y][newMovingPosition.x];
+
+            // Also update the player's position after moving the next 'O'
+            movingPosition->y = newMovingPosition.y;
+            movingPosition->x = newMovingPosition.x;
+            break;
+
+        default:
+            break;
+    }
 }

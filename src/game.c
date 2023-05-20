@@ -8,6 +8,9 @@ void gameLoop(Windows * windows)
     Position position_offset; // Offset suggested by the user's inputs (if move up -> y-1 , x)
     int input = 0;
 
+    game->player->position.y = game->dungeon->position.y+1;
+    game->player->position.x = game->dungeon->position.x+1;
+
     while (input != 'a') // Main loop
     {
         wclear(windows->text_window);
@@ -42,9 +45,10 @@ Game * gameSetup()
     {   
         clearMap(new_game->map); // Sets map to default : empty with # on extremities
         mapProceduralGeneration(new_game->map); // Proceduraly generate map inside the walls;
+        new_game->map->tiles_save = copyMap(new_game->map); // copy the tiles to help handling movables later (replacing tile after they moved)
     } while ( !TryToPlacePlayerAndStructuresForMaxTrials(new_game, max_trials));
 
-    new_game->map->tiles_save = copyMap(new_game->map); // copy the tiles to help handling movables later (replacing tile after they moved)
+     
 
     
     // place the npc giving the quest in the house 

@@ -176,7 +176,7 @@ void screenSetup();
 PlayerStruct * playerSetup();
 void setRandomSpawn(Game * game);
 Position handleInput(Game * game, Windows * windows, int input);
-void handleMovable(PlayerStruct * player, Map * map, Position position_offset);
+void handleMovable(Position * movingPosition, Map * map, Position position_offset);
 void handleInteraction(Game * game, Windows * windows);
 void checkPosition(Position position_offset, Game * game, Windows * window);
 void playerMove(Position position_offset, Game * game, Windows * windows);
