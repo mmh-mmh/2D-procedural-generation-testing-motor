@@ -23,15 +23,17 @@ bool TryToPlacePlayerAndStructuresForMaxTrials(Game * game, int max_trials)
     generateRandomStructurePosition(game->map, game->house);
     generateRandomStructurePosition(game->map, game->dungeon);
 
-    trials++;
+    
 
-        if (trials >= max_trials) // If trials reaches maxTrials, return to create another map
-        {
-            return FALSE; //map is unvalid
-        }
+    if (trials >= max_trials) // If trials reaches maxTrials, return to create another map
+    {
+        return FALSE; //map is unvalid
+    }
+    trials++;
 
     // Checking if the structures are reachable by the player, not too near from each other and not too near from the player
     } while (!ArePlayerHouseAndDungeonWellPlaced(game)); 
+
 
     // Generates house and dungeon in the map array
     generateStructure(game->map, game->house);
@@ -113,7 +115,7 @@ void generateStructure(Map * map, StructureStruct * structure)
 
     PlaceDoorAtRandomSide(map, structure);
 
-    if (structure->chest = true)
+    if (structure->chest == true)
     {
         genChestInMiddleOfStructure(map, structure);
     }

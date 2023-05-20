@@ -178,7 +178,9 @@ void handleMovable(PlayerStruct * player, Map * map, Position position_offset)
 
 			player->position.y = newPlayerPosition.y;
 			player->position.x = newPlayerPosition.x;
+			break;
 
+		case 'O':
 			break;
 
 		default:

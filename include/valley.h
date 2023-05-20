@@ -21,8 +21,8 @@
 #define BLACK_ON_WHITE 8
 #define DEFAULT_ON_DEFAULT 9
 
-#define MAP_HEIGHT 80
-#define MAP_WIDTH 160
+#define MAP_HEIGHT 90
+#define MAP_WIDTH 180
 
 #define MAIN_WINDOW_HEIGHT 31
 #define MAIN_WINDOW_WIDTH 131
@@ -30,14 +30,14 @@
 #define MAIN_WINDOW_POSITION_X 0
 
 #define NOISE_DENSITY 60
-#define CELLULAR_AUTOMATON_ITERATIONS 12
+#define CELLULAR_AUTOMATON_ITERATIONS 13
 
-#define HOUSE_SIZE 6
-#define DUNGEON_SIZE 13
+#define HOUSE_SIZE 7
+#define DUNGEON_SIZE 11
 
 #define HOUSE_MINIMAL_DISTANCE_FROM_PLAYER 20
-#define DUNGEON_MINIMAL_DISTANCE_FROM_PLAYER 40
-#define HOUSE_MINIMAL_DISTANCE_FROM_DUNGEON 30
+#define DUNGEON_MINIMAL_DISTANCE_FROM_PLAYER 50
+#define HOUSE_MINIMAL_DISTANCE_FROM_DUNGEON 40
 
 #define PLAYER_MAX_HEALTH 20
 #define PLAYER_BASE_ATTACK 2
@@ -192,8 +192,8 @@ void ManageWizardInteractions(Game * game, Windows * windows);
 MobStruct * genMonster(Map * map, int health, int attack, char skin);
 
 //map functions
-Map * createMap();
-void mapSetup(Map * map);
+Map * mapSetup(int height, int width);
+void clearMap(Map * map);
 char ** copyMap(Map * map);
 bool TryToPlaceHouseAndPlayerForMaxTrials(Game * game, int max_trials);
 
