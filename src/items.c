@@ -37,14 +37,12 @@ Item * genPotion(int heal_points, int quantity, char * name_potion)
 	return medicine;
 }
 
-Item * genObject(int quantity, char skin, char * name_object, Position coordinate)
+Item * genObject(int quantity, char skin, char * name_object)
 {
 	Item * article = malloc(sizeof(Item));
 	strcpy(article->name, name_object);
 	article->mainItems.object = malloc(sizeof(Object));
 	article->mainItems.object->quantity = quantity;
 	article->mainItems.object->skin = skin;
-	article->mainItems.object->coordinate->x = coordinate.x; // if you wanna 
-	article->mainItems.object->coordinate->y = coordinate.y;
 	return article;
 }

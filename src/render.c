@@ -30,6 +30,7 @@ void printStatsInWindow (PlayerStruct * player, WINDOW * stats_window)
 
 	return;
 }
+
 void printInventoryInWindow (PlayerStruct * player, WINDOW * inventory_window)
 {
 	for(int i = 0; i < player->inventory_size; i++)

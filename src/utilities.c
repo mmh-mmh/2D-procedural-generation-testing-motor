@@ -31,3 +31,35 @@ bool isTooNear (Position a, Position b, int distance_limit)
         return FALSE;
     }
 }
+
+char ** copyCharArrayOfArray(char ** array, Dimensions dimensions)
+{
+	char ** char_array_copy = malloc(dimensions.height * sizeof(char *));
+
+	for (int y = 0; y < dimensions.height; y++)
+	{
+		char_array_copy[y] = malloc(dimensions.width * sizeof(char));
+
+		for (int x = 0; x < dimensions.width; x++)
+		{
+				char_array_copy[y][x] = array[y][x];
+		}
+	}
+	return char_array_copy;
+}
+
+int ** copyIntArrayOfArray(int ** array, Dimensions dimensions)
+{
+	int ** int_array_copy = malloc(dimensions.height * sizeof(int *));
+
+	for (int y = 0; y < dimensions.height; y++)
+	{
+		int_array_copy[y] = malloc(dimensions.width * sizeof(int));
+
+		for (int x = 0; x < dimensions.width; x++)
+		{
+				int_array_copy[y][x] = array[y][x];
+		}
+	}
+	return int_array_copy;	
+}

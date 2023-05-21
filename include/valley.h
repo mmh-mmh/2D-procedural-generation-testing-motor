@@ -66,6 +66,8 @@ typedef struct StructureStruct
 	Dimensions dimensions;
 	DoorStruct door;
 	bool chest;
+	Position chest_position;
+	int chest_interaction_count;
 } StructureStruct;
 
 typedef struct Map
@@ -74,6 +76,7 @@ typedef struct Map
     char ** tiles;
 	char ** tiles_save;
 	int ** colors;
+	int ** colors_save;
 } Map;
 
 typedef struct MobStruct
@@ -176,7 +179,7 @@ void screenSetup();
 PlayerStruct * playerSetup();
 void setRandomSpawn(Game * game);
 Position handleInput(Game * game, Windows * windows, int input);
-void handleMovable(Position * movingPosition, Map * map, Position position_offset);
+bool handleMovable(Position * pushing_position, Map * map, Position position_offset);
 void handleInteraction(Game * game, Windows * windows);
 void checkPosition(Position position_offset, Game * game, Windows * window);
 void playerMove(Position position_offset, Game * game, Windows * windows);
@@ -194,8 +197,10 @@ MobStruct * genMonster(Map * map, int health, int attack, char skin);
 //map functions
 Map * mapSetup(int height, int width);
 void clearMap(Map * map);
-char ** copyMap(Map * map);
+void SaveMapTilesAndColors(Map * map);
+
 bool TryToPlaceHouseAndPlayerForMaxTrials(Game * game, int max_trials);
+void mapGeneration(Game * game);
 
 // Structure functions
 StructureStruct * StructureSetup(int SIZE, char door, bool chest);
@@ -237,13 +242,16 @@ void CheckConstants();
 //utilities functions
 bool isNear(Position a, Position b);
 bool isTooNear (Position a, Position b, int distance_limit);
+char ** copyCharArrayOfArray(char ** array, Dimensions dimensions);
+int ** copyIntArrayOfArray(int ** array, Dimensions dimensions);
 
 //item functions
 Item * genSword(int damage, int durability, char *name_sword);
 Item * genPotion(int heal_points, int quantity, char * name_potion);
-Item * genObject(int quantity, char skin,char * name_object, Position coordinate);
+Item * genObject(int quantity, char skin,char * name_object);
 
 //chest functions
 void genChestInMiddleOfStructure(Map * map, StructureStruct * structure);
+void manageChestInteraction(Game * game, Windows * windows, Position chest_position);
 
 #endif

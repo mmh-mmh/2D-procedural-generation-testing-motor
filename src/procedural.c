@@ -91,7 +91,7 @@ void mapApplyCellularAutomaton(Map * map, int count)
     // if not, place ground
     for (int i = 0; i < count; i++)
     {
-        char ** temp_tiles = copyMap(map); // Copy original map state to use it
+        char ** temp_tiles = copyCharArrayOfArray(map->tiles,  map->dimensions); // Copy original map state to use it for the checking
 
         for (int k = 1; k < map->dimensions.height - 1; k++) // Check every tile on the map
         {

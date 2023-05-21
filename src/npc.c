@@ -28,7 +28,15 @@ void placeNpcInStructure(Map * map, StructureStruct * structure, npcStruct * npc
 
 
 void ManageWizardInteractions (Game * game, Windows * windows)
-{
+{   
+    
+    if(game->player->inventory[3] != NULL)
+    {
+        mvwprintw(windows->text_window, 1, 1, "Well, hum, thanks for the flowers. That's cool.");
+        game->player->inventory[3] = NULL;
+        return;
+    }
+
     mvwprintw(windows->text_window, 1, 1, "%s : HEY YOU. Go get me my magic hat you weird looking boy.", game->npc->name);
     mvwprintw(windows->text_window, 2, 1, "%s : I forgot it in this monsterful dungeon in [%d,%d].", game->npc->name, game->dungeon->position.y,game->dungeon->position.x);
     mvwprintw(windows->text_window, 3, 1, "%s : Take this sword, you're gonna need it to break the entrance.", game->npc->name);

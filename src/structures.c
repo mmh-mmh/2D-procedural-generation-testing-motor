@@ -108,12 +108,14 @@ void generateStructure(Map * map, StructureStruct * structure)
             else // If not, place ground
             {
                 map->tiles[y][x] = ' ';
-                map->colors[y][x] = DEFAULT_ON_DEFAULT;
+                map->colors[y][x] = WHITE_ON_DEFAULT;
             }
         }
     }
 
     PlaceDoorAtRandomSide(map, structure);
+
+    SaveMapTilesAndColors(map); // copy the map before movables are added to help handling movables later (replacing tile after they moved)
 
     if (structure->chest == true)
     {

@@ -7,7 +7,6 @@ Map * mapSetup(int height, int width)
 	map->dimensions.height = height;
 	map->dimensions.width = width;
 
-	char ** tiles;
 	map->tiles = malloc(sizeof(char*) * map->dimensions.height);
 	map->colors = malloc(sizeof(int*) * map->dimensions.height);
 
@@ -20,6 +19,19 @@ Map * mapSetup(int height, int width)
 	return map;
 }
 
+void mapGeneration (Game * game)
+{
+	// Generate proceduraly ground and walls of the map, then try for max_trials to place the player and the structures in the map
+    // They must verify certain conditions (not being too near, being reachable...)
+    // If max_trials reached, regenerate a map and retry
+    int max_trials = 10000;
+    do
+    {   
+        clearMap(game->map); // Sets map to default : empty with # on extremities
+        mapProceduralGeneration(game->map); // Proceduraly generate map inside the walls;
+    } while ( !TryToPlacePlayerAndStructuresForMaxTrials(game, max_trials));
+}
+
 void clearMap(Map * map)
 {	
 	for (int y = 0; y < map->dimensions.height; y++)
@@ -29,7 +41,6 @@ void clearMap(Map * map)
 			if (y == 0 || y == map->dimensions.height - 1 || x == 0 || x == map->dimensions.width - 1)
 			{
 				map->tiles[y][x] = '#';
-
 			}
 			else
 			{
@@ -41,19 +52,8 @@ void clearMap(Map * map)
 	}
 }
 
-
-char ** copyMap(Map * map)
+void SaveMapTilesAndColors(Map * map)
 {
-	char ** tiles_save = malloc(map->dimensions.height * sizeof(char *));
-
-	for (int y = 0; y < map->dimensions.height; y++)
-	{
-		tiles_save[y] = malloc(map->dimensions.width * sizeof(char));
-
-		for (int x = 0; x < map->dimensions.width; x++)
-		{
-				tiles_save[y][x] = map->tiles[y][x];
-		}
-	}
-	return tiles_save;
+	map->tiles_save = copyCharArrayOfArray(map->tiles, map->dimensions);
+	map->colors_save = copyIntArrayOfArray(map->colors, map->dimensions);
 }

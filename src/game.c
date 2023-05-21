@@ -8,9 +8,6 @@ void gameLoop(Windows * windows)
     Position position_offset; // Offset suggested by the user's inputs (if move up -> y-1 , x)
     int input = 0;
 
-    game->player->position.y = game->dungeon->position.y+1;
-    game->player->position.x = game->dungeon->position.x+1;
-
     while (input != 'a') // Main loop
     {
         wclear(windows->text_window);
@@ -36,21 +33,8 @@ Game * gameSetup()
     new_game->dungeon = StructureSetup(DUNGEON_SIZE, '%', true);
     new_game->npc = wizardSetup(); // malloc and set position
 
+    mapGeneration(new_game);
 
-    // Generate proceduraly ground and walls of the map, then try for max_trials to place the player and the structures in the map
-    // They must verify certain conditions (not being too near, being reachable...)
-    // If max_trials reached, regenerate a map and retry
-    int max_trials = 10000;
-    do
-    {   
-        clearMap(new_game->map); // Sets map to default : empty with # on extremities
-        mapProceduralGeneration(new_game->map); // Proceduraly generate map inside the walls;
-        new_game->map->tiles_save = copyMap(new_game->map); // copy the tiles to help handling movables later (replacing tile after they moved)
-    } while ( !TryToPlacePlayerAndStructuresForMaxTrials(new_game, max_trials));
-
-     
-
-    
     // place the npc giving the quest in the house 
     placeNpcInStructure(new_game->map, new_game->house, new_game->npc);
 

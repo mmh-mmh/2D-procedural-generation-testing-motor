@@ -4,7 +4,7 @@ PlayerStruct * playerSetup()
 {
 	PlayerStruct * player = malloc(sizeof(PlayerStruct));
 	player->skin = '@'; // Set player char
-	player->inventory_size = 3;
+	player->inventory_size = 4;
 	initPlayerInventory(player);
 	player->max_health = PLAYER_MAX_HEALTH;
 	player->health = player->max_health;
@@ -80,12 +80,22 @@ Position handleInput(Game * game, Windows * windows, int input)
 
 void handleInteraction(Game * game, Windows * windows)
 {
+	Position object_position;
+	
 	for (int y = game->player->position.y - 1; y <= game->player->position.y + 1; y++)
 	{
 		for (int x = game->player->position.x - 1; x <= game->player->position.x + 1; x++)
 		{
 			switch (game->map->tiles[y][x])
 			{
+				case '*':
+
+					game->map->tiles[y][x] = ' ';
+					game->map->colors[y][x] = WHITE_ON_DEFAULT;
+					game->player->inventory[3] = genObject(1, '*', "Flowers");
+					mvwprintw(windows->text_window, 1, 1, "mmmmhhhhh.....flowies.");
+					break;
+
 				case 'W':
 					ManageWizardInteractions(game, windows);
 					break;
@@ -102,6 +112,17 @@ void handleInteraction(Game * game, Windows * windows)
 					}
 					break;
 
+				case 'O':
+					game->map->tiles[y][x] = ' ';
+					break;
+				case '$':
+					object_position.y = y;
+					object_position.x = x;
+					manageChestInteraction(game, windows, object_position);
+					break;
+
+				case '=':
+					mvwprintw(windows->text_window, 1, 1, "Broken, just like me.");
 
 				case 'G':
 					//combat()
@@ -147,7 +168,7 @@ void playerMove(Position position_offset, Game * game, Windows * windows)
 			break;
 
 		// If movable
-		case 'O': 
+		case 'O':
 			handleMovable(&game->player->position, game->map, position_offset);
 		break;
 
@@ -157,44 +178,40 @@ void playerMove(Position position_offset, Game * game, Windows * windows)
 	}
 }
 
-void handleMovable(Position * movingPosition, Map * map, Position position_offset)
+bool handleMovable(Position * pushing_position, Map * map, Position position_offset)
 {
-    Position newMovingPosition;
-    Position newMovedPosition;
+	
+    Position new_pushing_position; // position of the pushing object (firstly being the player)
+    Position new_pushed_position; // position of the pushed object (firstly being a movable)
 
-    newMovingPosition.y = movingPosition->y + position_offset.y;
-    newMovingPosition.x = movingPosition->x + position_offset.x;
+    new_pushing_position.y = pushing_position->y + position_offset.y; // new positions suggested by the player displacement input
+    new_pushing_position.x = pushing_position->x + position_offset.x;
 
-    newMovedPosition.y = newMovingPosition.y + position_offset.y;
-    newMovedPosition.x = newMovingPosition.x + position_offset.x;
+    new_pushed_position.y = new_pushing_position.y + position_offset.y;
+    new_pushed_position.x = new_pushing_position.x + position_offset.x;
 
-    switch(map->tiles[newMovedPosition.y][newMovedPosition.x])
+    switch(map->tiles[new_pushed_position.y][new_pushed_position.x]) // Check the tile where we want to move the movable
     {
+		case 'O':
+            if (handleMovable(&new_pushing_position, map, position_offset) == 0) // recursively calls the function to check the tile behind the string of movable
+			{
+				return 0; // 0 is returned by every call if the last call returns 0
+			}
         case ',':
         case '"':
         case '*':
         case ' ':
-            // If the new moved position is empty, move the 'O' there
-            map->tiles[newMovedPosition.y][newMovedPosition.x] = 'O';
+            // If we can move the string of 'O' move the last and then the followings returning 1 to each call 
 
-            // Update the player's position
-            movingPosition->y = newMovingPosition.y;
-            movingPosition->x = newMovingPosition.x;
-            break;
+            map->tiles[new_pushed_position.y][new_pushed_position.x] = 'O';
+			map->colors[new_pushed_position.y][new_pushed_position.x] = WHITE_ON_DEFAULT;
 
-        case 'O':
-            // If the new moved position has an 'O', move it recursively first
-            handleMovable(&newMovedPosition, map, position_offset);
-
-            // Only after moving the next 'O' do we clear the current 'O'
-            map->tiles[newMovingPosition.y][newMovingPosition.x] = map->tiles_save[newMovingPosition.y][newMovingPosition.x];
-
-            // Also update the player's position after moving the next 'O'
-            movingPosition->y = newMovingPosition.y;
-            movingPosition->x = newMovingPosition.x;
-            break;
-
+			// Move the 0 then restore the original tile state
+			map->tiles[new_pushing_position.y][new_pushing_position.x] = map->tiles_save[new_pushing_position.y][new_pushing_position.x];
+			map->colors[new_pushing_position.y][new_pushing_position.x] = map->colors_save[new_pushing_position.y][new_pushing_position.x];
+			return 1;
+			
         default:
-            break;
+			return 0; // If the there is finally an unmovable being the string, return 0, which will return 0
     }
 }
