@@ -3,6 +3,7 @@
 PlayerStruct * playerSetup()
 {
 	PlayerStruct * player = malloc(sizeof(PlayerStruct));
+	player->score = 0;
 	player->skin = '@'; // Set player char
 	player->inventory_size = 4;
 	initPlayerInventory(player);
@@ -94,6 +95,7 @@ void handleInteraction(Game * game, Windows * windows)
 					game->map->colors[y][x] = WHITE_ON_DEFAULT;
 					game->player->inventory[3] = genObject(1, '*', "Flowers");
 					mvwprintw(windows->text_window, 1, 1, "mmmmhhhhh.....flowies.");
+					game->player->score += 1;
 					break;
 
 				case 'W':
@@ -114,6 +116,7 @@ void handleInteraction(Game * game, Windows * windows)
 
 				case 'O':
 					game->map->tiles[y][x] = ' ';
+					game->player->score += 1;
 					break;
 				case '$':
 					object_position.y = y;

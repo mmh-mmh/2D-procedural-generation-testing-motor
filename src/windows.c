@@ -14,7 +14,7 @@ Windows* windowsSetup()
 
 
     int game_height = (0.75)*windows->main_dimensions.height; 
-    int game_width = (0.70)*windows->main_dimensions.width;      
+    int game_width = (0.80)*windows->main_dimensions.width;      
     int game_y = 0;                         
     int game_x = 0;                         
 
@@ -22,7 +22,7 @@ Windows* windowsSetup()
 
 
     int text_height = (0.25)*windows->main_dimensions.height;
-    int text_width = (0.70)*windows->main_dimensions.width;
+    int text_width = (0.80)*windows->main_dimensions.width;
     int text_y = game_height;
     int text_x = 0;
 
@@ -30,7 +30,7 @@ Windows* windowsSetup()
 
 
 	int stats_height = (0.5)*windows->main_dimensions.height;
-	int stats_width = (0.30)*windows->main_dimensions.width;
+	int stats_width = (0.20)*windows->main_dimensions.width;
 	int stats_y = 0;
 	int stats_x = game_width;
 
@@ -38,7 +38,7 @@ Windows* windowsSetup()
 
     
     int inventory_height = ((0.5)*windows->main_dimensions.height);
-    int inventory_width = (0.30)*windows->main_dimensions.width;
+    int inventory_width = (0.20)*windows->main_dimensions.width;
     int inventory_y = stats_height;
     int inventory_x = game_width;
 

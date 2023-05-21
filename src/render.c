@@ -6,38 +6,57 @@ void render(Game * game, Windows * windows)
 
     printMapInWindow(game, windows); // As it says
 	printInventoryInWindow(game->player, windows->inventory_window); // Seeks player's inventory informations to print them in the inventory window
-	printStatsInWindow(game->player, windows->stats_window); // Seeks player's stats informations to print them in the inventory window
+	printStatsInWindow(game, windows->stats_window); // Seeks player's stats informations to print them in the inventory window
 
 
 	refreshWindows(windows); // Gesture of ncurses's windows display refresh / refresh all windows 
 }
 
-void printStatsInWindow (PlayerStruct * player, WINDOW * stats_window)
+void printStatsInWindow (Game * game, WINDOW * stats_window)
 {	
-	mvwprintw(stats_window, 2, 3, "[%d,%d]", player->position.y, player->position.x);
+	mvwprintw(stats_window, 2, 3, "[%d,%d]", game->player->position.y, game->player->position.x);
 
-	mvwprintw(stats_window, 4, 3, "HP   %d/%d", player->health, player->max_health);
+	mvwprintw(stats_window, 4, 3, "HP   %d/%d", game->player->health, game->player->max_health);
 
-	if(player->inventory[0] != NULL)
+	if(game->player->inventory[0] != NULL)
 	{
-		mvwprintw(stats_window, 5, 3, "ATK  %d + %d", player->base_attack , (*player->inventory)->mainItems.weapon->damage);
+		mvwprintw(stats_window, 5, 3, "ATK  %d + %d", game->player->base_attack , (*game->player->inventory)->mainItems.weapon->damage);
 	}
 	else
 	{
-		mvwprintw(stats_window, 5, 3, "ATK  %d", player->base_attack);
+		mvwprintw(stats_window, 5, 3, "ATK  %d", game->player->base_attack);
 	}
 
+	// Get the current time
+    time_t current_time = time(NULL);
+    
+    // Calculate elapsed time
+    int elapsed_time = difftime(current_time, game->start_time);
+    
+    // Convert elapsed time to minutes and seconds
+    int minutes = elapsed_time / 60;
+    int seconds = elapsed_time % 60;
+
+    // Print the elapsed time
+    mvwprintw(stats_window, 7, 3, "Time : %02d:%02d", minutes, seconds);
+
+	mvwprintw(stats_window, 9, 3, "Score : %d", game->player->score);
 
 	return;
 }
 
 void printInventoryInWindow (PlayerStruct * player, WINDOW * inventory_window)
 {
+	mvwprintw(inventory_window, 1, 3,"INVENTORY");
 	for(int i = 0; i < player->inventory_size; i++)
 	{
 		if(player->inventory[i] != NULL)
 		{
-			mvwprintw(inventory_window, (i+1), 1,"%d - %s", (i+1), player->inventory[i]->name);
+			mvwprintw(inventory_window, (i+3), 3,"%d - %s", (i+1), player->inventory[i]->name);
+		}
+		else
+		{
+			mvwprintw(inventory_window, (i+3), 3, "%d - Empty        ", (i + 1));
 		}
 	}
 
@@ -51,19 +70,19 @@ void refreshWindows(Windows * windows)
 
 	wresize(windows->main_window, windows->main_dimensions.height, windows->main_dimensions.width); // Resizes the window, fixes some display bugs
 	
-	wresize(windows->game_window, (0.75)*windows->main_dimensions.height, (0.70)*windows->main_dimensions.width);
+	wresize(windows->game_window, (0.75)*windows->main_dimensions.height, (0.80)*windows->main_dimensions.width);
 	box(windows->game_window, 0, 0); // 'Box' the window : had white outlines
 	wnoutrefresh(windows->game_window); // This function is used to refresh a window in the buffer but not on the screen.
 	
-	wresize(windows->text_window, (0.25)*windows->main_dimensions.height, (0.70)*windows->main_dimensions.width);
+	wresize(windows->text_window, (0.25)*windows->main_dimensions.height, (0.80)*windows->main_dimensions.width);
 	box(windows->text_window, 0, 0);
 	wnoutrefresh(windows->text_window);
 
-	wresize(windows->stats_window, (0.5)*windows->main_dimensions.height, (0.30)*windows->main_dimensions.width);
+	wresize(windows->stats_window, (0.5)*windows->main_dimensions.height, (0.20)*windows->main_dimensions.width);
 	box(windows->stats_window, 0, 0);
 	wnoutrefresh(windows->stats_window);
 
-	wresize(windows->inventory_window, ((0.5)*windows->main_dimensions.height), (0.30)*windows->main_dimensions.width);
+	wresize(windows->inventory_window, ((0.5)*windows->main_dimensions.height), (0.20)*windows->main_dimensions.width);
 	box(windows->inventory_window, 0, 0);
 	wnoutrefresh(windows->inventory_window);
 

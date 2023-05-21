@@ -93,6 +93,7 @@ typedef struct npcStruct
 	char skin;
 	Position position;
 	int interactions_count;
+	bool quest_completed;
 } npcStruct;
 
 typedef enum {WEAPON_TYPE, OBJECTS_TYPE,POTIONS_TYPE} itemType;
@@ -131,6 +132,7 @@ typedef struct Item
 typedef struct PlayerStruct
 {
 	Position position;
+	int score;
 	char skin;
 	int health;
     int max_health;
@@ -138,8 +140,6 @@ typedef struct PlayerStruct
 	int attack;
 	Item ** inventory;
 	int inventory_size;
-
-    int score;
 } PlayerStruct;
 
 typedef struct Game
@@ -149,6 +149,8 @@ typedef struct Game
 	StructureStruct * house;
 	StructureStruct * dungeon;
 	npcStruct * npc;
+	time_t start_time;
+	int move_count;
 } Game;
 
 typedef struct Windows
@@ -163,9 +165,13 @@ typedef struct Windows
 } Windows;
 
 
+//loading functions
+void loading(Windows * windows);
+
 //game functions 
 Game * gameSetup();
 void gameLoop(Windows * windows);
+int checkEndConditions(Game * game);
 
 //menu functions
 void menuLoop(Windows * windows);
@@ -233,7 +239,7 @@ Windows * windowsSetup();
 void render(Game * game, Windows * windows);
 void printMapInWindow(Game * game, Windows * windows);
 void printInventoryInWindow (PlayerStruct * player, WINDOW * inventory_window);
-void printStatsInWindow(PlayerStruct * player, WINDOW * stats_window);
+void printStatsInWindow (Game * game, WINDOW * stats_window);
 void refreshWindows(Windows * windows);
 
 //error functions

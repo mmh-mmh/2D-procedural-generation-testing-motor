@@ -23,13 +23,14 @@ void menuLoop(Windows * windows)
                 refresh();
                 sleep(3);
                 clear();
-                mvwprintw(windows->main_window, 0, 0, "Z:aller vers le haut");
-                mvwprintw(windows->main_window, 1, 0, "Q:aller vers la gauche");
-                mvwprintw(windows->main_window, 2, 0, "S:aller vers le bas");
-                mvwprintw(windows->main_window, 3, 0, "D:aller vers la droite");
+                printw("Z:aller vers le haut\n");
+                printw("Q:aller vers la gauche\n");
+                printw("S:aller vers le bas\n");
+                printw("D:aller vers la droite\n");
                 refresh();
                 sleep(4);
                 clear();
+                refresh();
                 break;
             case 2:
                 //on mettra un truc apres avoir trouver un moyen de sauvegarder 
