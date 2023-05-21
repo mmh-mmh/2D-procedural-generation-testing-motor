@@ -8,9 +8,9 @@ int main()
 
 	Windows * windows = windowsSetup(); // Setup of all the windows used for display
 
-	//loading(windows);
+	loading(windows);
 
-	//menuLoop(windows); // Starting menu
+	menuLoop(windows); // Starting menu
 
 	gameLoop(windows); // Game loop
 

@@ -11,7 +11,7 @@ void loading(Windows * windows)
         for(int i = 0; i<strlen(text); i++)
         {
                 printw("%c", text[i]);
-                usleep(10000);
+                usleep(5000);
                 refresh();
             }
         mvprintw(((0.5)*windows->main_dimensions.height)-8, ((0.5)*windows->main_dimensions.width)-10, "Press enter to continue");

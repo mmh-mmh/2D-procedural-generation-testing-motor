@@ -162,21 +162,21 @@ void playerMove(Position position_offset, Game * game, Windows * windows)
 
 	switch (game->map->tiles[new_position.y][new_position.x])
 	{
-		// If not crossable
-		case '#': 
-		case '.':
-		case 'W':
-		case '%':
-		case '$':
+		// If crossable
+		case ' ':
+		case ',':
+		case '"':
+		case '*':
+		case '|':
+		game->player->position = new_position;
 			break;
 
 		// If movable
 		case 'O':
 			handleMovable(&game->player->position, game->map, position_offset);
-		break;
+			break;
 
-		default: // If crossable
-			game->player->position = new_position;
+		default: // If not crossable
 			break;
 	}
 }
