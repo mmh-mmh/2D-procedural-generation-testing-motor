@@ -15,7 +15,7 @@ void gameLoop(Windows * windows)
 
         if(game->move_count < 10)
         {
-            mvwprintw(windows->text_window, 1, 1, "I must hurry, I got only 5 minutes left, just enought for a last quest !");
+            mvwprintw(windows->text_window, 1, 1, "I must hurry, I only got 5 minutes left in the Valley, just enought for a last quest !");
             mvwprintw(windows->text_window, 3, 1, "'Finish the quest within 5 minutes, or you'll lose.'");
             mvwprintw(windows->text_window, 4, 1, "'If your health points reach 0, you'll lose'");
             mvwprintw(windows->text_window, 5, 1, "'To win, finish a quest or get 100 score'");
