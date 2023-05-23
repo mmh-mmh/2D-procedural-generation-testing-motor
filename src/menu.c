@@ -1,5 +1,29 @@
 #include "valley.h"
 
+void ingame_menuLoop(Windows * windows)
+{
+    wclear(windows->game_window);
+    refresh();
+    char * choices[] = {"Resume", "Wanna save and quit ?", "Quit game"};
+    int choice = -1;
+    while(choice !=0)
+     {
+        choice = mainMenu(windows, 3, choices);
+        refresh();
+
+        switch(choice)
+        {
+            case 0:
+                break;
+            case 1:
+                //on mettra un truc apres avoir trouver un moyen de sauvegarder 
+            case 2:
+                endwin(); 
+                exit(0);
+        }
+    }
+}
+
 void menuLoop(Windows * windows)
 {
     char * choices[] = {"Start a new adventure !", "Need some help ?", "Continue at your last checkpoint", "Quit game"};
@@ -44,7 +68,6 @@ void menuLoop(Windows * windows)
 void closeMenu(int numberItems, MENU * menu, ITEM ** items)
 {
     clear();
-    free_menu(menu);
 
     for (int i = 0; i < numberItems; i++)
     {
@@ -71,7 +94,7 @@ int mainMenu(Windows * windows, int numberItems, char * choices[])
 
     int menu_width = 40;
     int menu_height = 10;
-    int menu_y = ((0.5)*windows->main_dimensions.height) - (menu_height/2);
+    int menu_y = ((0.5)*windows->main_dimensions.height) - (menu_height/2)+1;
     int menu_x = ((0.5)*windows->main_dimensions.width) - (menu_width/2);
 
     WINDOW * menuwin = derwin(windows->main_window, menu_height, menu_width, menu_y, menu_x);

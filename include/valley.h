@@ -162,6 +162,7 @@ typedef struct Windows
 	WINDOW * text_window;
 	WINDOW * stats_window;
 	WINDOW * inventory_window;
+	WINDOW * loading_window;
 } Windows;
 
 
@@ -177,6 +178,7 @@ int checkEndConditions(Game * game);
 void menuLoop(Windows * windows);
 int mainMenu(Windows * windows, int numberItems, char * choices[]);
 void closeMenu(int numberItems, MENU * menu, ITEM ** items);
+void ingame_menuLoop(Windows * windows);
 
 //main functions
 void screenSetup();

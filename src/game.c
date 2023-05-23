@@ -11,6 +11,11 @@ void gameLoop(Windows * windows)
 
     while (end_condition == 0) // Main loop
     {
+        if(getch()=='f')
+        {
+            ingame_menuLoop(windows);
+        }// Faudrait tester sur un pc sous ubuntu
+
         wclear(windows->text_window);
 
         if(game->move_count < 10)
