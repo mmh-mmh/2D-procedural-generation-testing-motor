@@ -162,6 +162,7 @@ typedef struct Windows
 	WINDOW * text_window;
 	WINDOW * stats_window;
 	WINDOW * inventory_window;
+	WINDOW * loading_window;
 } Windows;
 
 
@@ -172,11 +173,13 @@ void loading(Windows * windows);
 Game * gameSetup();
 void gameLoop(Windows * windows);
 int checkEndConditions(Game * game);
+void handleTextEvents(Game * game, Windows * windows);
 
 //menu functions
 void menuLoop(Windows * windows);
 int mainMenu(Windows * windows, int numberItems, char * choices[]);
 void closeMenu(int numberItems, MENU * menu, ITEM ** items);
+void ingame_menuLoop(Windows * windows);
 
 //main functions
 void screenSetup();
@@ -250,6 +253,7 @@ bool isNear(Position a, Position b);
 bool isTooNear (Position a, Position b, int distance_limit);
 char ** copyCharArrayOfArray(char ** array, Dimensions dimensions);
 int ** copyIntArrayOfArray(int ** array, Dimensions dimensions);
+int returnElapsedTime(time_t start_time);
 
 //item functions
 Item * genSword(int damage, int durability, char *name_sword);

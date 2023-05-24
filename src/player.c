@@ -90,7 +90,7 @@ void handleInteraction(Game * game, Windows * windows)
 			switch (game->map->tiles[y][x])
 			{
 				case '*':
-
+					wclear(windows->text_window);
 					game->map->tiles[y][x] = ' ';
 					game->map->colors[y][x] = WHITE_ON_DEFAULT;
 					game->player->inventory[3] = genObject(1, '*', "Flowers");
@@ -99,6 +99,7 @@ void handleInteraction(Game * game, Windows * windows)
 					break;
 
 				case 'W':
+					wclear(windows->text_window);
 					ManageWizardInteractions(game, windows);
 					break;
 
@@ -106,10 +107,13 @@ void handleInteraction(Game * game, Windows * windows)
 				case '%':
 					if (game->player->attack >= 3) // 3 is the minimal required attack to break
 					{
+						wclear(windows->text_window);
 						game->map->tiles[y][x] = ' ';
+						mvwprintw(windows->text_window, 1, 1, "Take that");
 					}
 					else
 					{
+						wclear(windows->text_window);
 						mvwprintw(windows->text_window, 1, 1, "Dammit ! The door is obstructed and im too weak to break it.");
 					}
 					break;
@@ -119,12 +123,15 @@ void handleInteraction(Game * game, Windows * windows)
 					game->player->score += 1;
 					break;
 				case '$':
+					wclear(windows->text_window);
 					object_position.y = y;
 					object_position.x = x;
 					manageChestInteraction(game, windows, object_position);
 					break;
 
 				case '=':
+					wclear(windows->text_window);
+					wclear(windows->text_window);
 					mvwprintw(windows->text_window, 1, 1, "Broken, just like me.");
 
 				case 'G':

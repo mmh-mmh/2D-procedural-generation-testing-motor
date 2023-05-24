@@ -63,3 +63,14 @@ int ** copyIntArrayOfArray(int ** array, Dimensions dimensions)
 	}
 	return int_array_copy;	
 }
+
+int returnElapsedTime(time_t start_time)
+{
+    // Get the current time
+    time_t current_time = time(NULL);
+
+    // Calculate elapsed time
+    int elapsed_time = difftime(current_time, start_time);
+
+    return elapsed_time;
+}

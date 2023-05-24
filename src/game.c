@@ -3,24 +3,16 @@
 void gameLoop(Windows * windows)
 {
     Game * game = gameSetup(); // Generate the world and the player
-
    
     Position position_offset; // Offset suggested by the user's inputs (if move up -> y-1 , x)
     int input = 0;
     int end_condition = 0;
 
-    while (end_condition == 0) // Main loop
+    while (1) // Main loop
     {
-        wclear(windows->text_window);
+        wclear(windows->main_window); //clears all the game windows
+        handleTextEvents(game, windows);
 
-        if(game->move_count < 10)
-        {
-            mvwprintw(windows->text_window, 1, 1, "I must hurry, I only got 5 minutes left in the Valley, just enought for a last quest !");
-            mvwprintw(windows->text_window, 3, 1, "'Finish the quest within 5 minutes, or you'll lose.'");
-            mvwprintw(windows->text_window, 4, 1, "'If your health points reach 0, you'll lose'");
-            mvwprintw(windows->text_window, 5, 1, "'To win, finish a quest or get 100 score'");
-
-        }
         game->move_count++;
 
         position_offset = handleInput(game, windows, input); // Return position offset suggested by current user input
@@ -31,10 +23,24 @@ void gameLoop(Windows * windows)
 
         render(game, windows); // Update the game's display
 
-        end_condition = checkEndConditions(game);
-
         input = getch(); // Get user input
+
+        if(input =='f')
+        {
+            ingame_menuLoop(windows);
+        }
+
+        end_condition = checkEndConditions(game); // Associates a way to end the game with an int
+        if(end_condition !=0)
+        {
+            // Exit the game loop if an end condition is  fulfilled
+            break;
+        }
+
+        
     }
+
+    // Gérer l'écran de fin avec la valeur de checkEnCondition()
 }
 
 Game * gameSetup()
@@ -62,12 +68,7 @@ Game * gameSetup()
 
 int checkEndConditions (Game * game)
 {   
-    // Get the current time
-    time_t current_time = time(NULL);
-
-    // Calculate elapsed time
-    int elapsed_time = difftime(current_time, game->start_time);
-    
+    int elapsed_time = returnElapsedTime(game->start_time);
     
     if (elapsed_time > 300) // Check if elapsed_time is more than 5 minutes (300 seconds)
     {
@@ -88,4 +89,35 @@ int checkEndConditions (Game * game)
 
 
     return 0;
+}
+
+void handleTextEvents(Game * game, Windows * windows)
+{
+    int elapsed_time = returnElapsedTime(game->start_time);
+
+    if(elapsed_time < 10)
+    {
+        mvwprintw(windows->text_window, 1, 1, "I must hurry, I only got 5 minutes left in the Valley, just enought for a last quest !");
+        mvwprintw(windows->text_window, 3, 1, "'Finish the quest within 5 minutes, or you'll lose.'");
+        mvwprintw(windows->text_window, 4, 1, "'If your health points reach 0, you'll lose'");
+        mvwprintw(windows->text_window, 5, 1, "'To win, finish a quest or get 100 score'");
+    }
+    else if (elapsed_time > 100 && elapsed_time < 102)
+    {
+        mvwprintw(windows->text_window, 3, 40, "bip boup");
+    }
+    else if (elapsed_time > 240 && elapsed_time < 248)
+    {
+        mvwprintw(windows->text_window, 1, 1, "Only one minute left !??");
+        mvwprintw(windows->text_window, 2, 20, "But its been like only 4 minutes already ???");
+    }
+    else if (elapsed_time > 290 && elapsed_time < 295)
+    {
+        mvwprintw(windows->text_window, 1, 40, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        mvwprintw(windows->text_window, 2, 40, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        mvwprintw(windows->text_window, 3, 40, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        mvwprintw(windows->text_window, 4, 40, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    }
+
+
 }

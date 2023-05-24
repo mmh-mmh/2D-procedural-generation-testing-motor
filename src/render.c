@@ -2,9 +2,9 @@
 
 void render(Game * game, Windows * windows)
 {
-	//Changes are stored in the buffer, then applied at ther same time with refreshWindows()
+	// Changes are stored in the buffer, then applied at the same time with refreshWindows()
 
-    printMapInWindow(game, windows); // As it says
+    printMapInWindow(game, windows); // Prints the map around the player position placed at the center of the window
 	printInventoryInWindow(game->player, windows->inventory_window); // Seeks player's inventory informations to print them in the inventory window
 	printStatsInWindow(game, windows->stats_window); // Seeks player's stats informations to print them in the inventory window
 
@@ -56,7 +56,7 @@ void printInventoryInWindow (PlayerStruct * player, WINDOW * inventory_window)
 		}
 		else
 		{
-			mvwprintw(inventory_window, (i+3), 3, "%d - Empty        ", (i + 1));
+			mvwprintw(inventory_window, (i+3), 3, "%d - Empty", (i + 1));
 		}
 	}
 

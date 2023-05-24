@@ -12,3 +12,5 @@ Groupe : Felipe, Malik, Alrick
 'make clean' to rm .exe
 
 zqsd to move
+
+e to interact
