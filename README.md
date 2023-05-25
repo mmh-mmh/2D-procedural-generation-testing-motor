@@ -14,3 +14,8 @@ Groupe : Felipe, Malik, Alrick
 zqsd to move
 
 e to interact
+a to use potions
+
+# Bugs
+All the windows of the game refreshes whenever the player moves. Therefore if the player too fast (press a key for too long) the screen glitches so much.
+If you hit a monster and and hit again when it follows you, the monster disappears but comeback when you move.  
