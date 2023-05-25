@@ -62,7 +62,9 @@ Game * menuLoop(Windows * windows)
                 refresh();
                 break;
             case 2:
-                    //game = restoreSavedGame();
+                //loadMap
+                endwin(); 
+                exit(0);
             case 3:
                 endwin(); 
                 exit(0);

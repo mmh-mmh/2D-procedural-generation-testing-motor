@@ -171,7 +171,6 @@ void loading(Windows * windows);
 //game functions 
 Game * gameSetup();
 void saveGame(Game *game);
-Game * restoreSavedGame();
 void gameLoop(Game * game, Windows * windows);
 int checkEndConditions(Game * game);
 void handleTextEvents(Game * game, Windows * windows);

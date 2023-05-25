@@ -117,7 +117,7 @@ void handleTextEvents(Game * game, Windows * windows)
 
 }
 
-void saveGame(Game *game)
+ void saveGame(Game *game)
 {
     FILE *file = fopen("save.txt", "w");
     if (file == NULL) 
@@ -126,10 +126,9 @@ void saveGame(Game *game)
         return;
     }
 
-    fprintf(file, "Map dimensions: height = %d, width = %d\n", game->map->dimensions.height, game->map->dimensions.width);
-    fprintf(file, "Map tiles:\n");
+    // Then you can read the map tiles from the file
     for (int i = 0; i < game->map->dimensions.height; i++)
-     {
+    {
         for (int j = 0; j < game->map->dimensions.width; j++) 
         {
             fprintf(file, "%c ", game->map->tiles[i][j]);
@@ -143,13 +142,46 @@ void saveGame(Game *game)
     fprintf(file, "Player attack: %d\n", game->player->attack);
 
     fprintf(file, "Inventory: size = %d\n", game->player->inventory_size);
-   
+    for (int i = 0; i < game->player->inventory_size; i++)
+    {
+        if(game->player->inventory[i] != NULL)
+        {
+            fprintf(file, "Item %d: name = %s\n", i + 1, game->player->inventory[i]->name);
+        
+            switch (game->player->inventory[i]->type)
+            {
+                case WEAPON_TYPE:
+                    fprintf(file, "    Type: Weapon\n");
+                    fprintf(file, "    Damage: %d\n", game->player->inventory[i]->mainItems.weapon->damage);
+                    fprintf(file, "    Durability: %d\n", game->player->inventory[i]->mainItems.weapon->durability);
+                    break;
+                case OBJECTS_TYPE:
+                    fprintf(file, "    Type: Object\n");
+                    fprintf(file, "    Skin: %c\n", game->player->inventory[i]->mainItems.object->skin);
+                    fprintf(file, "    Quantity: %d\n", game->player->inventory[i]->mainItems.object->quantity);
+                    break;
+                case POTIONS_TYPE:
+                    fprintf(file, "    Type: Potion\n");
+                    fprintf(file, "    Heal: %d\n", game->player->inventory[i]->mainItems.potions->heal);
+                    fprintf(file, "    Quantity: %d\n", game->player->inventory[i]->mainItems.potions->quantity);
+                    break;
+            }
+        }
+        else
+        {
+            fprintf(file, "Item %d: NULL\n", i+1);
+            fprintf(file, "\n");
+            fprintf(file, "\n");
+            fprintf(file, "\n");
+        }
+    }
 
     fprintf(file, "House position: y = %d, x = %d\n", game->house->position.y, game->house->position.x);
 
     fprintf(file, "Dungeon position: y = %d, x = %d\n", game->dungeon->position.y, game->dungeon->position.x);
 
     fprintf(file, "NPC name: %s\n", game->npc->name);
+
     fprintf(file, "NPC skin: %c\n", game->npc->skin);
     fprintf(file, "NPC position: y = %d, x = %d\n", game->npc->position.y, game->npc->position.x);
     fprintf(file, "NPC interactions count: %d\n", game->npc->interactions_count);
