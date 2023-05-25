@@ -1,10 +1,13 @@
 #include "valley.h"
 
-void gameLoop(Game * game,Windows * windows)
+void gameLoop(Game * game, Windows * windows)
 {  
     Position position_offset; // Offset suggested by the user's inputs (if move up -> y-1 , x)
     int input = 0;
     int end_condition = 0;
+
+    /*monsters setup*/
+    game->mob = genMonster(game->map, game->numb_monster); // allocate memory and set status and generate numb_monster monsters
 
     while (1) // Main loop
     {
@@ -47,14 +50,12 @@ Game * gameSetup()
     new_game->house = StructureSetup(HOUSE_SIZE, '|', false); // malloc structure, set size, door, and if chest
     new_game->dungeon = StructureSetup(DUNGEON_SIZE, '%', true);
     new_game->npc = wizardSetup(); // malloc and set position
+    new_game->numb_monster = NB_MONSTERS;
 
     mapGeneration(new_game);
 
     // place the npc giving the quest in the house 
     placeNpcInStructure(new_game->map, new_game->house, new_game->npc);
-
-
-    MobStruct * mob = genMonster(new_game->map, 10,3,'G');
     
     new_game->start_time = time(NULL);
     

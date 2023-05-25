@@ -40,6 +40,7 @@ void ManageWizardInteractions (Game * game, Windows * windows)
     {
         mvwprintw(windows->text_window, 1, 1, "%s : Well, hum, thanks for the flowers. That's cool.", game->npc->name);
         game->player->inventory[3] = NULL;
+        game->player->score += 2;
         return;
     }
     else

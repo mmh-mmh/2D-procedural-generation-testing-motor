@@ -50,7 +50,7 @@ void printInventoryInWindow (PlayerStruct * player, WINDOW * inventory_window)
 	mvwprintw(inventory_window, 1, 3,"INVENTORY");
 	for(int i = 0; i < player->inventory_size; i++)
 	{
-		if(player->inventory[i] != NULL)
+		if(player->inventory[i] != NULL )
 		{
 			mvwprintw(inventory_window, (i+3), 3,"%d - %s", (i+1), player->inventory[i]->name);
 		}

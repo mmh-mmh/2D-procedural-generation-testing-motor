@@ -42,6 +42,8 @@
 #define PLAYER_MAX_HEALTH 20
 #define PLAYER_BASE_ATTACK 2
 
+#define NB_MONSTERS 20
+
 typedef struct Position
 {
 	int y;
@@ -85,6 +87,8 @@ typedef struct MobStruct
     int health;
     int attack;
     char skin;
+	bool alive;
+    bool triggered;
 } MobStruct;
 
 typedef struct npcStruct
@@ -148,8 +152,11 @@ typedef struct Game
 	PlayerStruct * player;
 	StructureStruct * house;
 	StructureStruct * dungeon;
+	MobStruct * mob;
 	npcStruct * npc;
 	time_t start_time;
+	int numb_monster;
+	int index_mob;
 } Game;
 
 typedef struct Windows
@@ -200,7 +207,12 @@ void placeNpcInStructure(Map * map, StructureStruct * structure, npcStruct * npc
 void ManageWizardInteractions(Game * game, Windows * windows);
 
 // mob functions
-MobStruct * genMonster(Map * map, int health, int attack, char skin);
+MobStruct * genMonster( Map * map,int nb_monster);
+int trackMob(int numb_monster , MobStruct * mob, PlayerStruct * player);
+void mobPursuit(Position playerpos, MobStruct * mob, Map * map, int index_mob);
+
+//Combat functions
+void combat (Game * game,Map * map,PlayerStruct * player, MobStruct * mob,int index_mob);
 
 //map functions
 Map * mapSetup(int height, int width);
@@ -257,6 +269,8 @@ int returnElapsedTime(time_t start_time);
 Item * genSword(int damage, int durability, char *name_sword);
 Item * genPotion(int heal_points, int quantity, char * name_potion);
 Item * genObject(int quantity, char skin,char * name_object);
+void potionInteraction(PlayerStruct * player, Windows * windows);
+void flowerInteraction(Game * game, Windows * windows, int y, int x);
 
 //chest functions
 void genChestInMiddleOfStructure(Map * map, StructureStruct * structure);
