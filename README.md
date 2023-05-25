@@ -14,6 +14,7 @@ Groupe : Felipe, Malik, Alrick
 zqsd to move
 
 e to interact
+
 a to use potions
 
 # Bugs
