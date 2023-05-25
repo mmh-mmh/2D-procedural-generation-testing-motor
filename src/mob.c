@@ -91,9 +91,10 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
 		 (map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x - 1] != '#'))
 		
 		{	
+			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=' ';
 			mob[index_mob].coordinate.x--;
 			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=mob[index_mob].skin;
-			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x+1]=' ';
+			
 		}		
 		/* step right */
 		else if ((abs((mob[index_mob].coordinate.x + 1) - playerpos.x) < abs(mob[index_mob].coordinate.x - playerpos.x))&&
@@ -101,9 +102,10 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
 		 (map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x + 1] != '@')&&
 		 (map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x + 1] != '#'))
 		{
+			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=' ';
 			mob[index_mob].coordinate.x++;
 			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=mob[index_mob].skin;
-			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x-1]=' ';
+			
 		}
 		/* step down*/
 		else if ((abs((mob[index_mob].coordinate.y + 1) - playerpos.y) < abs(mob[index_mob].coordinate.y - playerpos.y))&&
@@ -111,9 +113,10 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
 		(map->tiles[mob[index_mob].coordinate.y + 1][mob[index_mob].coordinate.x] != '@')&&
 		(map->tiles[mob[index_mob].coordinate.y + 1][mob[index_mob].coordinate.x] != '#'))
 		{
+			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=' ';
 			mob[index_mob].coordinate.y++;
 			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=mob[index_mob].skin;
-			map->tiles[mob[index_mob].coordinate.y-1][mob[index_mob].coordinate.x]=' ';
+			
 		}
 		/* step up */
 		else if ((abs((mob[index_mob].coordinate.y - 1) - playerpos.y) < abs(mob[index_mob].coordinate.y - playerpos.y)) &&
@@ -121,11 +124,12 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
 		 (map->tiles[mob[index_mob].coordinate.y - 1][mob[index_mob].coordinate.x] != '@')&&
 		  (map->tiles[mob[index_mob].coordinate.y - 1][mob[index_mob].coordinate.x] != '#'))
 		{
+			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=' ';
 			mob[index_mob].coordinate.y--;
 			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=mob[index_mob].skin;
-			map->tiles[mob[index_mob].coordinate.y+1][mob[index_mob].coordinate.x]=' ';
 		}
 		mob->triggered=false;
+		printw("here");
 
 	}
 	 
