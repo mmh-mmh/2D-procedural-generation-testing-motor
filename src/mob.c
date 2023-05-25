@@ -80,7 +80,7 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
  void mobPursuit(Position playerpos, MobStruct * mob, Map * map, int index_mob)
 {
 
-	if(isTooNear(playerpos , mob[index_mob].coordinate,2)&& mob[index_mob].alive==true&& mob[index_mob].triggered==true &&)
+	if(isTooNear(playerpos , mob[index_mob].coordinate,2)&& mob[index_mob].alive==true&& mob[index_mob].triggered==true)
 	{
 
 		/* step left */
