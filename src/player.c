@@ -75,7 +75,7 @@ Position handleInput(Game * game, Windows * windows, int input)
 			break;
 
 		case 'e':
-			case 'E':
+		case 'E':
 			wclear(windows->text_window);
 			handleInteraction(game, windows);
 			break;
@@ -108,6 +108,9 @@ void handleInteraction(Game * game, Windows * windows)
 				case 'W':
 					ManageWizardInteractions(game, windows);
 					break;
+				case 'N':
+					ManageNecroInteractions(game,windows);
+					break;
 				case '%':
 					if (game->player->attack >= 3) // 3 is the minimal required attack to break
 					{
@@ -131,7 +134,7 @@ void handleInteraction(Game * game, Windows * windows)
 				case '=':
 					mvwprintw(windows->text_window, 1, 1, "Broken, just like me.");
 				case 'G':
-					case 'X':
+				case 'X':
 				case 'T':
 					game->index_mob=trackMob(game->numb_monster,game->mob, game->player);
 					combat(game,game->map,game->player, game->mob,game->index_mob);
