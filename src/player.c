@@ -7,6 +7,9 @@ PlayerStruct * playerSetup()
 	player->skin = '@'; // Set player char
 	player->inventory_size = 4;
 	initPlayerInventory(player);
+	player->inventory[1] = genPotion(10, 5, "Heal potion");
+	player->inventory[3] = genObject(0, '*', "Flowers");
+	
 	player->max_health = PLAYER_MAX_HEALTH;
 	player->health = player->max_health;
 	player->base_attack = PLAYER_BASE_ATTACK;
@@ -72,10 +75,19 @@ Position handleInput(Game * game, Windows * windows, int input)
 			break;
 
 		case 'e':
+		case 'E':
 			handleInteraction(game, windows);
+			break;
+		case 'a':
+		case 'A':
+			potionInteraction(game->player, windows);
+			break;
+		
 		default :
-			break;	
+			break;
 	}
+	mobPursuit(game->player->position, game->mob, game->map,game->index_mob);
+
 	return position_offset;
 }
 
@@ -90,30 +102,20 @@ void handleInteraction(Game * game, Windows * windows)
 			switch (game->map->tiles[y][x])
 			{
 				case '*':
-					wclear(windows->text_window);
-					game->map->tiles[y][x] = ' ';
-					game->map->colors[y][x] = WHITE_ON_DEFAULT;
-					game->player->inventory[3] = genObject(1, '*', "Flowers");
-					mvwprintw(windows->text_window, 1, 1, "mmmmhhhhh.....flowies.");
-					game->player->score += 1;
+					flowerInteraction(game,windows, y,x);
 					break;
-
 				case 'W':
-					wclear(windows->text_window);
 					ManageWizardInteractions(game, windows);
 					break;
 
 
 				case '%':
-					if (game->player->attack >= 3) // 3 is the minimal required attack to break
+					if(game->player->attack >= 3) // 3 is the minimal required attack to break
 					{
-						wclear(windows->text_window);
 						game->map->tiles[y][x] = ' ';
-						mvwprintw(windows->text_window, 1, 1, "Take that");
 					}
 					else
 					{
-						wclear(windows->text_window);
 						mvwprintw(windows->text_window, 1, 1, "Dammit ! The door is obstructed and im too weak to break it.");
 					}
 					break;
@@ -123,21 +125,20 @@ void handleInteraction(Game * game, Windows * windows)
 					game->player->score += 1;
 					break;
 				case '$':
-					wclear(windows->text_window);
 					object_position.y = y;
 					object_position.x = x;
 					manageChestInteraction(game, windows, object_position);
 					break;
 
 				case '=':
-					wclear(windows->text_window);
-					wclear(windows->text_window);
 					mvwprintw(windows->text_window, 1, 1, "Broken, just like me.");
 
 				case 'G':
-					//combat()
-					break;
-
+				case 'X':
+				case 'T':
+					game->index_mob=trackMob(game->numb_monster,game->mob, game->player);
+					combat(game,game->map,game->player, game->mob,game->index_mob);
+					break;	
 				default:
 					break;
 			}
@@ -169,21 +170,24 @@ void playerMove(Position position_offset, Game * game, Windows * windows)
 
 	switch (game->map->tiles[new_position.y][new_position.x])
 	{
-		// If crossable
-		case ' ':
-		case ',':
-		case '"':
-		case '*':
-		case '|':
-		game->player->position = new_position;
+		// If not crossable
+		case '#': 
+		case '.':
+		case 'W':
+		case '%':
+		case '$':
+		case 'G':
+		case 'X':
+		case 'T':
 			break;
 
 		// If movable
 		case 'O':
 			handleMovable(&game->player->position, game->map, position_offset);
-			break;
+		break;
 
-		default: // If not crossable
+		default: // If crossable
+			game->player->position = new_position;
 			break;
 	}
 }
