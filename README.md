@@ -19,4 +19,4 @@ a to use potions
 # Bugs
 All the windows of the game refreshes whenever the player moves. Therefore if the player too fast (press a key for too long) the screen glitches repeatedly
 
-If you hit a monster and and hit again when it follows you, the monster disappears but comeback when you move
+If you hit a monster and again while it's following you, the monster disappears from the screen but comeback once you move
