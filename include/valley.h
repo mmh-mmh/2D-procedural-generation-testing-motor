@@ -150,7 +150,6 @@ typedef struct Game
 	StructureStruct * dungeon;
 	npcStruct * npc;
 	time_t start_time;
-	int move_count;
 } Game;
 
 typedef struct Windows
@@ -171,15 +170,17 @@ void loading(Windows * windows);
 
 //game functions 
 Game * gameSetup();
-void gameLoop(Windows * windows);
+void saveGame(Game *game);
+Game * restoreSavedGame();
+void gameLoop(Game * game, Windows * windows);
 int checkEndConditions(Game * game);
 void handleTextEvents(Game * game, Windows * windows);
 
 //menu functions
-void menuLoop(Windows * windows);
+Game * menuLoop(Windows * windows);
 int mainMenu(Windows * windows, int numberItems, char * choices[]);
 void closeMenu(int numberItems, MENU * menu, ITEM ** items);
-void ingame_menuLoop(Windows * windows);
+void ingame_menuLoop(Game * game, Windows * windows);
 
 //main functions
 void screenSetup();
@@ -198,7 +199,6 @@ void initPlayerInventory(PlayerStruct * player);
 npcStruct * wizardSetup();
 void placeNpcInStructure(Map * map, StructureStruct * structure, npcStruct * npc);
 void ManageWizardInteractions(Game * game, Windows * windows);
-
 
 // mob functions
 MobStruct * genMonster(Map * map, int health, int attack, char skin);
@@ -222,7 +222,6 @@ bool ArePlayerHouseAndDungeonWellPlaced(Game * game);
 
 // door functions
 void PlaceDoorAtRandomSide(Map * map, StructureStruct * structure);
-
 
 //procedural functions
 void mapProceduralGeneration(Map * map);

@@ -1,9 +1,7 @@
 #include "valley.h"
 
-void gameLoop(Windows * windows)
-{
-    Game * game = gameSetup(); // Generate the world and the player
-   
+void gameLoop(Game * game,Windows * windows)
+{  
     Position position_offset; // Offset suggested by the user's inputs (if move up -> y-1 , x)
     int input = 0;
     int end_condition = 0;
@@ -12,8 +10,6 @@ void gameLoop(Windows * windows)
     {
         wclear(windows->main_window); //clears all the game windows
         handleTextEvents(game, windows);
-
-        game->move_count++;
 
         position_offset = handleInput(game, windows, input); // Return position offset suggested by current user input
         
@@ -27,7 +23,7 @@ void gameLoop(Windows * windows)
 
         if(input =='f')
         {
-            ingame_menuLoop(windows);
+            ingame_menuLoop(game, windows);
         }
 
         end_condition = checkEndConditions(game); // Associates a way to end the game with an int
@@ -51,7 +47,6 @@ Game * gameSetup()
     new_game->house = StructureSetup(HOUSE_SIZE, '|', false); // malloc structure, set size, door, and if chest
     new_game->dungeon = StructureSetup(DUNGEON_SIZE, '%', true);
     new_game->npc = wizardSetup(); // malloc and set position
-    new_game->move_count = 0;
 
     mapGeneration(new_game);
 
@@ -120,4 +115,47 @@ void handleTextEvents(Game * game, Windows * windows)
     }
 
 
+}
+
+void saveGame(Game *game)
+{
+    FILE *file = fopen("save.txt", "w");
+    if (file == NULL) 
+    {
+        printf("Impossible d'ouvrir le fichier save.txt\n");
+        return;
+    }
+
+    fprintf(file, "Map dimensions: height = %d, width = %d\n", game->map->dimensions.height, game->map->dimensions.width);
+    fprintf(file, "Map tiles:\n");
+    for (int i = 0; i < game->map->dimensions.height; i++)
+     {
+        for (int j = 0; j < game->map->dimensions.width; j++) 
+        {
+            fprintf(file, "%c ", game->map->tiles[i][j]);
+        }
+        fprintf(file, "\n");
+    }
+
+    fprintf(file, "Player position: y = %d, x = %d\n", game->player->position.y, game->player->position.x);
+    fprintf(file, "Player score: %d\n", game->player->score);
+    fprintf(file, "Player health: %d/%d\n", game->player->health, game->player->max_health);
+    fprintf(file, "Player attack: %d\n", game->player->attack);
+
+    fprintf(file, "Inventory: size = %d\n", game->player->inventory_size);
+   
+
+    fprintf(file, "House position: y = %d, x = %d\n", game->house->position.y, game->house->position.x);
+
+    fprintf(file, "Dungeon position: y = %d, x = %d\n", game->dungeon->position.y, game->dungeon->position.x);
+
+    fprintf(file, "NPC name: %s\n", game->npc->name);
+    fprintf(file, "NPC skin: %c\n", game->npc->skin);
+    fprintf(file, "NPC position: y = %d, x = %d\n", game->npc->position.y, game->npc->position.x);
+    fprintf(file, "NPC interactions count: %d\n", game->npc->interactions_count);
+    fprintf(file, "NPC quest completed: %s\n", game->npc->quest_completed ? "Oui" : "Non");
+
+    fprintf(file, "Start time: %ld\n", game->start_time);
+
+    fclose(file);
 }

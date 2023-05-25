@@ -10,9 +10,9 @@ int main()
 
 	loading(windows);
 
-	menuLoop(windows); // Starting menu
+	Game * game = menuLoop(windows); // Starting menu
 
-	gameLoop(windows); // Game loop
+	gameLoop(game, windows); // Game loop
 
 	endwin(); // Stops ncurses in the terminal
 
