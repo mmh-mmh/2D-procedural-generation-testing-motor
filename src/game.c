@@ -50,7 +50,7 @@ Game * gameSetup()
     new_game->house = StructureSetup(HOUSE_SIZE, '|', false); // malloc structure, set size, door, and if chest
     new_game->dungeon = StructureSetup(DUNGEON_SIZE, '%', true);
     new_game->npc = wizardSetup(); // malloc and set position
-    new_game->numb_monster = NB_MONSTERS;
+    new_game->numb_monster = NB_MONSTERS;//this variable will be risponsible for the number of monsters will appear in the game
     new_game->move_count = 0;
 
     mapGeneration(new_game);
