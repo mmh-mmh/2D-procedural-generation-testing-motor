@@ -8,6 +8,8 @@ void gameLoop(Game * game, Windows * windows)
 
     /*monsters setup*/
     game->mob = genMonster(game->map, game->numb_monster); // allocate memory and set status and generate numb_monster monsters
+    /*necromancer setup*/  
+    game->necro=necomancerSetup(game->map); // allocate memory, set skin and generate coordinate
 
     while (1) // Main loop
     {
@@ -73,18 +75,22 @@ int checkEndConditions (Game * game)
     {
         return 2;
     }
-    else if (game->player->score >= 100) // Check if the score reach 100
+    else if (game->necro->quest_completed == true) // Check if the player met the necromancer
     {
         return 3;
     }
-    else if (game->player->health <= 0) // Check if the player is dead
+    else if (game->player->score >= 100) // Check if the score reach 100
     {
         return 4;
     }
-
-
+    else if (game->player->health <= 0) // Check if the player is dead
+    {
+        return 5;
+    }
+    
     return 0;
 }
+
 
 void handleTextEvents(Game * game, Windows * windows)
 {

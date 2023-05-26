@@ -78,7 +78,7 @@ Position handleInput(Game * game, Windows * windows, int input)
 			mobPursuit(game->player->position, game->mob, game->map, game->index_mob, game->move_count);
 			break;
 		case 'e':
-			case 'E':
+		case 'E':
 			wclear(windows->text_window);
 			handleInteraction(game, windows);
 			break;
@@ -108,6 +108,9 @@ void handleInteraction(Game * game, Windows * windows)
 					break;
 				case 'W':
 					ManageWizardInteractions(game, windows);
+					break;
+				case 'N':
+					ManageNecroInteractions(game,windows);
 					break;
 				case '%':
 					if (game->player->attack >= 3) // 3 is the minimal required attack to break
