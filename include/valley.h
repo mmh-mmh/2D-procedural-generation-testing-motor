@@ -154,6 +154,7 @@ typedef struct Game
 	StructureStruct * dungeon;
 	MobStruct * mob;
 	npcStruct * npc;
+	npcStruct * necro;
 	time_t start_time;
 	int numb_monster;
 	int index_mob;
@@ -203,8 +204,10 @@ void initPlayerInventory(PlayerStruct * player);
 
 // npc functions
 npcStruct * wizardSetup();
+npcStruct * necomancerSetup(Map * map);
 void placeNpcInStructure(Map * map, StructureStruct * structure, npcStruct * npc);
 void ManageWizardInteractions(Game * game, Windows * windows);
+void ManageNecroInteractions(Game * game, Windows * windows);
 
 // mob functions
 MobStruct * genMonster( Map * map,int nb_monster);

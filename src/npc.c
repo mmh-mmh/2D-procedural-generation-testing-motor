@@ -1,5 +1,33 @@
 #include "valley.h"
 
+npcStruct * necomancerSetup(Map * map)
+{
+	npcStruct * npc = malloc(sizeof(npcStruct));
+	
+    npc->skin = 'N';
+
+    npc->name = malloc(sizeof(char*));
+    
+    strcpy(npc->name, "Necro Bob");
+
+    npc->interactions_count = 0;
+
+    npc->quest_completed = false;
+
+	do
+	{
+		npc->position.y = rand() % (map->dimensions.height - 2) + 1;
+		
+		npc->position.x = rand() % (map->dimensions.width - 2) + 1;
+	
+	} while (map->tiles[npc->position.y][npc->position.x] == '.' || 
+	map->tiles[npc->position.y][npc->position.x] == '#');
+	
+	map->tiles[npc->position.y][npc->position.x] = npc->skin;
+	map->colors[npc->position.y][npc->position.x] = MAGENTA_ON_DEFAULT;
+    return npc;
+}
+
 npcStruct * wizardSetup()
 {
     npcStruct * npc = malloc(sizeof(npcStruct));
@@ -57,4 +85,12 @@ void ManageWizardInteractions (Game * game, Windows * windows)
         game->player->inventory[0] = genSword(5, 200, "rusty sword");
         game->player->attack = game->player->base_attack + 5;
     }
+}
+
+void ManageNecroInteractions(Game * game, Windows * windows)
+{
+		mvwprintw(windows->text_window, 1, 1, "%s : Oh, yeah boy, u found me. Great... So, I'm the Necromancer...",game->necro->name);					
+		mvwprintw(windows->text_window, 2, 1, "%s : Listen up! I'm old, and I'm tired of chicky brats like you messing around",game->necro->name);					
+		mvwprintw(windows->text_window, 3, 1, "%s : So, let's make it easy for both sides, you win! ok? you win!",game->necro->name);					
+		game->necro->quest_completed=true;
 }
