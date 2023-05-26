@@ -157,6 +157,7 @@ typedef struct Game
 	time_t start_time;
 	int numb_monster;
 	int index_mob;
+	int move_count;
 } Game;
 
 typedef struct Windows
@@ -209,7 +210,7 @@ void ManageWizardInteractions(Game * game, Windows * windows);
 // mob functions
 MobStruct * genMonster( Map * map,int nb_monster);
 int trackMob(int numb_monster , MobStruct * mob, PlayerStruct * player);
-void mobPursuit(Position playerpos, MobStruct * mob, Map * map, int index_mob);
+void mobPursuit(Position playerpos, MobStruct * mob, Map * map, int index_mob, int game_move_count);
 
 //Combat functions
 void combat (Game * game,Map * map,PlayerStruct * player, MobStruct * mob,int index_mob);

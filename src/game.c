@@ -18,8 +18,6 @@ void gameLoop(Game * game, Windows * windows)
         
         checkPosition(position_offset, game, windows); // Deal with what's where the player wants to move
 
-        //moveMonsters(game);
-
         render(game, windows); // Update the game's display
 
         input = getch(); // Get user input
@@ -30,13 +28,13 @@ void gameLoop(Game * game, Windows * windows)
         }
 
         end_condition = checkEndConditions(game); // Associates a way to end the game with an int
+
         if(end_condition !=0)
         {
             // Exit the game loop if an end condition is  fulfilled
             break;
         }
-
-        
+        game->move_count++;
     }
 
     // Gérer l'écran de fin avec la valeur de checkEnCondition()
@@ -51,6 +49,7 @@ Game * gameSetup()
     new_game->dungeon = StructureSetup(DUNGEON_SIZE, '%', true);
     new_game->npc = wizardSetup(); // malloc and set position
     new_game->numb_monster = NB_MONSTERS;
+    new_game->move_count = 0;
 
     mapGeneration(new_game);
 

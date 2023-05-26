@@ -57,23 +57,26 @@ Position handleInput(Game * game, Windows * windows, int input)
 		case 'Z' :
 			position_offset.y = - 1;
 			position_offset.x = 0;
+			mobPursuit(game->player->position, game->mob, game->map, game->index_mob, game->move_count);
 			break;
 		case 's' :
 		case 'S' :
 			position_offset.y = + 1;
 			position_offset.x = 0;
+			mobPursuit(game->player->position, game->mob, game->map, game->index_mob, game->move_count);
 			break;
 		case 'q' :
 		case 'Q' :
 			position_offset.y = 0;
 			position_offset.x = - 1;
+			mobPursuit(game->player->position, game->mob, game->map, game->index_mob, game->move_count);
 			break;
 		case 'd' :
 		case 'D' :
 			position_offset.y = 0;
 			position_offset.x = + 1;
+			mobPursuit(game->player->position, game->mob, game->map, game->index_mob, game->move_count);
 			break;
-
 		case 'e':
 			case 'E':
 			wclear(windows->text_window);
@@ -87,8 +90,6 @@ Position handleInput(Game * game, Windows * windows, int input)
 		default :
 			break;	
 	}
-
-	mobPursuit(game->player->position, game->mob, game->map,game->index_mob);
 	return position_offset;
 }
 
@@ -131,10 +132,10 @@ void handleInteraction(Game * game, Windows * windows)
 				case '=':
 					mvwprintw(windows->text_window, 1, 1, "Broken, just like me.");
 				case 'G':
-					case 'X':
+				case 'X':
 				case 'T':
-					game->index_mob=trackMob(game->numb_monster,game->mob, game->player);
-					combat(game,game->map,game->player, game->mob,game->index_mob);
+					game->index_mob=trackMob(game->numb_monster, game->mob, game->player);
+					combat(game,game->map, game->player, game->mob, game->index_mob);
 					break;	
 				default:
 					break;

@@ -1,6 +1,6 @@
 #include "valley.h"
 
-MobStruct * genMonster( Map * map,int nb_monster)
+MobStruct * genMonster(Map * map,int nb_monster)
 {
 int health, attack;
 	char skin;
@@ -13,9 +13,9 @@ int health, attack;
 		switch (mob)
 		{
 		case 1: 
-				health=24;
-				attack=4;
-				skin='X'; //X for spider 
+			health=24;
+			attack=4;
+			skin='X'; //X for spider 
 			break;
 		case 2: 
 			health=10;
@@ -41,6 +41,7 @@ int health, attack;
 		} while (map->tiles[monster[i].coordinate.y][monster[i].coordinate.x] == '.' || map->tiles[monster[i].coordinate.y ][monster[i].coordinate.x] == '#');
 
 		map->tiles[monster[i].coordinate.y][monster[i].coordinate.x] = monster[i].skin;
+		map->colors[monster[i].coordinate.y][monster[i].coordinate.x] = WHITE_ON_DEFAULT;
 	}
 	return monster;
 }
@@ -53,7 +54,7 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
         The player must be engaged in melee combat, and the chosen monster must be alive and have the smallest distance to the player.
     */
     int closestMonsterIndex = -1;
-    double minDistance = 2; // Set a maximum distance of 2 
+    double minDistance = 2; // Set minimum distance 
 
     for (int i = 0; i < numb_monster; i++)
     {
@@ -77,11 +78,15 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
  *  
  * */
 
- void mobPursuit(Position playerpos, MobStruct * mob, Map * map, int index_mob)
+ void mobPursuit(Position playerpos, MobStruct * mob, Map * map, int index_mob, int game_move_count)
 {
 
-	if(isTooNear(playerpos , mob[index_mob].coordinate,2)&& mob[index_mob].alive==true&& mob[index_mob].triggered==true)
+	 if(isTooNear(playerpos, mob[index_mob].coordinate, 6) && mob[index_mob].alive == true && mob[index_mob].triggered == true)
 	{
+		if(game_move_count%2 == 0)
+		{
+			return;
+		}
 
 		/* step left */
 		if((abs((mob[index_mob].coordinate.x - 1) - playerpos.x) < abs(mob[index_mob].coordinate.x - playerpos.x))&&
@@ -91,8 +96,11 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
 
 		{	
 			mob[index_mob].coordinate.x--;
-			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=mob[index_mob].skin;
-			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x+1]=' ';
+			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x] = mob[index_mob].skin;
+			map->colors[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x] = WHITE_ON_DEFAULT;
+
+			map->colors[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x + 1] = map->colors_save[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x + 1];
+			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x + 1] = map->tiles_save[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x + 1];
 		}		
 		/* step right */
 		else if ((abs((mob[index_mob].coordinate.x + 1) - playerpos.x) < abs(mob[index_mob].coordinate.x - playerpos.x))&&
@@ -101,8 +109,11 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
 		 (map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x + 1] != '#'))
 		{
 			mob[index_mob].coordinate.x++;
-			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=mob[index_mob].skin;
-			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x-1]=' ';
+			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x] = mob[index_mob].skin;
+			map->colors[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x] = WHITE_ON_DEFAULT;
+
+			map->colors[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x - 1] = map->colors_save[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x - 1];
+			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x-1] = map->tiles_save[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x - 1];
 		}
 		/* step down*/
 		else if ((abs((mob[index_mob].coordinate.y + 1) - playerpos.y) < abs(mob[index_mob].coordinate.y - playerpos.y))&&
@@ -111,8 +122,11 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
 		(map->tiles[mob[index_mob].coordinate.y + 1][mob[index_mob].coordinate.x] != '#'))
 		{
 			mob[index_mob].coordinate.y++;
-			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=mob[index_mob].skin;
-			map->tiles[mob[index_mob].coordinate.y-1][mob[index_mob].coordinate.x]=' ';
+			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x] = mob[index_mob].skin;
+			map->colors[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x] = WHITE_ON_DEFAULT;
+
+			map->colors[mob[index_mob].coordinate.y-1][mob[index_mob].coordinate.x] = map->colors_save[mob[index_mob].coordinate.y-1][mob[index_mob].coordinate.x];
+			map->tiles[mob[index_mob].coordinate.y-1][mob[index_mob].coordinate.x] = map->tiles_save[mob[index_mob].coordinate.y-1][mob[index_mob].coordinate.x];
 		}
 		/* step up */
 		else if ((abs((mob[index_mob].coordinate.y - 1) - playerpos.y) < abs(mob[index_mob].coordinate.y - playerpos.y)) &&
@@ -121,8 +135,11 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
 		  (map->tiles[mob[index_mob].coordinate.y - 1][mob[index_mob].coordinate.x] != '#'))
 		{
 			mob[index_mob].coordinate.y--;
-			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x]=mob[index_mob].skin;
-			map->tiles[mob[index_mob].coordinate.y+1][mob[index_mob].coordinate.x]=' ';
+			map->tiles[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x] = mob[index_mob].skin;
+			map->colors[mob[index_mob].coordinate.y][mob[index_mob].coordinate.x] = WHITE_ON_DEFAULT;
+
+			map->colors[mob[index_mob].coordinate.y+1][mob[index_mob].coordinate.x] = map->colors_save[mob[index_mob].coordinate.y+1][mob[index_mob].coordinate.x];
+			map->tiles[mob[index_mob].coordinate.y+1][mob[index_mob].coordinate.x] = map->tiles_save[mob[index_mob].coordinate.y+1][mob[index_mob].coordinate.x];
 		}
 		mob->triggered=false;
 
