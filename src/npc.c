@@ -1,6 +1,6 @@
 #include "valley.h"
 
-npcStruct * necomancerSetup(Map * map)
+npcStruct * necomancerSetup(Map * map) // this functions creates the necromancer and set up its attributes
 {
 	npcStruct * npc = malloc(sizeof(npcStruct));
 	
@@ -15,7 +15,7 @@ npcStruct * necomancerSetup(Map * map)
     npc->quest_completed = false;
 
 	do
-	{
+	{ //generate random positions until, finds one in the bounds of the map
 		npc->position.y = rand() % (map->dimensions.height - 2) + 1;
 		
 		npc->position.x = rand() % (map->dimensions.width - 2) + 1;
@@ -86,7 +86,7 @@ void ManageWizardInteractions (Game * game, Windows * windows)
         game->player->attack = game->player->base_attack + 5;
     }
 }
-
+// The function bellow prints on the screen the lines of the necromancer npc 
 void ManageNecroInteractions(Game * game, Windows * windows)
 {
 		mvwprintw(windows->text_window, 1, 1, "%s : Oh, yeah boy, u found me. Great... So, I'm the Necromancer...",game->necro->name);					

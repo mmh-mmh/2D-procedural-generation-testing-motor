@@ -1,5 +1,7 @@
 #include "valley.h"
 
+// The code bellow sets up the attributes of a sword
+
 Item * genSword(int damage, int durability, char *name_sword)
 {
 	Item * blade = malloc(sizeof(Item));
@@ -18,6 +20,7 @@ Item * genSword(int damage, int durability, char *name_sword)
 	return blade;
 }
 
+// The code bellow sets up the attributes of potions
 Item * genPotion(int heal_points, int quantity, char * name_potion)
 {
 	Item * medicine = malloc(sizeof(Item));
@@ -35,6 +38,7 @@ Item * genPotion(int heal_points, int quantity, char * name_potion)
 
 	return medicine;
 }
+// The code bellow sets up the attributes of objects
 
 Item * genObject(int quantity, char skin, char * name_object)
 {
@@ -46,11 +50,12 @@ Item * genObject(int quantity, char skin, char * name_object)
 	return article;
 }
 
+/*
+ * The code bellow handles the interactions of potion consumation, the quantity of potions and 
+ * the number of points that the player can heal
+ * */
 void potionInteraction(PlayerStruct * player, Windows * windows) // if the player still has potions he can use it to recover a number of points until player->max_health points of life
 {
-
-
-
 	if(player->inventory[1] != NULL && (*player->inventory[1]).mainItems.potions->quantity > 0)
 	{
 		(*player->inventory[1]).mainItems.potions->quantity--;
@@ -69,7 +74,12 @@ void potionInteraction(PlayerStruct * player, Windows * windows) // if the playe
 	}
 }
 
-void flowerInteraction(Game * game, Windows * windows, int y, int x)
+
+/*
+ * The code bellow handles the flower's interaction: It will impose a max of flowers that the player can pick up
+ * and the player's line
+ * */
+void flowerInteraction(Game * game, Windows * windows, int y, int x) 
 {
 
 	if(game->player->inventory[3] == NULL)
