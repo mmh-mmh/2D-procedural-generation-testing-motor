@@ -92,7 +92,7 @@ void flowerInteraction(Game * game, Windows * windows, int y, int x)
 		game->map->tiles[y][x] = ' ';
 		game->map->colors[y][x] = WHITE_ON_DEFAULT;
 		game->player->inventory[3]->mainItems.object->quantity++;
-		mvwprintw(windows->text_window, 1, 1, "mmmmhhhhh.....flowies. I got %d pieces of them in my bag",game->player->inventory[3]->mainItems.object->quantity);
+		mvwprintw(windows->text_window, 1, 1, "mmmmhhhhh.....flowies. I got %d of them in my bag",game->player->inventory[3]->mainItems.object->quantity);
 		game->player->score += 1;
 
 	}else if (game->npc->interactions_count != 0)
