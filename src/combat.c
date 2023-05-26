@@ -1,5 +1,9 @@
 #include "valley.h"
 
+/*
+ * The fonction combat, creates a combat between the player and a monster
+ * */
+
 void combat(Game *game, Map *map, PlayerStruct *player, MobStruct *mob, int index_mob)
 {
     if (map == NULL || player == NULL || mob == NULL)
@@ -18,13 +22,13 @@ void combat(Game *game, Map *map, PlayerStruct *player, MobStruct *mob, int inde
         player->score += 10;
         game->numb_monster--;
 
-        if (game->numb_monster == 0)
+        if (game->numb_monster == 0) // in the case all monsters die, the game free the memory
         {
             free(mob);
         }
     }
     else
     {
-        player->health -= mob[index_mob].attack;
+        player->health -= mob[index_mob].attack; // the monster strikes back
     }
 }
