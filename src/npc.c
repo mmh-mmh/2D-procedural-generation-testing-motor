@@ -37,6 +37,7 @@ npcStruct * wizardSetup()
     strcpy(npc->name, "Strange Wizard");
 
     npc->interactions_count = 0;
+    npc->gave_flowers = 0;
 
     npc->quest_completed = false;
 
@@ -64,15 +65,36 @@ void ManageWizardInteractions (Game * game, Windows * windows)
         mvwprintw(windows->text_window, 1, 1, "%s : HEY     THATS MY HAT", game->npc->name);
         game->npc->quest_completed = true;
     }
-    else if(game->player->inventory[3] != NULL)
+    else if(game->player->inventory[3] != NULL && game->player->inventory[3]->mainItems.object->quantity == FLOWER_CAPACITY_LIMIT && game->npc->interactions_count != 0 && game->npc->gave_flowers == 0)
     {
         mvwprintw(windows->text_window, 1, 1, "%s : Well, hum, thanks for the flowers. That's cool.", game->npc->name);
         game->player->inventory[3] = NULL;
-        game->player->score += 2;
+        game->player->score += 10;
+        game->npc->gave_flowers ++;
         return;
     }
-    else
+    else if (game->player->inventory[3] != NULL && game->player->inventory[3]->mainItems.object->quantity == FLOWER_CAPACITY_LIMIT && game->npc->gave_flowers == 1)
+    {
+        mvwprintw(windows->text_window, 1, 1, "%s : ENOUGH OF THAT", game->npc->name);
+        mvwprintw(windows->text_window, 2, 45, "%s : WHAT DO YOU THINK I AM ? A RUMINANT ?", game->npc->name);
+        mvwprintw(windows->text_window, 4, 20, "%s : I JUST FINISHED EATING THE LAST ONES", game->npc->name);
+        mvwprintw(windows->text_window, 5, 15, "%s : I LIVE IN A VALLEY YOU THINK IM MISSING FLOWERS", game->npc->name);
+        game->npc->gave_flowers++;
+    }
+    else if (game->npc->interactions_count > 10)
+    {
+        mvwprintw(windows->text_window, 1, 1, "%s : STOP TALKING TO ME", game->npc->name);
+        mvwprintw(windows->text_window, 2, 20, "%s : I NOT BE YOUR FRIEND", game->npc->name);
+        mvwprintw(windows->text_window, 4, 50, "%s : or maybe if you bring me my hat", game->npc->name);
+        mvwprintw(windows->text_window, 5, 3, "%s : I miss my hat..", game->npc->name);
+    }
+    else if(game->npc->interactions_count > 1)
     {   
+        mvwprintw(windows->text_window, 1, 1, "%s : HURRY ! The dungeon is in [%d,%d].", game->npc->name, game->dungeon->position.y,game->dungeon->position.x);
+        game->npc->interactions_count++;
+    }
+    else
+    {
         mvwprintw(windows->text_window, 1, 1, "%s : HEY YOU. Go get me my magic hat you weird looking boy.", game->npc->name);
         mvwprintw(windows->text_window, 2, 1, "%s : I forgot it in this monsterful dungeon in [%d,%d].", game->npc->name, game->dungeon->position.y,game->dungeon->position.x);
         mvwprintw(windows->text_window, 3, 1, "%s : Take this sword, you're gonna need it to break the entrance.", game->npc->name);
@@ -91,6 +113,6 @@ void ManageNecroInteractions(Game * game, Windows * windows)
 {
 		mvwprintw(windows->text_window, 1, 1, "%s : Oh, yeah boy, u found me. Great... So, I'm the Necromancer...",game->necro->name);					
 		mvwprintw(windows->text_window, 2, 1, "%s : Listen up! I'm old, and I'm tired of chicky brats like you messing around",game->necro->name);					
-		mvwprintw(windows->text_window, 3, 1, "%s : So, let's make it easy for both sides, you win! ok? you win!",game->necro->name);					
+		mvwprintw(windows->text_window, 3, 1, "%s : So, let's make it easy for both sides, you win? ok? you win!",game->necro->name);					
 		game->necro->quest_completed=true;
 }

@@ -42,7 +42,10 @@
 #define PLAYER_MAX_HEALTH 20
 #define PLAYER_BASE_ATTACK 2
 
+#define FLOWER_CAPACITY_LIMIT 10
+
 #define NB_MONSTERS 20
+
 
 typedef struct Position
 {
@@ -98,6 +101,7 @@ typedef struct npcStruct
 	Position position;
 	int interactions_count;
 	bool quest_completed;
+	int gave_flowers;
 } npcStruct;
 
 typedef enum {WEAPON_TYPE, OBJECTS_TYPE,POTIONS_TYPE} itemType;

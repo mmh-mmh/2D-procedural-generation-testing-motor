@@ -87,7 +87,7 @@ void flowerInteraction(Game * game, Windows * windows, int y, int x)
 		game->player->inventory[3] = genObject(0, '*', "Flowers");
 	}
 
-	if(game->player->inventory[3]->mainItems.object->quantity < 10)
+	if(game->player->inventory[3]->mainItems.object->quantity < FLOWER_CAPACITY_LIMIT)
 	{
 		game->map->tiles[y][x] = ' ';
 		game->map->colors[y][x] = WHITE_ON_DEFAULT;
@@ -95,9 +95,13 @@ void flowerInteraction(Game * game, Windows * windows, int y, int x)
 		mvwprintw(windows->text_window, 1, 1, "mmmmhhhhh.....flowies. I got %d pieces of them in my bag",game->player->inventory[3]->mainItems.object->quantity);
 		game->player->score += 1;
 
-	}else 
+	}else if (game->npc->interactions_count != 0)
 	{
-		mvwprintw(windows->text_window, 1, 1, "My bag is full with flowers, it's becoming compulsive, I should stop... ");
-
+		mvwprintw(windows->text_window, 1, 1, "My bag is full with flowers, it's becoming compulsive.");
+		mvwprintw(windows->text_window, 1, 20, "Maybe that weird wizard wnats them.. ");
+	}
+	else 
+	{
+		mvwprintw(windows->text_window, 1, 1, "My bag is full with flowers, it's becoming really compulsive.");
 	}
 }

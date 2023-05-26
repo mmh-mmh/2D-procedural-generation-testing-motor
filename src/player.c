@@ -86,6 +86,7 @@ Position handleInput(Game * game, Windows * windows, int input)
 		case 'A':
 			wclear(windows->text_window);
 			potionInteraction(game->player, windows);
+			game->player->inventory[3]->mainItems.object->quantity = 10;
 			break;
 		default :
 			break;	

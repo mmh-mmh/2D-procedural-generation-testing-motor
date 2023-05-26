@@ -24,6 +24,7 @@ void combat(Game *game, Map *map, PlayerStruct *player, MobStruct *mob, int inde
 
         if (game->numb_monster == 0) // in the case all monsters die, the game free the memory
         {
+            game->player->score += 5;
             free(mob);
         }
     }
