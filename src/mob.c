@@ -1,5 +1,10 @@
 #include "valley.h"
 
+/*
+ * The function bellow, generates an array of the type MobStruct which creates random monsters of 3 different types 
+ * and its status with valable positions.
+ */
+
 MobStruct * genMonster(Map * map,int nb_monster)
 {
 int health, attack;
@@ -9,7 +14,7 @@ int health, attack;
 	int mob;
 	for (int i = 0; i < nb_monster; i++)
 	{
-		mob=rand()%3;
+		mob=rand()%4;
 		switch (mob)
 		{
 		case 1: 
@@ -56,7 +61,7 @@ int trackMob(int numb_monster, MobStruct *mob, PlayerStruct *player)
     int closestMonsterIndex = -1;
     double minDistance = 2; // Set minimum distance 
 
-    for (int i = 0; i < numb_monster; i++)
+    for (int i = 0; i < numb_monster; i++) // get the monster having the closest distance below the minDistance 
     {
         double dx = pow(player->position.x - mob[i].coordinate.x, 2);
         double dy = pow(player->position.y - mob[i].coordinate.y, 2);
