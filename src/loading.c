@@ -115,7 +115,7 @@ void endLoading(Windows * windows, int end_condition)
                 usleep(1000);
                 refresh();
             } 
-            sleep(100);         
+            sleep(3);         
             break;   
     case 5:
             for(int i = 0; i<strlen(necromancer); i++)
@@ -124,7 +124,8 @@ void endLoading(Windows * windows, int end_condition)
                 usleep(1000);
                 refresh();
             } 
-            sleep(100);         
+            sleep(3);         
             break;
-    }    
+    }   
+    return; 
 }

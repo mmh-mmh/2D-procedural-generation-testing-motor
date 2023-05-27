@@ -36,6 +36,9 @@ void gameLoop(Game * game, Windows * windows)
     }
     endLoading(windows, end_condition);
     // Gérer l'écran de fin avec la valeur de checkEnCondition()
+
+    freeGame(game);
+    freeWindows(windows);
 }
 
 Game * gameSetup()
@@ -84,7 +87,6 @@ int checkEndConditions (Game * game)
     {
         return 4;
     }
-    else if (game->player->health <= 0) // Check if the player is dead
     else if (game->necro->quest_completed == true) // Check if the player met the necromancer
     {
         return 5;

@@ -189,6 +189,10 @@ typedef struct Windows
 	WINDOW * loading_window;
 } Windows;
 
+//save functions
+void freeGame(Game * game);
+void freeWindows(Windows * windows);
+
 
 //loading functions
 void loading(Windows * windows);
