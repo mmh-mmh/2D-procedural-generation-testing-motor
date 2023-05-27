@@ -5,23 +5,26 @@ Informatic Project Préing 1 Cy-Tech
 
 Groupe : Felipe, Malik, Alrick
 
-'make' to make
+To run the project:
+- 'make' to make
 
-'make run' to run
+- 'make run' to run
 
-'make clean' to rm .exe
+- 'make clean' to rm .exe
+
 
 short cut: make && make clean && make run 
-- In menu screen
-  arrows to select an option and enter to confirm choice
 
-In game:
-  zqsd to move
+In menu screen
+-arrows to select an option and enter to confirm choice
 
-  e to interact (attack, talk, break and pick up flowers)
+In game
+- zqsd to move
 
-  a to use the potions
+- e to interact (attack, talk, break and pick up flowers)
+
+-  a to use the potions
 
 # Bugs
 
-the game can only be saved but the function to load the game doesn't work
+- the game can only be saved but the function to load the game doesn't work
