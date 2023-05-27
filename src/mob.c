@@ -41,7 +41,7 @@ MobStruct * genMonster(StructureStruct * dungeon,Map * map,int nb_monster) // ty
 		monster[i].skin = skin;
 		monster[i].alive = true;
 		monster[i].triggered = false;
-		if(chance<=2) //1 is the number assigned to mobs spawned inside the dungeon 
+		if(chance<=2) // indicates the chance of mobs appearing inside the dungeon
 		{
 			do
 			{
