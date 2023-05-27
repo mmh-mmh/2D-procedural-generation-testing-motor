@@ -5,16 +5,16 @@
 void CheckConstants()
 {
     
-    if (MAP_HEIGHT != 90) {
-    fprintf(stderr, "ERROR : MAP_HEIGHT constant should be 90 \n");
+    if (MAP_HEIGHT <= 80) {
+    fprintf(stderr, "ERROR : MAP_HEIGHT constant is too low (< 80) \n");
     exit(1);
 	}
-    if (MAP_WIDTH != 180) {
-    fprintf(stderr, "ERROR : MAP_WIDTH constant should be 160\n");
+    if (MAP_WIDTH <= 160) {
+    fprintf(stderr, "ERROR : MAP_WIDTH constant is too low (< 160)\n");
     exit(1);
 	}
-    if (NOISE_DENSITY != 60) {
-    fprintf(stderr, "ERROR : NOISE_DENSITY constant should be 60\n");
+    if (NOISE_DENSITY >= 65) {
+    fprintf(stderr, "ERROR : NOISE_DENSITY constant is too high (>= 65)\n");
     exit(1);
     }
     if (CELLULAR_AUTOMATON_ITERATIONS != 13) {

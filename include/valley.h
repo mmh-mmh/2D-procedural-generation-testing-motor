@@ -21,14 +21,18 @@
 #define BLACK_ON_WHITE 8
 #define DEFAULT_ON_DEFAULT 9
 
+// Map dimensions, can cause crash if not handled properly
 #define MAP_HEIGHT 90
 #define MAP_WIDTH 180
 
+// Main game window size and position on the terminal
 #define MAIN_WINDOW_HEIGHT 31
 #define MAIN_WINDOW_WIDTH 131
 #define MAIN_WINDOW_POSITION_Y 0
 #define MAIN_WINDOW_POSITION_X 0
 
+
+// Options for procedural generation, can cause crash if not handled properly
 #define NOISE_DENSITY 60
 #define CELLULAR_AUTOMATON_ITERATIONS 13
 
@@ -39,6 +43,8 @@
 #define DUNGEON_MINIMAL_DISTANCE_FROM_PLAYER 50
 #define HOUSE_MINIMAL_DISTANCE_FROM_DUNGEON 40
 
+
+//Other options
 #define PLAYER_MAX_HEALTH 20
 #define PLAYER_BASE_ATTACK 2
 
@@ -48,6 +54,10 @@
 #define OUTSIDE_MOB 1
 #define STRUCT_MOB -1
 
+
+// 2048 minigame options
+#define BOARD_SIZE 2
+#define WIN_SCORE 256
 
 typedef struct Position
 {
@@ -285,5 +295,15 @@ void flowerInteraction(Game * game, Windows * windows, int y, int x);
 //chest functions
 void genChestInMiddleOfStructure(Map * map, StructureStruct * structure);
 void manageChestInteraction(Game * game, Windows * windows, Position chest_position);
+
+//2048 minigame functions
+int play2048(Windows * windows);
+bool check_loss(int ** tab);
+bool check_win(int ** tab);
+void make_move(int ** tab, char move);
+void print_board(int ** tab, Windows * windows);
+int ** init_board();
+int add_random_tile(int ** tab);
+void free_board(int **tab);
 
 #endif

@@ -111,8 +111,84 @@ void ManageWizardInteractions (Game * game, Windows * windows)
 // The function bellow prints on the screen the lines of the necromancer npc 
 void ManageNecroInteractions(Game * game, Windows * windows)
 {
-		mvwprintw(windows->text_window, 1, 1, "%s : Oh, yeah boy, u found me. Great... So, I'm the Necromancer...",game->necro->name);					
-		mvwprintw(windows->text_window, 2, 1, "%s : Listen up! I'm old, and I'm tired of chicky brats like you messing around",game->necro->name);					
-		mvwprintw(windows->text_window, 3, 1, "%s : So, let's make it easy for both sides, you win? ok? you win!",game->necro->name);					
-		game->necro->quest_completed=true;
+    if(game->necro->interactions_count == 0)
+    {
+	    mvwprintw(windows->text_window, 1, 1, "%s : Oh, yeah boy, u found me. Great... So, I'm the Necromancer...",game->necro->name);					
+	    mvwprintw(windows->text_window, 2, 1, "%s : Listen up! I'm old, and I'm tired of chicky brats like you messing around",game->necro->name);					
+	    mvwprintw(windows->text_window, 3, 1, "%s : So, let's play a little game, if you win, you win...",game->necro->name);	
+        mvwprintw(windows->text_window, 4, 15, "%s : ... BUT. IF. YOU. LOSE.      I'LL KILL YOU MOUHAHAHAHAHAHHAHAHAHAHAHAHHAHAHA",game->necro->name);
+        mvwprintw(windows->text_window, 5, 3, "%s : Im the necromancer.",game->necro->name);
+        game->necro->interactions_count++;
+    }
+    else if (game->necro->interactions_count == 1)
+    {
+        mvwprintw(windows->text_window, 1, 1, "%s : So, what do you say weird boy ?",game->necro->name);
+        mvwprintw(windows->text_window, 2, 30, "%s : Feeling  playful ?",game->necro->name);
+        mvwprintw(windows->text_window, 4, 10, "'Y to accept'                            'N to deny'");
+
+        box(windows->text_window, 0, 0);
+        wrefresh(windows->text_window);
+        
+        char choice;
+        do{
+            choice = getch();
+        } while (choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N');
+
+        if(choice == 'y' || choice == 'Y')
+        {
+            wclear(windows->text_window);
+            mvwprintw(windows->text_window, 1, 1, "%s : So you accepted the challenge, mere mortal.",game->necro->name);
+            mvwprintw(windows->text_window, 2, 1, "%s : Reach %d to win.",game->necro->name, WIN_SCORE);
+            box(windows->text_window, 0, 0);
+            wrefresh(windows->text_window);
+
+            if(play2048(windows))
+            {
+                wclear(windows->text_window);
+                mvwprintw(windows->text_window, 1, 1, "%s : Mere mortal, I'm impressed, your magic is very powerful.",game->necro->name);
+                mvwprintw(windows->text_window, 2, 1, "%s : You won.",game->necro->name, WIN_SCORE);
+                mvwprintw(windows->text_window, 3, 1, "%s : GG",game->necro->name, WIN_SCORE);
+                box(windows->text_window, 0, 0);
+                wrefresh(windows->text_window);
+                game->necro->quest_completed=true;
+                return;
+            }
+            else
+            {
+                wclear(windows->text_window);
+                box(windows->text_window, 0, 0);
+                mvwprintw(windows->text_window, 1, 1, "%s : oh, you losed...          ha hahaHAHAHHAHAHHAHAHHAHHAHAHAHAHAHHAHAHHAHAHAHAHAHAHAHHAHAHAHHAHAHAHAHAHHAHAHAHAHAH",game->necro->name);
+                mvwprintw(windows->text_window, 2, 1, "HAHAHAHHAHAHHAHAHAHAHHAHAHYAHAHAHAHAHAHAHHAHAHAHAHAHAHAHAHAHHAHAHHAHHAHAHHAHAHAHHAAHHAHAHAAHHAHAHAHAHHAHAHAHAHAHHAHAHAHAHAH");
+                mvwprintw(windows->text_window, 4, 1, "%s : ...      ..Im not going to kill you hahaha",game->necro->name);
+                mvwprintw(windows->text_window, 5, 1, "%s : you're so stupid you'll certainly kill yourself chocking on some thick air",game->necro->name);
+                wrefresh(windows->text_window);
+                getch();
+                wclear(windows->text_window);
+                box(windows->text_window, 0, 0);
+                mvwprintw(windows->text_window, 3, 45, "%s : Bye loser",game->necro->name);
+                wrefresh(windows->text_window);
+                getch();
+                wclear(windows->text_window);
+                box(windows->text_window, 0, 0);
+                mvwprintw(windows->text_window, 1, 1, "%s : MOUHAHAHAHHAHAHAHHAHAHAHHA          necromancer     out.",game->necro->name);
+                mvwprintw(windows->text_window, 3, 15, "'He disappeared'");
+                wrefresh(windows->text_window);
+                game->map->tiles[game->necro->position.y][game->necro->position.x] = ' ';
+
+                box(windows->text_window, 0, 0);
+                wrefresh(windows->text_window);
+                wrefresh(windows->game_window);
+                return;
+            }
+        }
+        else
+        {
+            wclear(windows->text_window);
+            mvwprintw(windows->text_window, 1, 1, "%s :              meh",game->necro->name);
+            mvwprintw(windows->text_window, 2, 1, "%s :                               fair enought.",game->necro->name);
+            mvwprintw(windows->text_window, 3, 15, "'He disappeared'");
+            game->map->tiles[game->necro->position.y][game->necro->position.x] = ' ';
+            return;
+        }
+    }   
 }

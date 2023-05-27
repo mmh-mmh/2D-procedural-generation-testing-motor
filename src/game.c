@@ -6,21 +6,27 @@ void gameLoop(Game * game, Windows * windows)
     int input = 0;
     int end_condition = 0;
 
+
+
     /*monsters setup*/
     game->mob = genMonster(game->dungeon,game->map, game->numb_monster); // allocate memory and set status and generate numb_monster monsters
     /*necromancer setup*/  
     game->necro=necomancerSetup(game->map); // allocate memory, set skin and generate coordinate
 
+    game->player->position.y = game->necro->position.y + 1;
+    game->player->position.x = game->necro->position.x + 1;
+
     while (1) // Main loop
     {
-        wclear(windows->main_window); //clears all the game windows
-        handleTextEvents(game, windows);
+        wclear(windows->main_window); // clears the game window
+        handleTextEvents(game, windows); // little text events that happen when certain conditions matches
 
         position_offset = handleInput(game, windows, input); // Return position offset suggested by current user input
         
         checkPosition(position_offset, game, windows); // Deal with what's where the player wants to move
 
         render(game, windows); // Update the game's display
+        
 
         input = getch(); // Get user input
 
