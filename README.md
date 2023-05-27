@@ -11,12 +11,16 @@ Groupe : Felipe, Malik, Alrick
 
 'make clean' to rm .exe
 
-short cut:
+short cut: make && make clean && make run 
+- In menu screen
+  arrows to select an option and enter to confirm choice
 
-zqsd to move
+-In game:
+  zqsd to move
 
-e to interact (attack, talk, break and pick up flowers)
-a to use the potions
+  e to interact (attack, talk, break and pick up flowers)
+
+  a to use the potions
 
 # Bugs
 
