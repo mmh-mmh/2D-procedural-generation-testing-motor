@@ -5,15 +5,17 @@
  * and its status with valable positions.
  */
 
-MobStruct * genMonster(Map * map,int nb_monster)
+MobStruct * genMonster(StructureStruct * dungeon,Map * map,int nb_monster) // type is to check if it's a monster meant to be spawned inside a dungeon or not
 {
-int health, attack;
+	int health, attack;
 	char skin;
 
 	MobStruct * monster = malloc(sizeof(MobStruct)*nb_monster);
 	int mob;
+	int chance;
 	for (int i = 0; i < nb_monster; i++)
 	{
+		chance= rand()%21;
 		mob=rand()%4;
 		switch (mob)
 		{
@@ -39,14 +41,29 @@ int health, attack;
 		monster[i].skin = skin;
 		monster[i].alive = true;
 		monster[i].triggered = false;
-		do
+		if(chance<=2) //1 is the number assigned to mobs spawned inside the dungeon 
 		{
-			monster[i].coordinate.y = rand() % (map->dimensions.height - 2) + 1;
-			monster[i].coordinate.x = rand() % (map->dimensions.width - 2) + 1;
-		} while (map->tiles[monster[i].coordinate.y][monster[i].coordinate.x] == '.' || map->tiles[monster[i].coordinate.y ][monster[i].coordinate.x] == '#');
-
+			do
+			{
+				monster[i].coordinate.y = dungeon->position.y+ rand() % (dungeon->dimensions.height-2) + 1;
+				monster[i].coordinate.x = dungeon->position.x+ rand() % (dungeon->dimensions.width - 2) + 1;
+			} while (map->tiles[monster[i].coordinate.y][monster[i].coordinate.x] == 'O' || map->tiles[monster[i].coordinate.y ][monster[i].coordinate.x] == '#');
+		}
+		
+		else
+		{
+			do
+			{
+				monster[i].coordinate.y = rand() % (map->dimensions.height - 2) + 1;
+				monster[i].coordinate.x = rand() % (map->dimensions.width - 2) + 1;
+			} while (map->tiles[monster[i].coordinate.y][monster[i].coordinate.x] == '.' || map->tiles[monster[i].coordinate.y ][monster[i].coordinate.x] == '#');
+		}
+		
 		map->tiles[monster[i].coordinate.y][monster[i].coordinate.x] = monster[i].skin;
 		map->colors[monster[i].coordinate.y][monster[i].coordinate.x] = WHITE_ON_DEFAULT;
+		
+	
+
 	}
 	return monster;
 }
