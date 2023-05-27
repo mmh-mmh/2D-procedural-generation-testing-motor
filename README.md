@@ -23,6 +23,8 @@ In game
 
 - e to interact (attack, talk, break and pick up flowers)
 
+-f to open the menu ingame
+
 -  a to use the potions
 
 # Bugs
