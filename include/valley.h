@@ -56,7 +56,7 @@
 
 
 // 2048 minigame options
-#define BOARD_SIZE 2
+#define BOARD_SIZE 4
 #define WIN_SCORE 256
 
 typedef struct Position
@@ -192,6 +192,7 @@ typedef struct Windows
 
 //loading functions
 void loading(Windows * windows);
+void endLoading(Windows * windows, int end_condition);
 
 //game functions 
 Game * gameSetup();

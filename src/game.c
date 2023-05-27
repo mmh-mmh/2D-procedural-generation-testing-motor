@@ -6,14 +6,6 @@ void gameLoop(Game * game, Windows * windows)
     int input = 0;
     int end_condition = 0;
 
-
-
-    /*monsters setup*/
-    game->mob = genMonster(game->dungeon,game->map, game->numb_monster); // allocate memory and set status and generate numb_monster monsters
-    /*necromancer setup*/  
-    game->necro=necomancerSetup(game->map); // allocate memory, set skin and generate coordinate
-
-
     while (1) // Main loop
     {
         wclear(windows->main_window); // clears the game window
@@ -42,7 +34,7 @@ void gameLoop(Game * game, Windows * windows)
         }
         game->move_count++;
     }
-
+    endLoading(windows, end_condition);
     // Gérer l'écran de fin avec la valeur de checkEnCondition()
 }
 
@@ -61,6 +53,11 @@ Game * gameSetup()
 
     // place the npc giving the quest in the house 
     placeNpcInStructure(new_game->map, new_game->house, new_game->npc);
+
+    /*monsters setup*/
+    new_game->mob = genMonster(new_game->dungeon,new_game->map, new_game->numb_monster); // allocate memory and set status and generate numb_monster monsters
+    /*necromancer setup*/  
+    new_game->necro=necomancerSetup(new_game->map); // allocate memory, set skin and generate coordinate
     
     new_game->start_time = time(NULL);
     
@@ -79,22 +76,22 @@ int checkEndConditions (Game * game)
     {
         return 2;
     }
-    else if (game->necro->quest_completed == true) // Check if the player met the necromancer
+    else if (game->player->score >= 100) // Check if the score reach 100
     {
         return 3;
     }
-    else if (game->player->score >= 100) // Check if the score reach 100
+    else if (game->player->health <= 0) // Check if the player is dead
     {
         return 4;
     }
     else if (game->player->health <= 0) // Check if the player is dead
+    else if (game->necro->quest_completed == true) // Check if the player met the necromancer
     {
         return 5;
     }
     
     return 0;
 }
-
 
 void handleTextEvents(Game * game, Windows * windows)
 {
