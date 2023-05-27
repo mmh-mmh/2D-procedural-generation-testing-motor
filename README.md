@@ -15,7 +15,7 @@ short cut: make && make clean && make run
 - In menu screen
   arrows to select an option and enter to confirm choice
 
--In game:
+In game:
   zqsd to move
 
   e to interact (attack, talk, break and pick up flowers)
@@ -24,4 +24,4 @@ short cut: make && make clean && make run
 
 # Bugs
 
-- the game can only be saved but the function to load the game doesn't work
+the game can only be saved but the function to load the game doesn't work
