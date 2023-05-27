@@ -13,8 +13,6 @@ void gameLoop(Game * game, Windows * windows)
     /*necromancer setup*/  
     game->necro=necomancerSetup(game->map); // allocate memory, set skin and generate coordinate
 
-    game->player->position.y = game->necro->position.y + 1;
-    game->player->position.x = game->necro->position.x + 1;
 
     while (1) // Main loop
     {
@@ -26,7 +24,7 @@ void gameLoop(Game * game, Windows * windows)
         checkPosition(position_offset, game, windows); // Deal with what's where the player wants to move
 
         render(game, windows); // Update the game's display
-        
+
 
         input = getch(); // Get user input
 
