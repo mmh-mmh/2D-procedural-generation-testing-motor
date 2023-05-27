@@ -7,7 +7,7 @@ void gameLoop(Game * game, Windows * windows)
     int end_condition = 0;
 
     /*monsters setup*/
-    game->mob = genMonster(game->map, game->numb_monster); // allocate memory and set status and generate numb_monster monsters
+    game->mob = genMonster(game->dungeon,game->map, game->numb_monster); // allocate memory and set status and generate numb_monster monsters
     /*necromancer setup*/  
     game->necro=necomancerSetup(game->map); // allocate memory, set skin and generate coordinate
 

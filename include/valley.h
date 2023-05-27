@@ -45,6 +45,8 @@
 #define FLOWER_CAPACITY_LIMIT 10
 
 #define NB_MONSTERS 20
+#define OUTSIDE_MOB 1
+#define STRUCT_MOB -1
 
 
 typedef struct Position
@@ -215,7 +217,7 @@ void ManageWizardInteractions(Game * game, Windows * windows);
 void ManageNecroInteractions(Game * game, Windows * windows);
 
 // mob functions
-MobStruct * genMonster( Map * map,int nb_monster);
+MobStruct * genMonster(StructureStruct * dungeon,Map * map,int nb_monster);
 int trackMob(int numb_monster , MobStruct * mob, PlayerStruct * player);
 void mobPursuit(Position playerpos, MobStruct * mob, Map * map, int index_mob, int game_move_count);
 
