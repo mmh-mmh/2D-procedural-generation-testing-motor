@@ -1,5 +1,5 @@
 # Valley
-UNFINISHED
+V 1.0
 
 Informatic Project Préing 1 Cy-Tech
 
